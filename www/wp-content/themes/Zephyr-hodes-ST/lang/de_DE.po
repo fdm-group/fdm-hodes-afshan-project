@@ -1,0 +1,8 @@
+msgid "Centres"
+msgstr "Niederlassungen"
+
+msgid "Academies"
+msgstr "Niederlassungen mit FDM Academy"
+
+msgid "Placements"
+msgstr "Einsatzorte"

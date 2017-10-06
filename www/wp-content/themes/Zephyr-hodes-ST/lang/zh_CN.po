@@ -1,0 +1,8 @@
+msgid "Centres"
+msgstr "中心"
+
+msgid "Academies"
+msgstr "培训学院"
+
+msgid "Placements"
+msgstr "调配"

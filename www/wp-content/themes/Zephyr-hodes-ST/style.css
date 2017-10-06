@@ -1,0 +1,38 @@
+/*
+Theme Name: Zephyr - Hodes - ST Child
+Template: Zephyr
+Version: 1.0
+Author:	UpSolution
+Theme URI: http://zephyr.us-themes.com/
+Author URI: http://us-themes.com/
+*/
+
+#cws-search-form .w-form-row,
+.widget-jobsearch .w-form-row{
+    padding-left: 0;
+}
+#cws-search-form .w-form-row-label,
+.widget-jobsearch .w-form-row-label{
+    left: 0;
+}
+#cws-search-form .ui-widget-content {
+    border: 0;
+    background: #eee;
+    height: 4px;
+}
+#cws-search-form .ui-slider .ui-slider-handle{
+    border: 0px;
+    border-radius: 1.2em;
+}
+#cws-search-form .ui-slider-horizontal .ui-slider-handle {
+    top: -0.4em;
+}
+.widget-jobsearch-full #date-container {
+    margin-bottom: 17px;
+}
+.widget-jobsearch-full #date-labels {
+    margin-bottom: 50px;
+}
+#cws-search-form .w-separator.size_small {
+    margin: 5px 0;
+}

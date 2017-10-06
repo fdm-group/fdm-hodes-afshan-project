@@ -1,0 +1,14 @@
+# Put site-specific files to ignore here
+/www/wp-config.php
+database.sql
+
+# Ignore log and session dirs, and all hidden files apart from .gitignore
+/log
+/sessions
+/.*
+!/.gitignore
+
+# Standard Windows and Mac system files to ignore
+Icon?
+ehthumbs.db
+Thumbs.db
