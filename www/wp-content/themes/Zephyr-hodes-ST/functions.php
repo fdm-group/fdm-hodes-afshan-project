@@ -26,10 +26,29 @@ add_action( 'after_setup_theme', function() {
     load_theme_textdomain( 'fdm', get_stylesheet_directory() . '/lang' );
 }, 1 );
 
-
 // Return a generic error message regardless of login failure (prevents username/email ennumeration)
 add_filter( 'login_errors', function() {
 	return 'Login Error';
+});
+
+// During password reset process, show same response for incorrect login as correct (prevents username/email ennumeration)
+add_action( 'lost_password', function() {
+
+	global $errors;
+	
+	$error_codes_to_mask = [
+		'invalid_email',
+		'invalidcombo',
+		'invalid_username',
+	];
+	foreach( $error_codes_to_mask as $code ) {
+		if ( $errors->get_error_messages( $code ) ) {
+			// user entered incorrect login or email - send them the same response as for a correct one - redirect to check email message
+			wp_safe_redirect( 'wp-login.php?checkemail=confirm' );
+			exit;
+		}
+	}
+
 });
 
 // Implement ip whitelist for login/admin pages
@@ -66,6 +85,7 @@ if ( STAGING ) {
 add_action( 'wp_enqueue_scripts', function() {
 
 	wp_enqueue_script( 'hodes-fdm', asset_url( 'js/hodes-fdm.js' ) , [ 'jquery' ] );
+	wp_enqueue_script( 'investis-iframe-manager', asset_url( 'js/frame-manager.js' ) , [ 'jquery' ] );
 
 } );
 
@@ -82,13 +102,16 @@ add_action( 'wp_head', function() {
 	$less_path = get_stylesheet_directory() . '/css/style.less';
 	$timestamp = filemtime( $css_path ) ?: 0;
 	
-	if ( $timestamp < filemtime( $less_path ) ) {
+	if ( true ) {
+	//if ( $timestamp < filemtime( $less_path ) ) {
 	
 		error_log( "Custom CSS file is out of date - recompiling from less file $less_path to $css_path" );	
 
 		// load and set up the compiler
 		require_once( __DIR__ . '/include/lessc.php' );
 		$lesscompiler = new \lessc();
+		
+		$lesscompiler->setImportDir( __DIR__ . '/css' );
 	
 		// use compressed output
 		$lesscompiler->setFormatter( "compressed" );
@@ -126,13 +149,18 @@ add_action( 'wp_head', function() {
 } );
 
 // Set javascript variable to allow the FDM logo to be set to a link to the correct language homepage
-if ( function_exists( 'pll_home_url' ) ) {
-	add_action( 'wp_head', function() {
-		?>
-		<script>window.fdmTranslatedHomeLink = <?= json_encode( pll_home_url() ) ?>;</script>
-		<?php
-	} );
-}
+add_action( 'wp_head', function() {
+	?>
+	<script>
+		<?php if ( function_exists( 'pll_home_url' ) ) { ?>
+			window.fdmTranslatedHomeLink = <?= json_encode( pll_home_url() ) ?>;
+		<?php } ?>
+		<?php if ( function_exists( 'pll_current_language' ) ) { ?>
+			window.fdmCurrentLang = <?= json_encode( pll_current_language() ) ?>;
+		<?php } ?>
+	</script>
+	<?php
+} );
 
 // Insert addthis sharing buttons on single post pages
 add_filter( 'wp', function() {
@@ -152,6 +180,25 @@ add_filter( 'wp', function() {
 		} );
 
 	}
+} );
+
+// Insert our custom header
+add_action( 'us_before_page', function() {
+
+	$prefix = 'fdm_hdr_';
+	$len = strlen( $prefix );
+	$args = [];
+	foreach( (array) get_fields() as $name => $value ) {
+		if ( substr( $name, 0, $len ) == $prefix ) {
+			$args[ substr( $name, $len ) ] = $value;
+		}
+	}
+	if ( ! empty( $args ) && $args['use_header_banner'] ) {
+		extract( $args );
+		unset( $args );
+		include( __DIR__ . '/template/heading-banner.php' );
+	}
+
 } );
 
 
@@ -231,7 +278,8 @@ function cws_add_zephyr_breadcrumbs(){
 add_shortcode( 'fdm-location-selector', function() {
 
 	$langs = pll_the_languages( [ 'raw' => true ] );
-	$current_lang = array_pop( array_filter( $langs, function( $lang ) { return $lang['current_lang']; } ) );
+	$current_lang = array_filter( $langs, function( $lang ) { return $lang['current_lang']; } );
+	$current_lang = array_pop( $current_lang );
 	ob_start();
 	?>
 	<div id="fdm-location-selector">
@@ -362,4 +410,3 @@ add_shortcode( 'fdm-translated-button', function( $args ) {
 
 
 //include('include/dh-content-find-replace.php');
-//include('include/dh-posts-import.php');

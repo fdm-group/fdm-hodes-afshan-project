@@ -77,9 +77,9 @@ class BlogListing extends VCComponent {
 		$query = new \WP_Query( $args );
 
 		// keep track of whether there is more posts available for this query
-		$this->has_more = ( $query->found_posts > ( $page * $posts_per_page + $query->post_count ) );
+		$this->has_more = ( $query->found_posts > ( ( $page - 1 ) * $posts_per_page + $query->post_count ) );
 
-		error_log( "page {$page} got {$query->post_count} posts" );
+		// error_log( "page {$page} got {$query->post_count} posts, total {$query->found_posts}" );
 
 		return $query;
 
@@ -99,7 +99,7 @@ class BlogListing extends VCComponent {
 			if ( $category->slug == 'uncategorized' ) {
 				continue; // don't show uncategorized
 			}
-			$translated_category_id = pll_get_term( $category->term_id, $slug );
+			$translated_category_id = pll_get_term( $category->term_id, 'slug' );
 			$translated_category = $translated_category_id ? get_term( $translated_category_id ) : false;
 			$categories[ $category->slug ] = $translated_category ? $translated_category->name : $category->name;
 		}
