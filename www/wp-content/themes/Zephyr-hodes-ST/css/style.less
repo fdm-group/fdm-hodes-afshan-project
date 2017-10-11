@@ -32,6 +32,14 @@ h2 {  color:@blue !Important; }
 .ult-carousel-wrapper button.circle-bg:hover {background: rgb(210, 210, 210) !important;}
 .ult-carousel-wrapper button.circle-bg:hover i {color:#fff;}
 
+@media screen and (max-width: 600px) {
+	.g-cols.type_boxes>div>.vc_column-inner {
+		padding: 10px;
+	}
+}
+
+
+
 .grey-bg {
 	background-color: @grey-bg;
 }
@@ -62,7 +70,13 @@ h2 {  color:@blue !Important; }
 }
 
 
-.slick-slider {width:90%; margin: 0 auto;}
+.slick-slider {
+	width:90%;
+	margin: 0 auto;
+	@media (max-width: 600px) {
+		width: 100%;
+	}
+}
 .slick-dots li {width: auto; margin: 0;}
 .half-p p {width:60%; margin: 0 auto 50px; line-height:18px;}
 .gbkg {padding: 60px 0px; background-color:@grey-bg;}
@@ -168,7 +182,16 @@ ul li { margin: 0 0 0.2rem; }
 
 
 /** Content Block (for most sub-pages) **/
-.l-canvas.sidebar_none .l-section.content-block, .l-canvas.sidebar_none .l-section.content-block-wbg {padding: 0 0; margin: 0 15%;}
+.l-canvas.sidebar_none .l-section.content-block, .l-canvas.sidebar_none .l-section.content-block-wbg {
+	padding: 0 0;
+	margin: 0 12%;
+	@media (max-width: 800px) {
+		margin: 5%;
+	}
+	@media (max-width: 500px) {
+		margin: 0;
+	}
+}
 .content-block {background: #f8f8f9; }
 .content-block .vc_column-inner > .wpb_wrapper, .content-block-wbg .wpb_wrapper{ margin: 0% 5%; } 
 .content-block .deco-line, .content-block-wbg .deco-line {margin: 0 auto 15px; }
@@ -393,24 +416,6 @@ ul li { margin: 0 0 0.2rem; }
 
 #whatWeDo .hs-caption-media {height: 360px;}
 
-/** Logo & Nav **/
-
-/*
-#fdm-main-nav ul.ubermenu-submenu li a::after, #fdm-main-nav>li>a::after {display:block;  content:attr(title); font-weight:bold; height:1px; color:transparent;	overflow:hidden; visibility:hidden;}
-#fdm-main-nav>li  {line-height:107px; border-top: 3px solid transparent;}
-#fdm-main-nav>li:hover {border-top: 3px solid @blue; }
-#fdm-main-nav>li:hover a {font-weight:bold;}
-#fdm-main-nav>li>a {font-family: 'Open Sans'; font-weight:300; line-height:107px; padding-top: 0px; padding-bottom: 0px;}
-#fdm-main-nav ul.ubermenu-submenu { width:100%; text-align:right; background: rgba(255,255,255,0.8); padding-right: calc(1.4rem ~"+" 2% ~"+" 21px);}
-#fdm-main-nav ul.ubermenu-submenu li {float:none; display:inline-block; padding:0px 20px; min-width:50px;}
-#fdm-main-nav ul.ubermenu-submenu li a {padding:16px 0px; border-bottom: 3px solid transparent; text-transform:uppercase;}
-#fdm-main-nav ul.ubermenu-submenu li a:hover {border-bottom: 3px solid @blue; font-weight:bold;}
-#fdm-main-nav ul.ubermenu-submenu>li>a {color:#000;font-family: 'Open Sans'; font-weight:300;}
-#fdm-main-nav>li.ubermenu-current-menu-item, #fdm-main-nav>li.ubermenu-current-menu-ancestor { border-top: 3px solid @blue;}
-#fdm-main-nav>li.ubermenu-current-menu-item>a, #fdm-main-nav>li.ubermenu-current-menu-ancestor>a {font-weight:bold;}
-#fdm-main-nav ul.ubermenu-submenu{ background:white;}
-#fdm-main-nav ul.ubermenu-submenu li.ubermenu-current-menu-item a { border-bottom: 3px solid @blue; font-weight:bold;}
-*/
 
 /** Logo & Nav **/
 #fdm-main-nav {
@@ -1172,6 +1177,9 @@ a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5
 		width:32%;
 		display:inline-block;
 		margin:0 0.5%;
+		@media (max-width: 600px) {
+			width: 100%;
+		}
 	}
 }
 
@@ -1181,6 +1189,16 @@ a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5
 		width: 25%;
 		float: left;
 		padding: 5px;
+		@media (max-width: 900px) {
+			width: 33.3%;
+		}
+		@media (max-width: 600px) {
+			width: 50%;
+		}
+		@media (max-width: 450px) {
+			width: 100%;
+			margin-bottom: 10px;
+		}
 	}
 	.fdm-board-of-directors-component & {
 		max-width: 1200px;
@@ -1208,6 +1226,16 @@ a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5
 				width: 100%;
 				height: 100%;
 			}
+			@media (max-width: 450px) {
+				width: 32vw;
+				.fdm-our-people-component & {
+					padding-top: 32vw;
+				}
+				.fdm-board-of-directors-component & {
+					padding-top: 40vw;
+				}
+				float: left;
+			}
 		}
 		[name=info] {
 			height: 10em;
@@ -1215,6 +1243,10 @@ a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5
 			line-height: 1.4;
 			span {
 				display: block;
+			}
+			@media (max-width: 450px) {
+				height: auto;
+				padding-left: 2vw;
 			}
 		}
 		[name=name] {
@@ -1224,6 +1256,9 @@ a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5
 			font-weight: bold;
 			margin-top: 15px;
 			margin-bottom: 0.2em;
+			@media (max-width: 450px) {
+				margin-top: 0;
+			}
 		}
 		[name=job-title] {
 			margin-bottom: 0.4em;
@@ -1666,3 +1701,4 @@ a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5
 
 
 @import "mark.less";
+@import "rich.less";
