@@ -64,6 +64,7 @@ add_action('init', function() {
 
 			// Madison Solutions
 			'164.39.204.54/32',
+			'109.169.33.25/32',
 
 			// Hodes Office
 			'81.130.151.48/32',

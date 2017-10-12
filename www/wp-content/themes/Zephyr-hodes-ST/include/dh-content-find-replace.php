@@ -17,6 +17,79 @@
 		
 	}
 	
+	function carousel_remove_style( $post, $save ) {
+	
+		/* css_ad_caraousel=".vc_custom_1505291695498{padding-right: 20px !important;padding-left: 20px !important;}" */
+		
+		$content = preg_replace_callback( '/(.{0,100})css_ad_caraousel="(.*?)"(.{0,100})/', function( $matches ) {
+		
+			echo '<p>' . htmlspecialchars( $matches[1] ) . '<strong>css_ad_caraousel="' . htmlspecialchars( $matches[2] ) . '"</strong>' . htmlspecialchars( $matches[3] ) . '</p>';
+			
+			$replace = $matches[1].$matches[3];
+			echo '<p>' . htmlspecialchars( $replace ) . '</p>';
+			
+			return $replace;
+		
+		}, $post->post_content, -1, $count );
+
+		if ( $save && $count > 0 ) {
+			$result = wp_update_post( [ 'ID' => $post->ID, 'post_content' => $content ], true );
+			if ( is_wp_error( $result ) ) {
+				echo '<p style="color:red">Error: updating ' . $post->ID . ': ' . htmlspecialchars( implode( ', ', $result->get_error_messages() ) ) . '</p>';
+			} else {
+				echo '<p style="color:green">Updated ' . $post->ID . '</p>';
+			}
+		}
+	
+	}
+	
+	function carousel_slides_on_tab( $post, $save ) {
+	
+		/* This is what we want, if there's 3 on desktop, there should be 2 on tabs and 1 on mobile
+		[ultimate_carousel ... slides_on_desk="3" slides_on_tabs="2" slides_on_mob="1" ... ] */
+	
+		$updates = 0;
+	
+		$content = preg_replace_callback('/\[ultimate_carousel (.*?)\]/', function ( $matches ) use ( &$updates ) {
+		
+			$orig = $matches[0];
+			$atts = $matches[1];
+			if ( preg_match('/slides_on_desk="(\d+)"/', $atts, $matches ) ) {
+				$desk = (int) $matches[1];	
+				if ($desk == 3) {
+					$atts = preg_replace('/slides_on_tabs="(\d+)"/', 'slides_on_tabs="2"', $atts, -1, $count);
+					if ( $count == 0 ) {
+						$atts .= ' slides_on_tabs="2" ';
+					}
+					$atts = preg_replace('/slides_on_mob="(\d+)"/', 'slides_on_mob="1"', $atts, -1, $count);
+					if ( $count == 0 ) {
+						$atts .= ' slides_on_mob="1" ';
+					}				
+				}		
+			}
+			
+			$replace = "[ultimate_carousel {$atts}]";
+			
+			if ( $orig != $replace ) {
+				echo "<p>".htmlspecialchars($orig).' --- '.htmlspecialchars($replace).'</p>';
+				$updates++;
+			}
+			
+			return $replace;	
+		
+		}, $post->post_content, -1 );
+		
+		if ( $save && $updates > 0 ) {
+			$result = wp_update_post( [ 'ID' => $post->ID, 'post_content' => $content ], true );
+			if ( is_wp_error( $result ) ) {
+				echo '<p style="color:red">Error: updating ' . $post->ID . ': ' . htmlspecialchars( implode( ', ', $result->get_error_messages() ) ) . '</p>';
+			} else {
+				echo '<p style="color:green">Updated ' . $post->ID . '</p>';
+			}
+		}
+	
+	}
+	
 	function buttons_remove_titles( $post, $save ) {
 
 		/*
@@ -63,6 +136,41 @@
 		}
 	
 	}
+	
+	function faq_remove_h3( $post, $save ) {
+	
+		// We don't want h3s round the titles, we should style using the stylesheet [vc_tta_section title="<h3>Getting Back to Business Programme</h3>"]
+		
+		$updates = 0;
+	
+		$content = preg_replace_callback('/\[vc_tta_section (.*?)\]/s', function ( $matches ) use ( &$updates ) {
+		
+			$orig = $matches[0];
+			$atts = $matches[1];
+			//echo "<p>{$orig}</p>";
+			
+			$atts = preg_replace( '#title="\s*<h3>(.*?)</h3>\s*"#s', 'title="$1"', $atts );
+			$replace = "[vc_tta_section {$atts}]";
+			
+			if ( $replace != $orig ) {
+				$updates++;
+				echo "<p>".htmlspecialchars($orig).' --- '.htmlspecialchars($replace).'</p>';
+			}
+			
+			return $replace;
+		
+		}, $post->post_content );
+		
+		if ( $save && $updates > 0 ) {
+			$result = wp_update_post( [ 'ID' => $post->ID, 'post_content' => $content ], true );
+			if ( is_wp_error( $result ) ) {
+				echo '<p style="color:red">Error: updating ' . $post->ID . ': ' . htmlspecialchars( implode( ', ', $result->get_error_messages() ) ) . '</p>';
+			} else {
+				echo '<p style="color:green">Updated ' . $post->ID . '</p>';
+			}
+		}
+	
+	}
 
 	
 	function post_replace( $post, $search, $replace, $save = false ) {
@@ -86,6 +194,96 @@
 	
 	}
 	
+	function update_german_urls( $post, $save ) {
+	
+		// IMPORTANT - make sure the child pages come before the parent pages!
+		$updates = [
+			'/de/de-culture/de-diversity-inclusion/' => '/de/unternehmenskultur/vielfalt-und-integration/',
+			'/de/de-culture/de-women-in-it/' => '/de/unternehmenskultur/gleichberechtigung/',
+			'/de/de-services/de-business-services/' => '/de/dienstleistungen/business/',
+			'/de/de-services/de-technical-services/' => '/de/dienstleistungen/technik/',
+			'/de/de-services/de-tailored-services/' => '/de/dienstleistungen/individuelle-programme/',
+			'/de/de-services/de-case-studies/' => '/de/dienstleistungen/beispiele/',
+			'/de/de-careers/de-internships-placements/' => '/de/karriere/praktika-werkstudenten/',
+			'/de/de-careers/de-graduates/' => '/de/karriere/traineeprogramm/',
+			'/de/de-careers/apprentices/' => '/de/karriere/ausbildung/',
+			'/de/de-culture/' => '/de/unternehmenskultur/',
+			'/de/de-our-people/' => '/de/unsere-mitarbeiter/',
+			'/de/de-social-hub/' => '/de/social-media/',
+			'/de/de-our-work/' => '/de/das-fdm-modell/',
+			'/de/de-clients/' => '/de/kunden/',
+			'/de/de-universities/' => '/de/universitaeten/',
+			'/de/de-awards/' => '/de/auszeichnungen/',
+			'/de/de-services/' => '/de/dienstleistungen/',
+			'/de/de-careers/' => '/de/karriere/',
+			'/de/de-investors/' => '/de/investoren/',
+			'/de/de-contact/' => '/de/kontakt/',
+			'/de/de-accessibility/' => '/de/zugaenglichkeit/',
+			'/de/de-press/' => '/de/presse/',
+		];
+		
+		$content = $post->post_content;
+		$total = 0;
+		
+		foreach( $updates as $old => $new ) {
+		
+			$old = trim( $old, '/' );
+			$new = trim( $new, '/' );
+			
+			while( strpos( $content, $old ) !== false ) {
+				$content = preg_replace_callback( '#(.{0,100})(' . preg_quote($old) . ')(.{0,100})#i', function( $matches ) use ( $new, &$total ) {
+					$outer_replace = $matches[1] . $new . $matches[3];
+					echo '<p>' . htmlspecialchars( $matches[1] ) . '<strong>' . htmlspecialchars( $matches[2] ) . '</strong>' . htmlspecialchars( $matches[3] ) . htmlspecialchars( ' --> ' . $outer_replace ) . '</p>';
+					$total++;
+					return $outer_replace;
+				}, $content, 1 );
+			}
+			
+			// same for links which are encoded
+			
+			$old = str_replace('/', '%2F', $old);
+			$new = str_replace('/', '%2F', $new);
+
+			while( strpos( $content, $old ) !== false ) {
+				$content = preg_replace_callback( '#(.{0,100})(' . preg_quote($old) . ')(.{0,100})#i', function( $matches ) use ( $new, &$total ) {
+					$outer_replace = $matches[1] . $new . $matches[3];
+					echo '<p>' . htmlspecialchars( $matches[1] ) . '<strong>' . htmlspecialchars( $matches[2] ) . '</strong>' . htmlspecialchars( $matches[3] ) . htmlspecialchars( ' --> ' . $outer_replace ) . '</p>';
+					$total++;
+					return $outer_replace;
+				}, $content, 1 );
+			}
+		
+		}
+
+		if ( $save && $total > 0 ) {
+			$result = wp_update_post( [ 'ID' => $post->ID, 'post_content' => $content ], true );
+			if ( is_wp_error( $result ) ) {
+				echo '<p style="color:red">Error: updating ' . $post->ID . ': ' . htmlspecialchars( implode( ', ', $result->get_error_messages() ) ) . '</p>';
+			} else {
+				echo '<p style="color:green">Updated ' . $post->ID . '</p>';
+			}
+		}
+		
+		$cta_change_count = 0;
+		$ctas = (array) get_field('fdm_hdr_call_to_actions', $post->ID);
+		foreach( $ctas as &$cta ) {
+			$new = @ $updates[$cta['link']];
+			if ( $new ) {
+				echo "<p>{$cta['link']} --- {$new}</p>";
+				$cta['link'] = $new;
+				$cta_change_count++;
+			}
+		}
+		if ( $cta_change_count > 0  ) {
+			print_r( $ctas );
+		}
+		if ( $save && $cta_change_count > 0 ) {
+			update_field( 'field_59db35e477729', $ctas, $post->ID );
+			echo '<p style="color:green">Updated ACF for ' . $post->ID . '</p>';
+		}
+	
+	}
+	
 	echo '<h1>Findings</h1>';
 	
 	while( $query->have_posts() ) {
@@ -104,6 +302,10 @@
 		//post_replace( $post, '/wp-content/uploads/2017/08/large-diverse-business-grou.mp4', '/wp-content/uploads/2017/10/home-header-10sec.mp4', false );
 		
 		//buttons_remove_titles( $post, false );
+		//carousel_remove_style( $post, false );
+		//carousel_slides_on_tab( $post, false );
+		//faq_remove_h3( $post, false );
+		//update_german_urls( $post, false );
 		
 		$findings = ob_get_clean();
 		

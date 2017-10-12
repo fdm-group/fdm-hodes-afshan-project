@@ -385,6 +385,19 @@ add_shortcode( 'fdm-cta', function( $atts, $content ) {
 
 } );
 
+
+function get_translated_permalink( $post_id, $lang = null ) {
+	// Get the translated post (as long as Polylang is installed)
+	$translated_post_id = false;
+	if ( function_exists('pll_get_post') && function_exists('pll_current_language') ) {
+		// if $lang is not set, assume current language
+		$translated_post_id = pll_get_post( $post_id, $lang ? : pll_current_language() );
+	}
+	// Return the permalink for the translated post
+	// Fall back to the permalink for the untranslated post if the post isn't translated
+	return get_permalink( $translated_post_id ? : $post_id );
+}
+
 // The design specifies a button in the left of the footer underneath the company logo which points to a language-specific page
 // There is no way of achieving this in VC, so we use a shortcode to provide a VC Button with a translated link (defaulting to English UK)
 // @param	$args	array	Arguments passed to shortcode. If 'post-id' defined, this should be the ID OF THE UK POST/PAGE.
@@ -393,11 +406,8 @@ add_shortcode( 'fdm-translated-button', function( $args ) {
 	// Get the post id to translate (default to current post)	
 	$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
 	
-	// Get the translated post (as long as Polylang is installed)
-	$translated_post_id = function_exists('pll_get_post') ? pll_get_post( $post_id ) : false;
-	
 	// Calculate link and label
-	$link = get_permalink( $translated_post_id ? : $post_id ) . ( isset( $args['hash'] ) ? '#' . $args['hash'] : '' );
+	$link = get_translated_permalink( $post_id ) . ( isset( $args['hash'] ) ? '#' . $args['hash'] : '' );
 	$label = isset($args['link_text']) ? $args['link_text'] : get_the_title( $translated_post_id );
 	$invert = isset( $args['invert'] ) ? (bool) $args['invert'] : false;
 
@@ -409,4 +419,4 @@ add_shortcode( 'fdm-translated-button', function( $args ) {
 });
 
 
-//include('include/dh-content-find-replace.php');
+// include('include/dh-content-find-replace.php');

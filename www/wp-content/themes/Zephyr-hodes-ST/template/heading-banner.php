@@ -1,5 +1,5 @@
 <!-- /template/header-banner.php -->
-<section style="background-image:url('<?= $background_image['url']; ?>')" class="fdm-header-banner">
+<section <?= $background_video ? "" : 'style="background-image:url(' . $background_image['url'] . ')"' ?> class="fdm-header-banner">
 	
 	<?php if( $background_video ) { ?>
 		<div class="background-video">
@@ -21,7 +21,9 @@
 			</a>
 		<?php } ?>
 
-		<h1 class="banner-heading"><?= $heading; ?></h1>
+		<?php if ( $heading ) { ?>
+			<h1 class="banner-heading"><?= $heading; ?></h1>
+		<?php } ?>
 
 		<?php if ( $call_to_actions ) {
 			
