@@ -1,6 +1,6 @@
 <!-- /template/header-banner.php -->
-<section <?= $background_video ? "" : 'style="background-image:url(' . $background_image['url'] . ')"' ?> class="fdm-header-banner">
-	
+<section <?= $background_video ? "" : 'style="background-image:url(' . $background_image['url'] . ')"' ?> class="fdm-header-banner"<?php if( $call_to_actions) { ?> data-num-ctas="<?= count( $call_to_actions ); ?>"<?php } ?>>
+
 	<?php if( $background_video ) { ?>
 		<div class="background-video">
 			<video data-mute="muted" loop="loop" preload="auto" autoplay="autoplay">
@@ -10,7 +10,7 @@
 	<?php } ?>
 
 	<div class="overlay">
-	
+
 		<?php if( $youtube_link ) { ?>
 			<a class="youtube-link popup-youtube" href="<?= $youtube_link; ?>">
 				<svg viewBox="0 0 100 100">
@@ -25,41 +25,45 @@
 			<h1 class="banner-heading"><?= $heading; ?></h1>
 		<?php } ?>
 
-		<?php if ( $call_to_actions ) {
-			
-			$n = count( $call_to_actions );
-			if ( $n > 3 ) {
-				// more than 3, split into 2 lines
-				$cta_rows = [
-					array_slice( $call_to_actions, 0, ceil( $n / 2 ) ),
-					array_slice( $call_to_actions, ceil( $n / 2 ) ),
-				];
-			} else {
-				// 3 or less, leave on a single row
-				$cta_rows = [
-					$call_to_actions,
-				];
-			}
-			
+	</div>
+
+	<?php if ( $call_to_actions ) {
+
+		$n = count( $call_to_actions );
+		if ( $n > 3 ) {
+			// more than 3, split into 2 lines
+			$cta_rows = [
+				array_slice( $call_to_actions, 0, ceil( $n / 2 ) ),
+				array_slice( $call_to_actions, ceil( $n / 2 ) ),
+			];
+		} else {
+			// 3 or less, leave on a single row
+			$cta_rows = [
+				$call_to_actions,
+			];
+		}
+
+		?>
+		<div class="call-to-actions">
+			<?php
 			foreach( $cta_rows as $cta_row ) {
 				?>
-				<div class="call-to-actions">
+				<div>
 					<?php foreach( $cta_row as $cta ) {
 						Hodes\FDM\fdm_output_button( $cta['link'], $cta['label'] );
 					} ?>
 				</div>
 			<?php } ?>
+		</div>
 
-		<?php } ?>
-		
-	</div>
+	<?php } ?>
 
 	<?php if ( $show_we_work_with_carousel ) { ?>
-	
+
 		<div class="client-carousel-heading"><?= $carousel_heading; ?></div>
-	
+
 	<?php } ?>
-	
+
 </section>
 
 <?php if ( $show_we_work_with_carousel ) { ?>
@@ -71,7 +75,7 @@
 					$clients = array_map( function( $c ) {
 						return '<span class="client-name carousel-part">' . $c['client'] . '</span>';
 					}, $clients_list );
-	
+
 					echo implode( '<span class="divider"></span>', $clients );
 				?>
 			</div>

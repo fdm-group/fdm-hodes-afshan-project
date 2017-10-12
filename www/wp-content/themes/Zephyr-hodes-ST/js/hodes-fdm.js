@@ -32,9 +32,6 @@ if (Array.prototype.indexOf === undefined) {Array.prototype.indexOf = function(e
 
 
 jQuery(function($){
-
-
-
 	/***** In page navigation pips *****/
 	(function(){
 

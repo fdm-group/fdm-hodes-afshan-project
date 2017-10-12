@@ -1,6 +1,6 @@
 # Put site-specific files to ignore here
 /www/wp-config.php
-database.sql
+database*.sql
 
 # Ignore log and session dirs, and all hidden files apart from .gitignore
 /log

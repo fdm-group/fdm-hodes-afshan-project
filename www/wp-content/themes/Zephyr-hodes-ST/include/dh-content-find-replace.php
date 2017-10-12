@@ -283,6 +283,84 @@
 		}
 	
 	}
+
+
+	function update_women_in_it_urls( $post, $save ) {
+		
+		// IMPORTANT - make sure the child pages come before the parent pages!
+		$updates = [
+			'/culture/women-in-it/' => '/culture/women-in-tech/',
+			'/en-us/us-women-in-it/' => '/en-us/us-women-in-tech/',
+			'/en-ca/ca-women-in-it/' => '/en-ca/ca-women-in-tech/',
+			'/en-sg/sg-culture/sg-women-in-it/' => '/en-sg/sg-culture/sg-women-in-tech/',
+			'/cn/cn-culture/cn-women-in-it/' => '/cn/cn-culture/cn-women-in-tech/',
+			'/en-hk/hk-culture/hk-women-in-it/' => '/en-hk/hk-culture/hk-women-in-tech/',
+		];
+		
+		$content = $post->post_content;
+		$total = 0;
+				
+		foreach( $updates as $old => $new ) {
+
+			$old = trim( $old, '/' );
+			$new = trim( $new, '/' );
+			
+			while( strpos( $content, $old ) !== false ) {
+				$content = preg_replace_callback( '#(.{0,100})(' . preg_quote($old) . ')(.{0,100})#i', function( $matches ) use ( $new, &$total ) {
+					$outer_replace = $matches[1] . $new . $matches[3];
+					echo '<p>' . htmlspecialchars( $matches[1] ) . '<strong>' . htmlspecialchars( $matches[2] ) . '</strong>' . htmlspecialchars( $matches[3] ) . htmlspecialchars( ' --> ' . $outer_replace ) . '</p>';
+					$total++;
+					return $outer_replace;
+				}, $content, 1 );
+			}
+			
+			// same for links which are encoded
+			
+			$old = str_replace('/', '%2F', $old);
+			$new = str_replace('/', '%2F', $new);
+
+			while( strpos( $content, $old ) !== false ) {
+				$content = preg_replace_callback( '#(.{0,100})(' . preg_quote($old) . ')(.{0,100})#i', function( $matches ) use ( $new, &$total ) {
+					$outer_replace = $matches[1] . $new . $matches[3];
+					echo '<p>' . htmlspecialchars( $matches[1] ) . '<strong>' . htmlspecialchars( $matches[2] ) . '</strong>' . htmlspecialchars( $matches[3] ) . htmlspecialchars( ' --> ' . $outer_replace ) . '</p>';
+					$total++;
+					return $outer_replace;
+				}, $content, 1 );
+			}
+		
+		}
+
+		if ( $save && $total > 0 ) {
+			$result = wp_update_post( [ 'ID' => $post->ID, 'post_content' => $content ], true );
+			if ( is_wp_error( $result ) ) {
+				echo '<p style="color:red">Error: updating ' . $post->ID . ': ' . htmlspecialchars( implode( ', ', $result->get_error_messages() ) ) . '</p>';
+			} else {
+				echo '<p style="color:green">Updated ' . $post->ID . '</p>';
+			}
+		}
+		
+		$cta_change_count = 0;
+		$ctas = (array) get_field('fdm_hdr_call_to_actions', $post->ID);
+		foreach( $ctas as &$cta ) {
+			$new = @ $updates[$cta['link']];
+			if ( $new ) {
+				echo "<p>{$cta['link']} --- {$new}</p>";
+				$cta['link'] = $new;
+				$cta_change_count++;
+			}
+		}
+		if ( $cta_change_count > 0  ) {
+			print_r( $ctas );
+		}
+		if ( $save && $cta_change_count > 0 ) {
+			update_field( 'field_59db35e477729', $ctas, $post->ID );
+			echo '<p style="color:green">Updated ACF for ' . $post->ID . '</p>';
+		}
+	
+	}
+
+
+
 	
 	echo '<h1>Findings</h1>';
 	
@@ -306,6 +384,7 @@
 		//carousel_slides_on_tab( $post, false );
 		//faq_remove_h3( $post, false );
 		//update_german_urls( $post, false );
+		//update_women_in_it_urls( $post, false );
 		
 		$findings = ob_get_clean();
 		

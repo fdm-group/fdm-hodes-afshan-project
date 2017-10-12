@@ -6,6 +6,7 @@ if ( ! defined( 'STAGING' ) ) {
 	wp_die( "Required constant is not set. Please edit the wordpress config wp-config.php and define the constant STAGING, true for staging sites, false for the live environment" );
 }
 
+
 // Register autoload function for finding classes in Hodes\FDM namespace
 spl_autoload_register( function( $class ) {
 	$parts = explode( '\\', $class );
@@ -82,6 +83,21 @@ if ( STAGING ) {
 	});
 }
 
+// Catch any 404 errors and see if they can be redirected
+add_action( 'template_redirect', function() {
+	if ( is_404() ){
+		include( 'include/redirects.php' );
+	}
+} );
+
+//use non minified version of core Zephyr script, with some modifications.
+add_action( 'wp_enqueue_scripts', function() {
+	global $us_template_directory_uri;
+	wp_deregister_script('us_core');
+	wp_register_script( 'us-core', $us_template_directory_uri . '/framework/js/us.core.js', array( 'jquery' ), US_THEMEVERSION, TRUE );
+	wp_enqueue_script( 'us-core' );
+});
+
 add_action( 'wp_enqueue_scripts', function() {
 
 	wp_enqueue_script( 'hodes-fdm', asset_url( 'js/hodes-fdm.js' ) , [ 'jquery' ] );
@@ -102,8 +118,7 @@ add_action( 'wp_head', function() {
 	$less_path = get_stylesheet_directory() . '/css/style.less';
 	$timestamp = filemtime( $css_path ) ?: 0;
 	
-	if ( true ) {
-	//if ( $timestamp < filemtime( $less_path ) ) {
+	if ( $timestamp < filemtime( $less_path ) ) {
 	
 		error_log( "Custom CSS file is out of date - recompiling from less file $less_path to $css_path" );	
 
@@ -387,15 +402,19 @@ add_shortcode( 'fdm-cta', function( $atts, $content ) {
 
 
 function get_translated_permalink( $post_id, $lang = null ) {
+	return get_permalink( get_translated_post_id( $post_id, $lang ) );
+}
+
+function get_translated_post_id( $post_id, $lang = null ) {
 	// Get the translated post (as long as Polylang is installed)
 	$translated_post_id = false;
 	if ( function_exists('pll_get_post') && function_exists('pll_current_language') ) {
 		// if $lang is not set, assume current language
 		$translated_post_id = pll_get_post( $post_id, $lang ? : pll_current_language() );
 	}
-	// Return the permalink for the translated post
-	// Fall back to the permalink for the untranslated post if the post isn't translated
-	return get_permalink( $translated_post_id ? : $post_id );
+	// Return the translated post id
+	// Fall back to theuntranslated post if the post isn't translated
+	return $translated_post_id ? $translated_post_id : $post_id;
 }
 
 // The design specifies a button in the left of the footer underneath the company logo which points to a language-specific page
@@ -403,11 +422,11 @@ function get_translated_permalink( $post_id, $lang = null ) {
 // @param	$args	array	Arguments passed to shortcode. If 'post-id' defined, this should be the ID OF THE UK POST/PAGE.
 add_shortcode( 'fdm-translated-button', function( $args ) {
 
-	// Get the post id to translate (default to current post)	
-	$post_id = isset( $args['post_id'] ) ? $args['post_id'] : get_the_ID();
+	// Get the translated post id (default to current post)	
+	$translated_post_id = get_translated_post_id( $args['post_id'] ?? get_the_ID() );
 	
 	// Calculate link and label
-	$link = get_translated_permalink( $post_id ) . ( isset( $args['hash'] ) ? '#' . $args['hash'] : '' );
+	$link = get_permalink( $translated_post_id ) . ( isset( $args['hash'] ) ? '#' . $args['hash'] : '' );
 	$label = isset($args['link_text']) ? $args['link_text'] : get_the_title( $translated_post_id );
 	$invert = isset( $args['invert'] ) ? (bool) $args['invert'] : false;
 
@@ -419,4 +438,4 @@ add_shortcode( 'fdm-translated-button', function( $args ) {
 });
 
 
-// include('include/dh-content-find-replace.php');
+include('include/dh-content-find-replace.php');

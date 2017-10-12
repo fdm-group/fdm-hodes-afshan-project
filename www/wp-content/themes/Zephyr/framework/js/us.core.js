@@ -2779,6 +2779,7 @@ jQuery(function($){
 					// Setting tabs active item
 					else {
 						if (index != this.active[0]) {
+							this.headerClicked = true;
 							this.openSection(index);
 						} else if ( this.curLayout == 'accordion' ) {
 							this.contents[index].css('display', 'block').slideUp(this.options.duration, this._events.contentChanged);
@@ -2805,22 +2806,34 @@ jQuery(function($){
 
 			// Starting everything
 			this.switchLayout(this.curLayout);
-			if (this.curLayout != 'accordion' || !this.isTogglable) {
-				this.openSection(this.active[0]);
-			}
 
-			setTimeout(this._events.resize, 50);
-			$us.$window.on('resize load', this._events.resize);
 
-			// Open tab on page load by hash
-			if (window.location.hash) {
-				var hash = window.location.hash.substr(1),
-					$linkedSection = this.$container.find('.w-tabs-section[id="' + hash + '"]');
-				if ($linkedSection.length && ( !$linkedSection.hasClass('active'))) {
-					var $header = $linkedSection.find('.w-tabs-section-header');
-					$header.click();
-				}
-			}
+			$us.$window.on('resize', this._events.resize);
+
+			$us.$document.on('ready', this._events.resize);
+
+			$us.$document.on('ready', function(){
+				setTimeout(this._events.resize, 50);
+				setTimeout(function(){
+					if (this.curLayout != 'accordion' || !this.isTogglable) {
+						this.openSection(this.active[0]);
+					}
+				}.bind(this), 100);
+
+				setTimeout(function(){
+				// Open tab on page load by hash
+					if (window.location.hash) {
+						var hash = window.location.hash.substr(1),
+							$linkedSection = this.$container.find('.w-tabs-section[id="' + hash + '"]');
+						if ($linkedSection.length && ( !$linkedSection.hasClass('active'))) {
+							var $header = $linkedSection.find('.w-tabs-section-header');
+							$header.click();
+						}
+					}
+				}.bind(this), 150);
+			}.bind(this));
+
+
 			// Support for external links to tabs
 			$.each(this.tabs, function(index){
 				if (this.headers[index].attr('href') != undefined) {
@@ -2883,18 +2896,16 @@ jQuery(function($){
 			else if (to == 'accordion') {
 				this.$container.addClass('accordion');
 				this.$contents.hide();
-				if (this.curLayout != 'accordion' && this.active[0] != this.definedActive[0]) {
+				if (this.curLayout != 'accordion' && this.active[0] != undefined && this.active[0] != this.definedActive[0]) {
 					this.tabs[this.active[0]].removeClass('active');
 					this.sections[this.active[0]].removeClass('active');
 					this.active[0] = this.definedActive[0];
-					if (this.active[0] != undefined) {
-						this.tabs[this.active[0]].addClass('active');
-						this.sections[this.active[0]].addClass('active');
-					}
 
 				}
 				for (var i = 0; i < this.active.length; i++) {
 					if (this.contents[this.active[i]] !== undefined) {
+						this.tabs[this.active[i]].addClass('active');
+						this.sections[this.active[i]].addClass('active');
 						this.contents[this.active[i]].show();
 					}
 				}
@@ -2972,12 +2983,13 @@ jQuery(function($){
 				}
 				this.contents[index].css('display', 'none').slideDown(this.options.duration, this._events.contentChanged);
 				// Scrolling to the opened section at small window dimensions
-				if (this.curLayout == 'accordion' && $us.canvas.winWidth < 768) {
+				if (this.curLayout == 'accordion' && $us.canvas.winWidth < 768 && this.headerClicked == true) {
 					var newTop = this.headers[0].offset().top;
 					for (var i = 0; i < index; i++) {
 						newTop += this.headers[i].outerHeight();
 					}
 					$us.scroll.scrollTo(newTop, true);
+					this.headerClicked = false;
 				}
 			}
 			this._events.contentChanged();
@@ -3019,7 +3031,7 @@ jQuery(function($){
 
 			// Basic layout may be overriden
 			if (this.responsive) {
-				if (this.basicLayout == 'ver' && this.curLayout != 'ver') this.switchLayout('ver');
+				// if (this.basicLayout == 'ver' && this.curLayout != 'ver') this.switchLayout('ver');
 				if (this.curLayout != 'accordion') this.measure();
 				var nextLayout = (this.width < this.minWidth) ? 'accordion' : this.basicLayout;
 				if (nextLayout !== this.curLayout) this.switchLayout(nextLayout);
@@ -3036,8 +3048,6 @@ jQuery(function($){
 					var height = this.sections[this.active[0]].height();
 					this.$sectionsWrapper.css('height', height);
 				}
-			} else if (this.curLayout == 'ver') {
-				var sectionsWrapperWidth = this.$sectionsWrapper.width();
 			}
 			this._events.contentChanged();
 		}
@@ -3050,6 +3060,7 @@ jQuery(function($){
 		});
 	};
 }(jQuery);
+
 
 
 /**

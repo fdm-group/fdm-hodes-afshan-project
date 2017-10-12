@@ -20,14 +20,14 @@ function ip_matches( $ip, $acl ) {
 	// End user's IP address as an integer
 	$ip_long = ip2long( $ip );
 	if ( $ip_long === false ) {
-		throw new Exception("Malformed ip address $ip");
+		throw new \Exception("Malformed ip address $ip");
 	}
 	
 	foreach ( $acl as $entry ) {
 	
 		// check entries are valid first
 		if ( ! preg_match( '/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$/', $entry ) ) {
-			throw new Exception( "Malformed entry in access list $entry" );
+			throw new \Exception( "Malformed entry in access list $entry" );
 		}
 	
 		// separate subnet address and mask bits
