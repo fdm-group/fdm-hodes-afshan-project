@@ -372,6 +372,8 @@
 		ob_start();
 		
 		//post_find( $post, 'hodes' );
+		//post_replace( $post, 'https://fdm-staging.hodes.co.uk/', '/', false );
+		//post_replace( $post, 'https%3A%2F%2Ffdm-staging.hodes.co.uk%2F', '%2F', false );
 		
 		//post_find( $post, 'findly' );
 		//post_replace( $post, 'https%3A%2F%2Fcdn-static.findly.com%2Fwp-content%2Fuploads%2Fsites%2F404%2F', '%2Fwp-content%2Fuploads%2F', false );
@@ -384,7 +386,7 @@
 		//carousel_slides_on_tab( $post, false );
 		//faq_remove_h3( $post, false );
 		//update_german_urls( $post, false );
-		//update_women_in_it_urls( $post, false );
+		//update_women_in_it_urls( $post, false );		
 		
 		$findings = ob_get_clean();
 		

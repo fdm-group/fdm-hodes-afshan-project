@@ -248,6 +248,9 @@ jQuery(function($){
 				} else {
 					$(this).removeClass('current').data('contents').hide();
 				}
+				if ( $(window).width() < 900 ) {
+					$('html, body').scrollTop( $subSection.data('contents').offset().top - 10 );					
+				}
 			});
 		};
 

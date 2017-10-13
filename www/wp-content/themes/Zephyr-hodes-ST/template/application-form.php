@@ -864,11 +864,11 @@
 						<label data-region="DE">Sind Sie deutschlandweit geographisch flexibel<span class="apply-form__required">*</span></label>
 					</div>
 					<div class="radio-group-horizontal">
-						<label>
+						<label data-region="DE">
 							<input id="selection-form__geoflex-commit" type="radio" value="yes" name="GeographicalFlexibility" data-validation="required" data-validation-error-msg-container="#selection-form__geoflex-commit-err"/>
 							<span>Ja</span>
 						</label>
-						<label>
+						<label data-region="DE">
 							<input id="selection-form__geoflex-commit" type="radio" value="no" name="GeographicalFlexibility"/>
 							<span>Nein</span>
 						</label>
@@ -1843,16 +1843,21 @@
 				</div>
 				
 				<p data-region="DE">Laden Sie bitte Ihre vollständigen Bewerbungsunterlagen in einer pdf-Datei hoch inkl. Anschreiben, Lebenslauf und Zeugnisse (max. 5 MB)*</p>
-				
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="UK Australia Canada China Singapore HK SA Ireland USA">
+
+				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="DE UK Australia Canada China Singapore HK SA Ireland USA">
 					<div>
 						<label class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="UK Canada China Singapore HK SA Ireland USA">I have read and accept the <a href="<?= Hodes\FDM\get_translated_permalink(1966) ?>">Terms and Conditions</a> of use, <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>">Privacy Policy</a> and consent to receiving information from FDM Group in relation to this request. FDM values the privacy of your personal details and we will not share or otherwise distribute your Personal Data to third parties except as provided in this Privacy Policy.</label>
 						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" for="selection-form__gdpr">I have read and accept the <a href="<?= Hodes\FDM\get_translated_permalink(1966) ?>">Terms and Conditions</a> of use, <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>">Privacy Policy</a> and consent to receiving information from FDM Group in relation to this request. FDM agrees to treat private information disclosed by you through your use of the Site in accordance with the Data Protection Act 1998 (UK) or equivalent legislation in the jurisdiction in which you applied.</label>
+						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="DE" for="selection-form__gdpr-de">Ich habe die <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>">Nutzungsbedingungen</a> und <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>">Datenschutzrichtlinie</a> gelesen bin damit einverstanden, dass ich im Hinblick auf diese Anfrage Informationen der FDM Group erhalte. FDM legt großen Wert auf den Schutz Ihrer persönlichen Angaben und wir werden Ihre personenbezogenen Daten nicht an Dritte weitergeben oder anderweitig verbreiten, es sei denn, wie in der Datenschutzrichtlinie vorgesehen.</label>
 					</div>
 					<div class="single-checkbox">
 						<label>
 							<input id="selection-form__gdpr" type="checkbox" value="yes" name="GDPRConsent"/>
 							<span>Yes</span>
+						</label>
+						<label data-region="DE">
+							<input id="selection-form__gdpr-de" type="checkbox" value="yes" name="GDPRConsent"/>
+							<span>Ja</span>
 						</label>
 					</div>
 				</div>

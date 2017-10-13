@@ -99,7 +99,8 @@ class BlogListing extends VCComponent {
 			if ( $category->slug == 'uncategorized' ) {
 				continue; // don't show uncategorized
 			}
-			$translated_category_id = pll_get_term( $category->term_id, 'slug' );
+			
+			$translated_category_id = pll_get_term( $category->term_id );
 			$translated_category = $translated_category_id ? get_term( $translated_category_id ) : false;
 			$categories[ $category->slug ] = $translated_category ? $translated_category->name : $category->name;
 		}

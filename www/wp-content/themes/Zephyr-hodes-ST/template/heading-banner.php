@@ -1,7 +1,8 @@
 <!-- /template/header-banner.php -->
-<section <?= $background_video ? "" : 'style="background-image:url(' . $background_image['url'] . ')"' ?> class="fdm-header-banner"<?php if( $call_to_actions) { ?> data-num-ctas="<?= count( $call_to_actions ); ?>"<?php } ?>>
+<?php $show_video = ( $background_video && ! Hodes\FDM\get_mobile_detect()->isMobile() ); ?>
+<section <?= $show_video ? "" : 'style="background-image:url(' . $background_image['url'] . ')"' ?> class="fdm-header-banner"<?php if( $call_to_actions) { ?> data-num-ctas="<?= count( $call_to_actions ); ?>"<?php } ?>>
 
-	<?php if( $background_video ) { ?>
+	<?php if( $show_video ) { ?>
 		<div class="background-video">
 			<video data-mute="muted" loop="loop" preload="auto" autoplay="autoplay">
 				<source type="video/mp4" src="<?= $background_video['url']; ?>">

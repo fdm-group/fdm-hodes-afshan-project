@@ -31,6 +31,11 @@ h2 {  color:@blue !Important; }
 .ult-carousel-wrapper button.circle-bg {background: rgb(255, 255, 255) !important;}
 .ult-carousel-wrapper button.circle-bg:hover {background: rgb(210, 210, 210) !important;}
 .ult-carousel-wrapper button.circle-bg:hover i {color:#fff;}
+.ult-carousel-wrapper {
+	@media screen and (max-width: 800px) {
+		padding-bottom: 60px;
+	}
+}
 
 @media screen and (max-width: 600px) {
 	.g-cols.type_boxes>div>.vc_column-inner {
@@ -421,7 +426,7 @@ ul li { margin: 0 0 0.2rem; }
 	    float: left;
 	    margin-left: 1%;
 	    margin-right: 1%;
-	    
+
 		&:hover {
 			z-index: 2;
 			transform: scale(1.1);
@@ -739,14 +744,55 @@ ul li { margin: 0 0 0.2rem; }
    /**Boxes **/
 
 #home-careers .careers-inner {width: 85%; margin: 0 auto;}
-.carbox-hover {z-index: 1; font-size:16px; line-height:20px; padding: 60px 50px; background-color:#fff; display:inline-block; border:0; width:300px; height:350px; position: relative; -webkit-transition: all 200ms ease-in; -webkit-transform: scale(1); -ms-transition: all 200ms ease-in; -ms-transform: scale(1); -moz-transition: all 200ms ease-in; -moz-transform: scale(1); transition: all 200ms ease-in; transform: scale(1); border-radius:3px;}
-.carbox-hover:hover {z-index: 2; color:#fff; padding: 45px 50px; z-index: 2; -webkit-transition: all 200ms ease-in; -webkit-transform: scale(1.1); -ms-transition: all 200ms ease-in; -ms-transform: scale(1.1); -moz-transition: all 200ms ease-in; -moz-transform: scale(1.1); transition: all 200ms ease-in; transform: scale(1.1); background-color:#000; border-bottom:4px solid @blue; border-radius:3px;}
-.carbox-hover h3 {font-weight:300; font-size:40px; line-height:40px;}
-.carbox-hover:hover h3 {color:#fff;}
+
+.carbox-hover {
+	z-index: 1;
+	font-size:16px;
+	line-height:20px;
+	padding: 60px 40px;
+	background-color:#fff;
+	display:inline-block;
+	border-bottom:4px solid transparent;
+	width:300px;
+	max-width: 100%;
+	height:350px;
+	position: relative;
+	transition: all 200ms ease-in;
+	transform: scale(1);
+	border-radius:3px;
+	@media (max-width: 1200px) {
+		padding: 50px 15px;
+	}
+	@media (max-width: 500px) {
+		padding: 30px 10px;
+	}
+	h3 {
+		font-weight:300;
+		font-size:40px;
+		line-height:40px;
+		@media (max-width: 1200px) {
+			font-size: 30px;
+		}
+	}
+	&:hover {
+		z-index: 2;
+		color:#fff;
+		transform: scale(1.1);
+		background-color:#000;
+		border-color: @blue;
+		h3 {
+			color:#fff;
+		}
+		.c-btn-hs {
+			display:block;
+		}
+	}
+
+}
+
 .c-line-hs {width:50px; clear:both; margin: 0 auto;}
 .homecarslide .carbox-hover:hover .c-line-hs {display:none;}
 .c-btn-hs {display:none; width:100%; clear:both; text-align:center;}
-.carbox-hover:hover .c-btn-hs {display:block;}
 #home-careers .slick-active i { color: #333333 !important;}
 
 /** Home-People **/
@@ -766,16 +812,32 @@ ul li { margin: 0 0 0.2rem; }
 .peop-slide-tbl {display: table; width: 100%;}
 .peop-slide-tbl-body {display: table-row-group;}
 .peop-slide-tbl-row {display: table-row;}
-.peop-slide-tbl-cell {display: table-cell; padding:15px;}
+.peop-slide-tbl-cell {padding:15px;}
+
+
   /** Slider item roll **/
 .people-cont {margin: 0 auto; max-width: 260px;}
 .hp-caption {position: relative; overflow: hidden; -webkit-transform: translateZ(0); transform: translateZ(0);}
 .hp-caption img {border-radius:3px;}
 .hp-caption-media {display: block; min-width: 100%; max-width: 100%; height: auto;}
 .hp-caption-overlay {position: absolute; right: 0; bottom: 0; left: 0; padding: 10px; color: white; -webkit-transform: translateY(100%); transform: translateY(100%); transition: -webkit-transform .35s ease-out; transition: transform .35s ease-out;}
-.hp-caption:hover .hp-caption-overlay {-webkit-transform: translateY(0); transform: translateY(0); background: rgba(0, 0, 0, .6);  margin:10px 10px; border-radius:3px;}
 .hp-caption-overlay-content {color:#fff; font-size:13px; width:100%; margin: 0 auto; line-height:18px; text-align:center;}
 .hp-caption-overlay-content h4 {font-size:14px; font-weight:bold; color:#fff; margin-bottom:8px;}
+
+@media all and (min-width:801px) {
+	.hp-caption:hover .hp-caption-overlay {-webkit-transform: translateY(0); transform: translateY(0); background: rgba(0, 0, 0, .6);  margin:10px 10px; border-radius:3px;}
+}
+
+@media all and (max-width:800px) {
+	.hp-caption-overlay {
+		position:relative;
+		transform:translateY(0);
+
+		&, .hp-caption-overlay-content, h4 {
+			color:#333;
+		}
+	}
+}
 /*.hp-caption:hover .hp-caption-overlay-content {position: absolute; top: 50%; left:0; -webkit-transform: translateY(-50%); transform: translateY(-50%);}*/
 
 /** Home-Blog **/
@@ -962,8 +1024,34 @@ ul li { margin: 0 0 0.2rem; }
 .juicer-feed.slider li.feed-item:not(.words) + li.feed-item.words:before {content: '';width: 1px;height: 100%;background-color: white;position: absolute;display: block;top: 0;left: 0;}
 .juicer-feed.image-grid .feed-item{border-right:white solid 1px; border-bottom:white solid 1px;}
 /* Color Block Carousel */
-.car-blk-col .cbc-blks {width:50%; float:left; vertical-align:middle; height: 250px;}
-.car-blk-col .cbc-blks div {padding: 30px 60px; text-align:center; font-size:24px; line-height:30px; border-radius: 3px;}
+.car-blk-col .cbc-blks {
+	width:50%;
+	height:250px;
+	float:left;
+	vertical-align:middle;
+
+	@media all and (min-width:1000px) {
+		height:320px;
+	}
+
+	@media all and (min-width:1200px) {
+		height:400px;
+	}
+
+	div {
+		position:relative;
+		padding: 30px 60px;
+		text-align:center;
+		font-size:24px;
+		line-height:30px;
+		border-radius: 3px;
+
+		@media all and (min-width:601px) {
+			top:50%;
+			transform:translateY(-50%);
+		}
+	}
+}
 .car-blk-col .bkline-bl {background-image: url(https://cdn-static.findly.com/wp-content/uploads/sites/404/2017/08/blu.gif); background-repeat: no-repeat; background-position: 50% 90%; background-size: 50px 4px;}
 .car-blk-col .bkline-wt {background-image: url(https://cdn-static.findly.com/wp-content/uploads/sites/404/2017/08/white.gif); background-repeat: no-repeat; background-position: 50% 90%; background-size: 50px 4px;}
 .car-blk-col .cbc-lgry {background-color: #E4E4E4; color:#000; }
@@ -1065,10 +1153,6 @@ span.blue-line {  border-bottom: 4px solid @blue;}
 		float: left;
 		.mpc-button__title {
 			text-transform: uppercase;
-		}
-
-		.w-separator {
-			display:none;
 		}
 	}
 	.fdm-investors-header-info {
@@ -1779,7 +1863,7 @@ a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5
 	    line-height: 1;
 	    color: rgb(150,150,150);
 	}
-	
+
 	.apply-form__val-msg {
 		&:before {
 		    content: "";
@@ -1791,7 +1875,7 @@ a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5
 		&.has-error:before {
 		    background: url(../img/form-cross.svg) no-repeat;
 		}
-	
+
 		&.has-success:before {
 		    background: url(../img/form-tick.svg) no-repeat;
 		}
@@ -1800,7 +1884,7 @@ a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5
 			color: red;
 		}
 	}
-	
+
 
 
 	.apply-form--checkboxes label, .apply-form--checkboxes input {
@@ -2119,7 +2203,7 @@ html{
 		}
 	}
 	@media screen and (max-width: 600px){
-		width:100%;	
+		width:100%;
 		height:auto;
 	}
 }
@@ -2164,7 +2248,7 @@ html{
 		}
 		label,input[type=radio]{display:inline-block;}
 		p{height:auto;}
-	} 
+	}
 }
 
 .overflow-table{
@@ -2178,5 +2262,3 @@ html{
 		}
 	}
 }
-
-

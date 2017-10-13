@@ -52,6 +52,16 @@ add_action( 'lost_password', function() {
 
 });
 
+add_filter( 'cn_cookie_notice_args', function($args) {
+
+	// Override the cookie message with our own translated version
+	$args['message_text'] = __( 'We use cookies to ensure that we give you the best experience on our website. If you continue to use this site we will assume that you are happy with it.', 'fdm' );
+	$args['accept_text'] = __( 'Ok', 'fdm' );
+
+	return $args;
+
+} );
+
 // Implement ip whitelist for login/admin pages
 include( 'include/ip-whitelist.php' );
 
@@ -342,6 +352,15 @@ function hodes_get_translated_menu_id( $location ) {
 
 }
 
+function get_mobile_detect() {
+	static $detect;
+	if ( ! $detect ) {
+		require_once( 'include/Mobile_Detect.php' );
+		$detect = new \Mobile_Detect();
+	}
+	return $detect;
+}
+
 
 // We need to resolve a conflict here between Ubermenu and Polylang
 // Both of them try to 'take over' the menus, so we create a new shortcode which will merge the functionality of both
@@ -438,4 +457,4 @@ add_shortcode( 'fdm-translated-button', function( $args ) {
 });
 
 
-include('include/dh-content-find-replace.php');
+//include('include/dh-content-find-replace.php');
