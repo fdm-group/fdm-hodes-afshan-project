@@ -164,7 +164,6 @@ $redirects = [
 	'de/it-services/production-support'=>'/de/dienstleistungen/technik/',
 	'de/it-services/murex-support'=>'/de/dienstleistungen/technik/',
 	'de/it-services/fallstudien'=>'/de/dienstleistungen/beispiele/',
-	'de/karriere'=>'/de/karriere/',
 	'de/karriere/das-fdm-traineeprogramm'=>'/de/karriere/traineeprogramm/',
 	'de/karriere/das-fdm-traineeprogramm/software-entwicklung'=>'/de/karriere/traineeprogramm/',
 	'de/karriere/das-fdm-traineeprogramm/business-analyse'=>'/de/karriere/traineeprogramm/',
@@ -180,7 +179,6 @@ $redirects = [
 	'de/karriere/tipps-zur-bewerbung'=>'/de/karriere/',
 	'de/karriere/faqs'=>'/de/de-faqs/',
 	'de/karriere/offene-stellen'=>'/de/karriere/',
-	'de/kontakt'=>'/de/kontakt/',
 	'de/blog'=>'/de/de-blog/',
 	'de/bewerben'=>'/de/karriere/praktika-werkstudenten/',
 	

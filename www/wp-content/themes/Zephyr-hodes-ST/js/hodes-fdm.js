@@ -103,7 +103,7 @@ jQuery(function($){
 				contentType: "application/json; charset=UTF-8",
 				data: JSON.stringify(dataObj),
 				processData: false,
-				url: "https://fdmsaldev-fdmgroup.cs88.force.com/apply/services/apexrest/EnquiryService"
+				url: "https://applications.fdmgroup.com/services/apexrest/EnquiryService"
 			}).done(function(){
 				$form.fadeOut(400, function(){
 					$thanks.fadeIn(400);
@@ -121,10 +121,14 @@ jQuery(function($){
 
 
 	/***** Header Logo *****/
-	$('a.fdm-header-logo').attr('href', window.fdmTranslatedHomeLink ? window.fdmTranslatedHomeLink : '/');
-	$('img[data-anim-src]').each(function(){
-		$(this).attr('src', $(this).attr('data-anim-src'));
-	});
+	$('a.fdm-header-logo').each( function() {
+		// Make it a link to the homepage for the current language (variabled fdmTranslatedHomeLink set server side)
+		$(this).attr('href', window.fdmTranslatedHomeLink ? window.fdmTranslatedHomeLink : '/');
+		var $logo = $(this).children('img');
+		// For some reason, the logo wasn't animating in IE11 for some people in the FDM office, so use static image for IE, and animation otherwise
+		var isInternetExplorer = ( navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > 0 );
+		$logo.attr( 'src', isInternetExplorer ? $logo.attr('data-static-src') : $logo.attr('data-anim-src') );
+	} );
 
 
 	/**** Posts Listing (blog) *****/
@@ -438,7 +442,7 @@ jQuery(function($){
 				mapTypeControl: false,
 				minZoom: 1,
 				maxZoom: 10,
-				draggable: $('html').is('.no-touch')
+				draggable: true,
 			};
 
 			// create the google map object

@@ -93,11 +93,9 @@ if ( STAGING ) {
 	});
 }
 
-// Catch any 404 errors and see if they can be redirected
-add_action( 'template_redirect', function() {
-	if ( is_404() ){
-		include( 'include/redirects.php' );
-	}
+// Implement our redirects
+add_action( 'init', function() {
+	include( 'include/redirects.php' );
 } );
 
 //use non minified version of core Zephyr script, with some modifications.
@@ -106,8 +104,9 @@ add_action( 'wp_enqueue_scripts', function() {
 	wp_deregister_script('us_core');
 	wp_register_script( 'us-core', $us_template_directory_uri . '/framework/js/us.core.js', array( 'jquery' ), US_THEMEVERSION, TRUE );
 	wp_enqueue_script( 'us-core' );
-});
+} );
 
+// Add our custom js, and the investis responsive frame script
 add_action( 'wp_enqueue_scripts', function() {
 
 	wp_enqueue_script( 'hodes-fdm', asset_url( 'js/hodes-fdm.js' ) , [ 'jquery' ] );
@@ -115,6 +114,10 @@ add_action( 'wp_enqueue_scripts', function() {
 
 } );
 
+// Stop mobile being resizable (so you can use touch for other functionality)
+add_filter( 'us_meta_viewport', function( $meta ) {
+	return 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+} );
 
 // define footer menu
 add_action( 'after_setup_theme', function() {
@@ -457,4 +460,4 @@ add_shortcode( 'fdm-translated-button', function( $args ) {
 });
 
 
-//include('include/dh-content-find-replace.php');
+include('include/dh-content-find-replace.php');

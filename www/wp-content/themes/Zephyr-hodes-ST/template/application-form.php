@@ -1,3 +1,5 @@
+
+
 <style>
 	.sk-circle {
 	display: none;
@@ -822,8 +824,7 @@
 							<option data-region="DE" value="Business Intelligence">Business Intelligence</option>
 							<option data-region="DE" value="Financial Application Management">Financial Application Management</option>
 							<option data-region="DE" value="IT Service Management">IT Service Management</option>
-							<option data-region="DE" value="Projekt Management">Projekt Management</option>
-							<option data-region="DE" value="o	Projekt Management / Business Analyse">o	Projekt Management / Business Analyse</option>
+							<option data-region="DE" value="Projekt Management / Business Analyse">Projekt Management / Business Analyse</option>
 							<option data-region="DE" value="Software Entwicklung">Software Entwicklung</option>
 							<option data-region="DE" value="Software Testing">Software Testing</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="UK China Ireland" value="Business">Business</option>
@@ -864,12 +865,12 @@
 						<label data-region="DE">Sind Sie deutschlandweit geographisch flexibel<span class="apply-form__required">*</span></label>
 					</div>
 					<div class="radio-group-horizontal">
-						<label data-region="DE">
-							<input id="selection-form__geoflex-commit" type="radio" value="yes" name="GeographicalFlexibility" data-validation="required" data-validation-error-msg-container="#selection-form__geoflex-commit-err"/>
+						<label  data-region="DE">
+							<input type="radio" value="yes" name="GeographicalFlexibility" data-validation="required" data-validation-error-msg-container="#selection-form__geoflex-commit-err"/>
 							<span>Ja</span>
 						</label>
-						<label data-region="DE">
-							<input id="selection-form__geoflex-commit" type="radio" value="no" name="GeographicalFlexibility"/>
+						<label  data-region="DE">
+							<input type="radio" value="no" name="GeographicalFlexibility"/>
 							<span>Nein</span>
 						</label>
 					</div>
@@ -1843,7 +1844,7 @@
 				</div>
 				
 				<p data-region="DE">Laden Sie bitte Ihre vollständigen Bewerbungsunterlagen in einer pdf-Datei hoch inkl. Anschreiben, Lebenslauf und Zeugnisse (max. 5 MB)*</p>
-
+				
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="DE UK Australia Canada China Singapore HK SA Ireland USA">
 					<div>
 						<label class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="UK Canada China Singapore HK SA Ireland USA">I have read and accept the <a href="<?= Hodes\FDM\get_translated_permalink(1966) ?>">Terms and Conditions</a> of use, <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>">Privacy Policy</a> and consent to receiving information from FDM Group in relation to this request. FDM values the privacy of your personal details and we will not share or otherwise distribute your Personal Data to third parties except as provided in this Privacy Policy.</label>
@@ -1926,7 +1927,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 </div>
 
-<script type="text/javascript">jQuery(function($){
+<script type="text/javascript">
+    jQuery(function($){
 	
 	var validationConfigs = {
 		modules : 'location, date, security, file',
@@ -1937,6 +1939,42 @@
 	};
 	
 	$.validate(validationConfigs);
+    
+    $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+            attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+            return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+    };
+        
+    jQuery.fn.toggleDisplay = function( show ) {
+        
+        jQuery( this ).each(function(){
+        
+            if( show ) {
+                if( jQuery( this ).is("hidden") ){
+                    jQuery( this ).changeElementType( "option" );
+                    jQuery( this ).show();
+                } else {
+                    jQuery( this ).show();
+                }
+            } else {
+                if( jQuery( this ).is("option") ){
+                    jQuery( this ).changeElementType( "hidden" );
+                    jQuery( this ).hide();
+                } else {
+                    jQuery( this ).hide();
+                }
+            }
+        });
+    };
+        
+    
 	
 			
 	function objectifyForm(formArray) {//serialize data function
@@ -1979,7 +2017,7 @@
 				contentType: "application/json; charset=UTF-8",
 				data: JSON.stringify(cv),
 				processData: false,
-				url: "https://fdmsaldev-fdmgroup.cs89.force.com/apply/services/apexrest/CVService"
+				url: "https://applications.fdmgroup.com/services/apexrest/CVService"
 			}).fail(function(jqXHR, textStatus) {
 				return false;
 			});
@@ -2061,9 +2099,8 @@
 		};
 
 		$(".js-next-btn").click(function(){
-		
 			var rawPathway = $('input[type=radio][name=RecruitmentType]:checked' ).val();
-						
+			
 			switch(rawPathway){
 				case "Graduate":
 					pathway = "graduate";
@@ -2077,18 +2114,19 @@
 				default:
 					return false;
 			}
-						
+			
 			region = $('select[name="ApplyingTo"]').val();
-						
+			
 			region = region == "Hong Kong" ? "HK" : region;
 			region = region == "South Africa" ? "SA" : region;
 			region = region == "Deutschland" ? "DE" : region;
-						
-			$('.js-specific-field').hide();
-			$('.js-specific-field[data-pathway~="' + pathway + '"]').show();
-			$('.js-specific-field[data-pathway~="' + pathway + '"]').filter('.js-specific-field:not([data-region~="' + region + '"])').hide();
-			
-			
+			            
+            
+			$('.js-specific-field').toggleDisplay(false);
+			$('.js-specific-field[data-pathway~="' + pathway + '"]').toggleDisplay(true);
+			$('.js-specific-field[data-pathway~="' + pathway + '"]').filter('.js-specific-field:not([data-region~="' + region + '"])').toggleDisplay(false);
+            
+            			
 			var $form = $('.js-form[data-section="' + currentSection + '"]');
 
 			if ($form != undefined){
@@ -2201,7 +2239,7 @@
 					'Content-Type': 'application/json' 
 				},
 				data: JSON.stringify(formJson),
-				url: "https://fdmsaldev-fdmgroup.cs89.force.com/apply/services/apexrest/ApplicationService",
+				url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService",
 				success: function(responseData, textStatus, jqXHR) {
 					var value = responseData;
 					if(uploadCv(value)){
@@ -2235,6 +2273,8 @@
 	}else{
 		$(".js-default-select").html("Please select one");
 	}
+        
+    $('option[data-region~="DE"]').toggleDisplay(false);
 		
 	switch(region) {
 				case "UK":
@@ -2421,6 +2461,8 @@
 					$('label:not([data-region~="' + region + '"])').hide();
 			
 					$('*[data-region~="DE"]').show();
+            
+                    $('select *[data-region~="DE"]').toggleDisplay(true);
 			
 					validationConfigs.lang = "de";
 					$.validate(validationConfigs);
