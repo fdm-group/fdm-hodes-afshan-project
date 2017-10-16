@@ -133,7 +133,7 @@
 </style>
 
 <div class="fdm-application-form-component" data-default-region="<?= $default_region ?>">
-	<div class="js-wrapper">
+	<div class="js-wrapper js-hidden">
 		<header>
 		
 			<ul class="progress-bar" data-region="ENG">
@@ -2473,7 +2473,7 @@
 		
 		// set a data attribute indicating the number of boxes visible - this is used in styling
 		var $ptb = $('.program-type-boxes');
-		$ptb.attr('data-num-visible', $ptb.children(':visible').length );
+		$ptb.attr('data-num-visible', $ptb.children(':not(.js-hidden)').length );
 		
 	}
 
