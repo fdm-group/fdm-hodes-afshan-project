@@ -249,59 +249,6 @@ add_filter( 'pll_ajax_posts_not_translated_args', function( $args ) {
 } );
 
 
-// Add Tribe Event Namespace
-
-function events_rss2_namespace() {
-    echo 'xmlns:ev="http://purl.org/rss/2.0/modules/event/"'."\n";
-}
- 
-// Add Event Dates to RSS Feed
-add_action('rss_item','tribe_rss_feed_add_eventdate');
-add_action('rss2_item','tribe_rss_feed_add_eventdate');
-add_action('commentsrss2_item','tribe_rss_feed_add_eventdate');
- 
-function tribe_rss_feed_add_eventdate() {
-  if ( ! tribe_is_event() ) return;
-  ?>
-  <ev:tribe_event_meta xmlns:ev="Event">
-  <?php if (tribe_get_start_date() !== tribe_get_end_date() ) { ?>
- 
-    <ev:startdate><?php echo tribe_get_start_date($post, false, 'M-d-Y h:i:s ') ; ?></ev:startdate>
-    <ev:enddate><?php echo tribe_get_end_date($post, false, 'M-d-Y h:i:s '); ?></ev:enddate>
- 
-  <?php } else { ?>
- 
-    <ev:startdate><?php echo tribe_get_start_date($post, false, 'M-d-Y h:i:s ') ; ?></ev:startdate>
- 
-  <?php } ?>
-  </ev:tribe_event_meta>
- 
-<?php }
-
-add_action( 'wp_enqueue_scripts', 'register_smiles', 14 );
-function register_smiles() {
-	wp_dequeue_script( 'bsf-Defaults' );
-	wp_enqueue_style( 'bsf-Defaults', str_replace( array(
-			'http:',
-			''
-		), '', content_url() ) . '/uploads/smile_fonts/Defaults/Defaults.css' );
-}
-
-add_shortcode('cws_breadcrumb', 'cws_add_zephyr_breadcrumbs');
-function cws_add_zephyr_breadcrumbs(){
-	// Shortcodes expect to return a string, their function prints it
-	$output = '';
-	ob_start();
-	us_breadcrumbs();
-	$output .= ob_get_clean();
-
-	return $output;
-}
-
-
-
-
-
 
 add_shortcode( 'fdm-location-selector', function() {
 
@@ -460,4 +407,4 @@ add_shortcode( 'fdm-translated-button', function( $args ) {
 });
 
 
-include('include/dh-content-find-replace.php');
+//include('include/dh-content-find-replace.php');

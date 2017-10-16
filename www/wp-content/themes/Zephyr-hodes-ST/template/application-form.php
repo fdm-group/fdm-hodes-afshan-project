@@ -133,7 +133,7 @@
 </style>
 
 <div class="fdm-application-form-component" data-default-region="<?= $default_region ?>">
-	<div class="help--hide js-wrapper">
+	<div class="js-wrapper">
 		<header>
 		
 			<ul class="progress-bar" data-region="ENG">
@@ -184,7 +184,7 @@
 		</header>
 
 	<!-- ####### Select a Programme ####### -->
-		<section class="[ js-section ]	[ -help--hide ]" data-section="0">
+		<section class="[ js-section ]" data-section="0">
 			<h1>
 				<span data-region="ENG-GB  ENG-HK  ENG-SGP">Select a Programme</span>
 				<span data-region="ENG-CA">FDM Careers Program</span>
@@ -211,7 +211,7 @@
 					<span data-region="ENG-GB ENG-HK ENG-SGP ENG-CN ENG-IRL ENG-ZAF">Please select the programme you would like to apply for<span class="apply-form__required">*</span></span>
 					<span data-region="ENG-USA ENG-CA">Please select the program you would like to apply for<span class="apply-form__required">*</span></span>
 				</label>
-				<label class="help--hide" data-region="DE">Bewerben Sie sich jetzt für das FDM Traineeprogramm*<span class="apply-form__required">*</span></label>
+				<label class="js-hidden" data-region="DE">Bewerben Sie sich jetzt für das FDM Traineeprogramm*<span class="apply-form__required">*</span></label>
 				
 				<div class="program-type-boxes">
 				
@@ -246,7 +246,7 @@
 		</section>
 
 	<!-- ####### Your Details ####### -->
-		<section class="[ js-section ]	[ help--hide ]" data-section="1">
+		<section class="[ js-section ]" style="display:none;" data-section="1">
 			<h1>
 				<span data-region="ENG">Your Details</span>
 				<span data-region="DE">Persönliche Informationen</span>
@@ -956,7 +956,7 @@
 		</section>
 
 	<!-- ####### Education ####### -->
-		<section class="[ js-section ]	[ help--hide ]" data-section="2">
+		<section class="[ js-section ]" style="display:none;" data-section="2">
 			<h1>
 				<span data-region="ENG-GB ENG-CA ENG-AUS ENG-CN ENG-HK ENG-IRL ENG-SGP ENG-ZAF">Education</span>
 				<span data-region="ENG-USA">Experience and Education</span>
@@ -1342,7 +1342,7 @@
 		</section>
 
 	<!-- ####### Location Details ####### -->
-		<section class="[ js-section ]	[ help--hide ]" data-section="3">
+		<section class="[ js-section ]" style="display:none;" data-section="3">
 			<h1 class="[ js-specific-field ]" data-pathway="graduate b2b exforces"  data-region="UK Australia China HK SA Ireland Singapore">Location Details</h1>
 			<h1 class="[ js-specific-field ]" data-pathway="graduate b2b exforces"  data-region="USA	 Canada">Self-Identification</h1>
 			<form class="[ apply-form ]	 [ js-form ]" data-section="3">
@@ -1662,7 +1662,7 @@
 		</section>
 
 	<!-- ####### Selection Criteria ####### -->
-		<section class="[ js-section ]	[ help--hide ]" data-section="4">
+		<section class="[ js-section ]" style="display:none;" data-section="4">
 			<h1>
 				<span data-region="ENG-CN ENG-GB ENG-HK ENG-AUS ENG-IRL ENG-SGP ENG-ZAF">Selection Criteria</span>
 				<span data-region="ENG-CA ENG-USA">Regional Criteria</span>
@@ -1847,9 +1847,9 @@
 				
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="DE UK Australia Canada China Singapore HK SA Ireland USA">
 					<div>
-						<label class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="UK Canada China Singapore HK SA Ireland USA">I have read and accept the <a href="<?= Hodes\FDM\get_translated_permalink(1966) ?>">Terms and Conditions</a> of use, <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>">Privacy Policy</a> and consent to receiving information from FDM Group in relation to this request. FDM values the privacy of your personal details and we will not share or otherwise distribute your Personal Data to third parties except as provided in this Privacy Policy.</label>
-						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" for="selection-form__gdpr">I have read and accept the <a href="<?= Hodes\FDM\get_translated_permalink(1966) ?>">Terms and Conditions</a> of use, <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>">Privacy Policy</a> and consent to receiving information from FDM Group in relation to this request. FDM agrees to treat private information disclosed by you through your use of the Site in accordance with the Data Protection Act 1998 (UK) or equivalent legislation in the jurisdiction in which you applied.</label>
-						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="DE" for="selection-form__gdpr-de">Ich habe die <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>">Nutzungsbedingungen</a> und <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>">Datenschutzrichtlinie</a> gelesen bin damit einverstanden, dass ich im Hinblick auf diese Anfrage Informationen der FDM Group erhalte. FDM legt großen Wert auf den Schutz Ihrer persönlichen Angaben und wir werden Ihre personenbezogenen Daten nicht an Dritte weitergeben oder anderweitig verbreiten, es sei denn, wie in der Datenschutzrichtlinie vorgesehen.</label>
+						<label class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="UK Canada China Singapore HK SA Ireland USA">I have read and accept the <a href="<?= Hodes\FDM\get_translated_permalink(1966) ?>" target="_blank">Terms and Conditions</a> of use, <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>" target="_blank">Privacy Policy</a> and consent to receiving information from FDM Group in relation to this request. FDM values the privacy of your personal details and we will not share or otherwise distribute your Personal Data to third parties except as provided in this Privacy Policy.</label>
+						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" for="selection-form__gdpr">I have read and accept the <a href="<?= Hodes\FDM\get_translated_permalink(1966) ?>" target="_blank">Terms and Conditions</a> of use, <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>" target="_blank">Privacy Policy</a> and consent to receiving information from FDM Group in relation to this request. FDM agrees to treat private information disclosed by you through your use of the Site in accordance with the Data Protection Act 1998 (UK) or equivalent legislation in the jurisdiction in which you applied.</label>
+						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="DE" for="selection-form__gdpr-de">Ich habe die <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>" target="_blank" >Nutzungsbedingungen</a> und <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>" target="_blank">Datenschutzrichtlinie</a> gelesen bin damit einverstanden, dass ich im Hinblick auf diese Anfrage Informationen der FDM Group erhalte. FDM legt großen Wert auf den Schutz Ihrer persönlichen Angaben und wir werden Ihre personenbezogenen Daten nicht an Dritte weitergeben oder anderweitig verbreiten, es sei denn, wie in der Datenschutzrichtlinie vorgesehen.</label>
 					</div>
 					<div class="single-checkbox">
 						<label>
@@ -1867,7 +1867,7 @@
 		</section>
 
 	<!-- ####### Congratulations ####### -->
-		<section class="[ js-section ]	[ help--hide ] thank-you-message" data-section="5">
+		<section class="[ js-section ] thank-you-message" style="display:none;" data-section="5">
 			<div data-region="ENG">
 				<h1 class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="Australia Canada China Singapore HK SA USA">Congratulations</h1>
 				<h1 class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="UK Ireland">Thank you</h1>
@@ -1889,12 +1889,12 @@
 
 			<button class="[ js-next-btn ]	[ btn ] ">
 				<span data-region="ENG">Next</span>
-				<span class="help--hide" data-region="DE">Weiter</span>
+				<span class="js-hidden" data-region="DE">Weiter</span>
 			</button>
 	
-			<button class="[ js-apply-btn ]	 [ btn ]	 [ help--hide ]">
+			<button class="[ js-apply-btn ]	 [ btn ]	 [ js-hidden ]">
 				<span data-region="ENG">Apply</span>
-				<span class="help--hide" data-region="DE">Abschicken</span>
+				<span class="js-hidden" data-region="DE">Abschicken</span>
 			
 				<div class="sk-circle  js-spinner">
 					  <div class="sk-circle1 sk-child"></div>
@@ -1912,14 +1912,14 @@
 				</div>
 			</button>
 			
-			<p class="help--hide	 js-apply-error">
+			<p class="js-hidden	 js-apply-error">
 				<span data-region="ENG">Something went wrong, please try again.</span>
 				<span data-region="DE">Etwas ist schief gelaufen. Bitte versuche es erneut.</span>
 			</p>
 	
-			<button class="[ js-pre-btn ]  [ btn ]	[ help--hide ]">
+			<button class="[ js-pre-btn ]  [ btn ]	[ js-hidden ]">
 				<span data-region="ENG">Back</span>
-				<span class="help--hide" data-region="DE">Zurück</span>
+				<span class="js-hidden" data-region="DE">Zurück</span>
 			</button>
 		</div>
 		
@@ -1959,16 +1959,16 @@
             if( show ) {
                 if( jQuery( this ).is("hidden") ){
                     jQuery( this ).changeElementType( "option" );
-                    jQuery( this ).show();
+                    jQuery( this ).removeClass('js-hidden');
                 } else {
-                    jQuery( this ).show();
+                    jQuery( this ).removeClass('js-hidden');
                 }
             } else {
                 if( jQuery( this ).is("option") ){
                     jQuery( this ).changeElementType( "hidden" );
-                    jQuery( this ).hide();
+                    jQuery( this ).addClass('js-hidden');
                 } else {
-                    jQuery( this ).hide();
+                    jQuery( this ).addClass('js-hidden');
                 }
             }
         });
@@ -2053,7 +2053,7 @@
 			
 		}
 		
-		$(".js-wrapper").show();
+		$(".js-wrapper").removeClass('js-hidden');
 		
 		$(".js-region").change(function(){
 			var selectedRegion = this.value;
@@ -2078,7 +2078,7 @@
 		var setProgress = function() {
 			$('.progress-bar:visible').each(function(){
 				$('.js-progress',this).each(function(){
-					//$(this).show();
+					//$(this).removeClass('js-hidden');
 					// find children who are visible and contain some text
 					var $content = $(this).children(':visible').filter(function() {return $(this).text();});
 					// if there are any, then show this pip, otherwise it's a blank, so hide it
@@ -2151,16 +2151,16 @@
 			
 			
 			if(nextSelection == 5){				 
-				$(".js-pre-btn").hide();
-				$(".js-next-btn").hide(); 
-				$(".js-apply-btn").hide();							
+				$(".js-pre-btn").addClass('js-hidden');
+				$(".js-next-btn").addClass('js-hidden'); 
+				$(".js-apply-btn").addClass('js-hidden');							
 			} else {
-				$(".js-pre-btn").css('display', 'block');
+				$(".js-pre-btn").removeClass('js-hidden');
 			}
 			
 			if(nextSelection == 4) {	  
-				$(".js-next-btn").hide();
-				$(".js-apply-btn").css('display', 'block');
+				$(".js-next-btn").addClass('js-hidden');
+				$(".js-apply-btn").removeClass('js-hidden');
 			}
 			
 			currentSection++;
@@ -2169,9 +2169,9 @@
 			setProgress();
 			scrollToTop();
 			
-			$('.js-specific-field').hide();
-			$('.js-specific-field[data-pathway~="' + pathway + '"]').show();
-			$('.js-specific-field[data-pathway~="' + pathway + '"]').filter('.js-specific-field:not([data-region~="' + region + '"])').hide();
+			$('.js-specific-field').addClass('js-hidden');
+			$('.js-specific-field[data-pathway~="' + pathway + '"]').removeClass('js-hidden');
+			$('.js-specific-field[data-pathway~="' + pathway + '"]').filter('.js-specific-field:not([data-region~="' + region + '"])').addClass('js-hidden');
 			
 			
 			$('.js-section[data-section="' + currentSection + '"]').fadeIn(100);
@@ -2179,18 +2179,18 @@
 		
 		$(".js-pre-btn").click(function(){
             
-            $('.js-specific-field').hide();
-			$('.js-specific-field[data-pathway~="' + pathway + '"]').show();
-			$('.js-specific-field[data-pathway~="' + pathway + '"]').filter('.js-specific-field:not([data-region~="' + region + '"])').hide();
+            $('.js-specific-field').addClass('js-hidden');
+			$('.js-specific-field[data-pathway~="' + pathway + '"]').removeClass('js-hidden');
+			$('.js-specific-field[data-pathway~="' + pathway + '"]').filter('.js-specific-field:not([data-region~="' + region + '"])').addClass('js-hidden');
 			
             
-			$(".js-next-btn").css('display', 'block');
-			$(".js-apply-btn").hide()
+			$(".js-next-btn").removeClass('js-hidden');
+			$(".js-apply-btn").addClass('js-hidden');
 			
 			if(preSelection == 0){
-				$(".js-pre-btn").hide()
+				$(".js-pre-btn").addClass('js-hidden')
 			} else {
-				$(".js-pre-btn").css('display', 'block');
+				$(".js-pre-btn").removeClass('js-hidden');
 			}
 			
 			$('.js-section[data-section="' + currentSection + '"]').hide();
@@ -2222,7 +2222,7 @@
 				return false;
 			}
 			
-			$(".js-spinner").show();
+			$(".js-spinner").removeClass('js-hidden');
 			$(".js-apply-btn").prop("disabled",true);
 			
 			var data = $(".js-form:not(.js-cv-form)").serializeArray();
@@ -2243,18 +2243,18 @@
 				success: function(responseData, textStatus, jqXHR) {
 					var value = responseData;
 					if(uploadCv(value)){
-						$(".js-apply-error").hide();
+						$(".js-apply-error").addClass('js-hidden');
 						$(".js-next-btn").trigger("click");
 					} else {
-						$(".js-apply-error").show();
+						$(".js-apply-error").removeClass('js-hidden');
 					}
 					
-					$(".js-spinner").hide();
+					$(".js-spinner").addClass('js-hidden');
 					$(".js-apply-btn").removeProp("disabled");
 				},
 				error: function (responseData, textStatus, errorThrown) {
-					$(".js-apply-error").show();
-					$(".js-spinner").hide();
+					$(".js-apply-error").removeClass('js-hidden');
+					$(".js-spinner").addClass('js-hidden');
 					$(".js-apply-btn").removeProp("disabled");
 				}
 			});
@@ -2264,7 +2264,7 @@
 	
 	function getRegionSpecifics(region) {
 		
-	$('label').show();
+	$('label').removeClass('js-hidden');
 	validationConfigs.lang = "en";
 	$.validate(validationConfigs);
 		
@@ -2278,189 +2278,189 @@
 		
 	switch(region) {
 				case "UK":
-					$('*[data-region~="ENG-Programme"]').hide();
-					$('*[data-region~="ENG-Graduate"]').hide();
-					$('*[data-region~="ENG-CA"]').hide();
-					$('*[data-region~="ENG-USA"]').hide();
-					$('*[data-region~="ENG-AUS"]').hide();
-					$('*[data-region~="ENG-Graduate"]').hide();
-					$('*[data-region~="ENG-CN"]').hide();
-					$('*[data-region~="ENG-HK"]').hide();
-					$('*[data-region~="ENG-IRL"]').hide();
-					$('*[data-region~="ENG-SGP"]').hide();
-					$('*[data-region~="ENG-ZAF"]').hide();
-					$('*[data-region~="DE"]').hide();
+					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
+					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
+					$('*[data-region~="ENG-IRL"]').addClass('js-hidden');
+					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+					$('*[data-region~="DE"]').addClass('js-hidden');
 			
-					$('*[data-region~="ENG"]').show();
-					$('*[data-region~="ENG-GB"]').show();
+					$('*[data-region~="ENG"]').removeClass('js-hidden');
+					$('*[data-region~="ENG-GB"]').removeClass('js-hidden');
 					break;
 				case "USA":
-					$('*[data-region~="ENG-GB"]').hide();
-					$('*[data-region~="ENG-CA"]').hide();
-					$('*[data-region~="ENG-Graduate"]').hide();
-					$('*[data-region~="ENG-Programme"]').hide();
-					$('*[data-region~="DE-DE"]').hide();
-					$('*[data-region~="DE"]').hide();
-					$('*[data-region~="ENG-AUS"]').hide();
-					$('*[data-region~="ENG-CN"]').hide();
-					$('*[data-region~="ENG-HK"]').hide();
-					$('*[data-region~="ENG-SGP"]').hide();
-					$('*[data-region~="ENG-ZAF"]').hide();
-					$(".js-grad-only").hide();
-					$('*[data-region~="ENG"]').show();
-					$('*[data-region~="ENG-USA"]').show();
-					$(".js-grad").show();
-					$(".js-common-used").show();
-					$(".js-exforces").show();
-					$(".js-b2b").show();
+					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+					$('*[data-region~="DE-DE"]').addClass('js-hidden');
+					$('*[data-region~="DE"]').addClass('js-hidden');
+					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
+					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
+					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+					$(".js-grad-only").addClass('js-hidden');
+					$('*[data-region~="ENG"]').removeClass('js-hidden');
+					$('*[data-region~="ENG-USA"]').removeClass('js-hidden');
+					$(".js-grad").removeClass('js-hidden');
+					$(".js-common-used").removeClass('js-hidden');
+					$(".js-exforces").removeClass('js-hidden');
+					$(".js-b2b").removeClass('js-hidden');
 					break;
 				case "Australia":
-					$('*[data-region~="ENG-Programme"]').hide();
-					$('*[data-region~="DE"]').hide();
-					$('*[data-region~="ENG-CA"]').hide();
-					$('*[data-region~="ENG-USA"]').hide();
-					$('*[data-region~="ENG-GB"]').hide();
-					$('*[data-region~="ENG-CN"]').hide();
-					$('*[data-region~="ENG-HK"]').hide();
-					$('*[data-region~="ENG-SGP"]').hide();
-					$('*[data-region~="ENG-ZAF"]').hide();
-					$(".js-exforces").hide();
-					$(".js-b2b").hide();
-					$(".js-common-used").hide();
-					$('*[data-region~="ENG-AUS"]').show();
-					$('*[data-region~="ENG"]').show();
-					$('*[data-region~="ENG-Graduate"]').show();
-					$(".js-grad").show();
-					$(".js-grad-only").show();
+					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+					$('*[data-region~="DE"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
+					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
+					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+					$(".js-exforces").addClass('js-hidden');
+					$(".js-b2b").addClass('js-hidden');
+					$(".js-common-used").addClass('js-hidden');
+					$('*[data-region~="ENG-AUS"]').removeClass('js-hidden');
+					$('*[data-region~="ENG"]').removeClass('js-hidden');
+					$('*[data-region~="ENG-Graduate"]').removeClass('js-hidden');
+					$(".js-grad").removeClass('js-hidden');
+					$(".js-grad-only").removeClass('js-hidden');
 					break;
 				case "Canada":
-					$('*[data-region~="ENG-Programme"]').hide();
-					$('*[data-region~="DE"]').hide();
-					$('*[data-region~="ENG-CA"]').hide();
-					$('*[data-region~="ENG-USA"]').hide();
-					$('*[data-region~="ENG-GB"]').hide();
-					$('*[data-region~="ENG-AUS"]').hide();
-					$('*[data-region~="ENG-Graduate"]').hide();
-					$('*[data-region~="ENG-CN"]').hide();
-					$('*[data-region~="ENG-HK"]').hide();
-					$('*[data-region~="ENG-SGP"]').hide();
-					$('*[data-region~="ENG-ZAF"]').hide();
-					$(".js-grad-only").hide();
-					$(".js-exforces").hide();
-					$(".js-b2b").hide();
-					$(".js-grad").show();
-					$(".js-common-used").show();
-					$('*[data-region~="ENG"]').show();
-					$('*[data-region~="ENG-CA"]').show();
+					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+					$('*[data-region~="DE"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
+					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
+					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
+					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+					$(".js-grad-only").addClass('js-hidden');
+					$(".js-exforces").addClass('js-hidden');
+					$(".js-b2b").addClass('js-hidden');
+					$(".js-grad").removeClass('js-hidden');
+					$(".js-common-used").removeClass('js-hidden');
+					$('*[data-region~="ENG"]').removeClass('js-hidden');
+					$('*[data-region~="ENG-CA"]').removeClass('js-hidden');
 					break;
 				case "China":
-					$('*[data-region~="ENG-Programme"]').hide();
-					$('*[data-region~="DE"]').hide();
-					$('*[data-region~="ENG-CA"]').hide();
-					$('*[data-region~="ENG-USA"]').hide();
-					$('*[data-region~="ENG-GB"]').hide();
-					$('*[data-region~="ENG-AUS"]').hide();
-					$('*[data-region~="ENG-Graduate"]').hide();
-					$('*[data-region~="ENG-HK"]').hide();
-					$('*[data-region~="ENG-SGP"]').hide();
-					$('*[data-region~="ENG-ZAF"]').hide();
-					$(".js-exforces").hide();
-					$(".js-b2b").hide();
-					$(".js-common-used").hide();
-					$(".js-grad").show();
-					$(".js-grad-only").show();
-					$('*[data-region="ENG"]').show();
-					$('*[data-region~="ENG-CN"]').show();
-					$('*[data-region="ENG-Graduate"]').show();
+					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+					$('*[data-region~="DE"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
+					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
+					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+					$(".js-exforces").addClass('js-hidden');
+					$(".js-b2b").addClass('js-hidden');
+					$(".js-common-used").addClass('js-hidden');
+					$(".js-grad").removeClass('js-hidden');
+					$(".js-grad-only").removeClass('js-hidden');
+					$('*[data-region="ENG"]').removeClass('js-hidden');
+					$('*[data-region~="ENG-CN"]').removeClass('js-hidden');
+					$('*[data-region="ENG-Graduate"]').removeClass('js-hidden');
 					break;
 				case "Hong Kong":
-					$('*[data-region~="ENG-Programme"]').hide();
-					$('*[data-region="ENG-Graduate"]').hide();
-					$('*[data-region~="DE"]').hide();
-					$('*[data-region~="ENG-CA"]').hide();
-					$('*[data-region~="ENG-USA"]').hide();
-					$('*[data-region~="ENG-GB"]').hide();
-					$('*[data-region~="ENG-AUS"]').hide();
-					$('*[data-region~="ENG-Graduate"]').hide();
-					$('*[data-region~="ENG-CN"]').hide();
-					$('*[data-region~="ENG-HK"]').hide();
-					$('*[data-region~="ENG-SGP"]').hide();
-					$('*[data-region~="ENG-ZAF"]').hide();
-					$(".js-exforces").hide();
-					$(".js-b2b").hide();
-					$(".js-common-used").hide();
-					$(".js-grad-only").hide();
-					$('*[data-region~="ENG"]').show();
-					$('*[data-region~="ENG-HK"]').show();
+					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+					$('*[data-region="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="DE"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
+					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
+					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
+					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+					$(".js-exforces").addClass('js-hidden');
+					$(".js-b2b").addClass('js-hidden');
+					$(".js-common-used").addClass('js-hidden');
+					$(".js-grad-only").addClass('js-hidden');
+					$('*[data-region~="ENG"]').removeClass('js-hidden');
+					$('*[data-region~="ENG-HK"]').removeClass('js-hidden');
 					break;
 				case "Ireland":
-					$('*[data-region~="ENG-Programme"]').hide();
-					$('*[data-region="ENG-Graduate"]').hide();
-					$('*[data-region~="DE"]').hide();
-					$('*[data-region~="ENG-CA"]').hide();
-					$('*[data-region~="ENG-USA"]').hide();
-					$('*[data-region~="ENG-GB"]').hide();
-					$('*[data-region~="ENG-AUS"]').hide();
-					$('*[data-region~="ENG-Graduate"]').hide();
-					$('*[data-region~="ENG-CN"]').hide();
-					$('*[data-region~="ENG-HK"]').hide();
-					$('*[data-region~="ENG-SGP"]').hide();
-					$('*[data-region~="ENG-ZAF"]').hide();
+					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+					$('*[data-region="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="DE"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
+					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
+					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
+					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
 			
-					$('*[data-region~="ENG"]').show();
-					$('*[data-region~="ENG-IRL"]').show();
+					$('*[data-region~="ENG"]').removeClass('js-hidden');
+					$('*[data-region~="ENG-IRL"]').removeClass('js-hidden');
 					break;
 				case "Singapore":
-					$('*[data-region~="ENG-Programme"]').hide();
-					$('*[data-region="ENG-Graduate"]').hide();
-					$('*[data-region~="DE"]').hide();
-					$('*[data-region~="ENG-CA"]').hide();
-					$('*[data-region~="ENG-USA"]').hide();
-					$('*[data-region~="ENG-GB"]').hide();
-					$('*[data-region~="ENG-AUS"]').hide();
-					$('*[data-region~="ENG-Graduate"]').hide();
-					$('*[data-region~="ENG-CN"]').hide();
-					$('*[data-region~="ENG-HK"]').hide();
-					$('*[data-region~="ENG-IRL"]').hide();
-					$('*[data-region~="ENG-SGP"]').hide();
-					$('*[data-region~="ENG-ZAF"]').hide();
+					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+					$('*[data-region="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="DE"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
+					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
+					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
+					$('*[data-region~="ENG-IRL"]').addClass('js-hidden');
+					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
 			
-					$('*[data-region~="ENG"]').show();
-					$('*[data-region~="ENG-SGP"]').show();
+					$('*[data-region~="ENG"]').removeClass('js-hidden');
+					$('*[data-region~="ENG-SGP"]').removeClass('js-hidden');
 					break;
 				case "South Africa":
-					$('*[data-region~="ENG-Programme"]').hide();
-					$('*[data-region="ENG-Graduate"]').hide();
-					$('*[data-region~="DE"]').hide();
-					$('*[data-region~="ENG-CA"]').hide();
-					$('*[data-region~="ENG-USA"]').hide();
-					$('*[data-region~="ENG-GB"]').hide();
-					$('*[data-region~="ENG-AUS"]').hide();
-					$('*[data-region~="ENG-Graduate"]').hide();
-					$('*[data-region~="ENG-CN"]').hide();
-					$('*[data-region~="ENG-HK"]').hide();
-					$('*[data-region~="ENG-IRL"]').hide();
-					$('*[data-region~="ENG-SGP"]').hide();
+					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+					$('*[data-region="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="DE"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
+					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
+					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
+					$('*[data-region~="ENG-IRL"]').addClass('js-hidden');
+					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
 			
-					$('*[data-region~="ENG-ZAF"]').show();
+					$('*[data-region~="ENG-ZAF"]').removeClass('js-hidden');
 					break;
 				case "Deutschland":
-					$('*[data-region~="ENG-Programme"]').hide();
-					$('*[data-region~="ENG-Graduate"]').hide();
-					$('*[data-region~="ENG-CA"]').hide();
-					$('*[data-region~="ENG-USA"]').hide();
-					$('*[data-region~="ENG-GB"]').hide();
-					$('*[data-region~="ENG-AUS"]').hide();
-					$('*[data-region~="ENG-Graduate"]').hide();
-					$('*[data-region~="ENG-CN"]').hide();
-					$('*[data-region~="ENG-HK"]').hide();
-					$('*[data-region~="ENG-IRL"]').hide();
-					$('*[data-region~="ENG-SGP"]').hide();
-					$('*[data-region~="ENG-ZAF"]').hide();
-					$('*[data-region~="ENG"]').hide();
-					$('label:not([data-region~="' + region + '"])').hide();
+					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
+					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
+					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
+					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
+					$('*[data-region~="ENG-IRL"]').addClass('js-hidden');
+					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+					$('*[data-region~="ENG"]').addClass('js-hidden');
+					$('label:not([data-region~="' + region + '"])').addClass('js-hidden');
 			
-					$('*[data-region~="DE"]').show();
+					$('*[data-region~="DE"]').removeClass('js-hidden');
             
                     $('select *[data-region~="DE"]').toggleDisplay(true);
 			
@@ -2470,6 +2470,11 @@
 				default:
 					break;
 			}
+		
+		// set a data attribute indicating the number of boxes visible - this is used in styling
+		var $ptb = $('.program-type-boxes');
+		$ptb.attr('data-num-visible', $ptb.children(':visible').length );
+		
 	}
 
     });</script>

@@ -1653,6 +1653,10 @@ a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5
 
 .fdm-application-form-component {
 
+	.js-hidden {
+		display: none !important;
+	}
+
 	*, *::before, *::after {
 		box-sizing: border-box;
 	}
@@ -1718,13 +1722,27 @@ a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5
 	.program-type-boxes {
 		.clearfix;
 		line-height: normal;
+		
+		&[data-num-visible="1"] >label:first-child {
+			margin-left: 34%;
+			@media (max-width: 850px) {
+				margin-left: 0%;
+			}
+		}
+		&[data-num-visible="2"] >label:first-child {
+			margin-left: 17%;
+			@media (max-width: 850px) {
+				margin-left: 0%;
+			}
+		}
+		&[data-num-visible="3"] >label:first-child {
+			margin-left: 0%;
+		}
+		
 		> label {
 			float: left;
 			width: 32%;
 			margin-left: 2%;
-			&:first-child {
-				margin-left: 0;
-			}
 			border: 1px solid @blue;
 			display: block;
 			padding: 2%;
@@ -1934,10 +1952,6 @@ a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5
 			width: 100px;
 			height: 100px;
 		}
-	}
-
-	.help--hide{
-		display: none;
 	}
 
 }

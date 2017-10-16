@@ -20,7 +20,8 @@ function ip_matches( $ip, $acl ) {
 	// End user's IP address as an integer
 	$ip_long = ip2long( $ip );
 	if ( $ip_long === false ) {
-		throw new \Exception("Malformed ip address $ip");
+		error_log("Malformed ip address $ip");
+		return false;
 	}
 	
 	foreach ( $acl as $entry ) {

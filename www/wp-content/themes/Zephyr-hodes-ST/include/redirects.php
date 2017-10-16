@@ -1,6 +1,7 @@
 <?php
 
 $redirects = [
+	'social-hub' => '/culture/social-hub/',
 	'uk/about'=>'/our-work/',
 	'uk/about/our-culture'=>'/culture/',
 	'uk/about/our-culture/diversity-inclusion'=>'/culture/diversity-inclusion/',

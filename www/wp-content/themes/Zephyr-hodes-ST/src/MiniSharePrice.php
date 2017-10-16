@@ -25,7 +25,7 @@ class MiniSharePrice extends VCComponent {
 			
 		ob_start();
 		?>
-		<iframe class="mini-share-price" width="100%" height="230px" src="https://ir.tools.investis.com/Clients/uk/fdmgroup/Minichart/Default.aspx?culture=en-GB"></iframe>
+		<iframe class="mini-share-price" width="100%" height="230px" src="https://irs.tools.investis.com/clients/uk/fdmgroup/SM8/default.aspx?culture=en-GB"></iframe>
 		<?php
 		return ob_get_clean();
 		
