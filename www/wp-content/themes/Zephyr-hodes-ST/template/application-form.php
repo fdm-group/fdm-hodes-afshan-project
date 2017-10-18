@@ -1,5 +1,3 @@
-
-
 <style>
 	.sk-circle {
 	display: none;
@@ -113,7 +111,7 @@
 	} 40% {
 	-webkit-transform: scale(1);
 			transform: scale(1);
-	}
+	   }
 	}
 
 	@keyframes sk-circleBounceDelay {
@@ -133,7 +131,7 @@
 </style>
 
 <div class="fdm-application-form-component" data-default-region="<?= $default_region ?>">
-	<div class="js-wrapper js-hidden">
+	<div class="js-wrapper  js-hidden">
 		<header>
 		
 			<ul class="progress-bar" data-region="ENG">
@@ -2120,13 +2118,17 @@
 			region = region == "Hong Kong" ? "HK" : region;
 			region = region == "South Africa" ? "SA" : region;
 			region = region == "Deutschland" ? "DE" : region;
-			            
             
-			$('.js-specific-field').toggleDisplay(false);
-			$('.js-specific-field[data-pathway~="' + pathway + '"]').toggleDisplay(true);
-			$('.js-specific-field[data-pathway~="' + pathway + '"]').filter('.js-specific-field:not([data-region~="' + region + '"])').toggleDisplay(false);
+            if (nextSelection == 1 ) {
+                $('.js-specific-field').toggleDisplay(false);
+                $('.js-specific-field[data-pathway~="' + pathway + '"]').toggleDisplay(true);
+                $('.js-specific-field[data-pathway~="' + pathway + '"]').filter('.js-specific-field:not([data-region~="' + region + '"])').toggleDisplay(false);
+			}else {
+                $('.js-specific-field').addClass('js-hidden');
+                $('.js-specific-field[data-pathway~="' + pathway + '"]').removeClass('js-hidden');
+                $('.js-specific-field[data-pathway~="' + pathway + '"]').filter('.js-specific-field:not([data-region~="' + region + '"])').addClass('js-hidden');
+            }
             
-            			
 			var $form = $('.js-form[data-section="' + currentSection + '"]');
 
 			if ($form != undefined){
@@ -2242,13 +2244,10 @@
 				url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService",
 				success: function(responseData, textStatus, jqXHR) {
 					var value = responseData;
-					if(uploadCv(value)){
-						$(".js-apply-error").addClass('js-hidden');
-						$(".js-next-btn").trigger("click");
-					} else {
-						$(".js-apply-error").removeClass('js-hidden');
-					}
-					
+					uploadCv(value);
+                    
+                    $(".js-apply-error").addClass('js-hidden');
+                    $(".js-next-btn").trigger("click");
 					$(".js-spinner").addClass('js-hidden');
 					$(".js-apply-btn").removeProp("disabled");
 				},
