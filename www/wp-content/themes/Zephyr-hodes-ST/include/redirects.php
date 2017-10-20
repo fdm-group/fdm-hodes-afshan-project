@@ -113,6 +113,7 @@ $redirects = [
 	'us/contact'=>'/en-us/us-contact/',
 	'us/blog'=>'/en-us/us-blog/',
 	'us/apply'=>'/en-us/us-apply/',
+	'en-us/culture-2' => '/en-us/us-culture/',
 	
 	'ca'=>'/en-ca/ca-home/',
 	'ca/about'=>'/en-ca/ca-our-work/',
@@ -181,7 +182,7 @@ $redirects = [
 	'de/karriere/faqs'=>'/de/de-faqs/',
 	'de/karriere/offene-stellen'=>'/de/karriere/',
 	'de/blog'=>'/de/de-blog/',
-	'de/bewerben'=>'/de/karriere/praktika-werkstudenten/',
+	'de/bewerben'=>'/de/de-apply/',
 	
 	'sg'=>'/en-sg/sg-home/',
 	'sg/about'=>'/en-sg/sg-our-work/',
