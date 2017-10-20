@@ -4,10 +4,6 @@
 RewriteEngine On
 RewriteBase /
 RewriteRule ^index\.php$ - [L]
-
-# Specific individual page redirects
-RewriteRule ^en-us/us-internships-placements/?$ $1/en-us/us-internships/$2 [R=301,L]
-
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.php [L]
