@@ -117,10 +117,6 @@ add_filter( 'image_size_names_choose', function( $sizes ) {
     ) );
 });
 
-add_filter( 'jpeg_quality', function() {
-	return 95;
-});
-
 //use non minified version of core Zephyr script, with some modifications.
 add_action( 'wp_enqueue_scripts', function() {
 	global $us_template_directory_uri;
