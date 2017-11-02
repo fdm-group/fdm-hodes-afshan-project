@@ -137,17 +137,29 @@
 			<ul class="progress-bar" data-region="ENG">
 				<li class="js-progress" data-section-id="0">
 					<span class="progress-icon"></span>
-					<span data-region="ENG-GB ENG-AUS ENG-CN ENG-HK ENG-IRL ENG-SGP  ENG-ZAF">Select a Programme</span>
+					<span data-region="ENG-GB ENG-AUS ENG-CN ENG-HK ENG-IRL ENG-SGP ENG-ZAF">Select a Programme</span>
 					<span data-region="ENG-CA ENG-USA">Select a Program</span>
 				</li><li class="js-progress" data-section-id="1">
 					<span class="progress-icon"></span>
 					<span>Your Details</span>
-				</li><li class="js-specific-field  js-progress" data-pathway="graduate b2b" data-section-id="2" data-region="Canada DE UK Australia China HK Ireland Singapore SA">
+				</li><li class="js-specific-field  js-progress"
+                         data-pathway="graduate b2b"
+                         data-section-id="2"
+                         data-region="Canada Australia China HK Ireland Singapore SA ENG-CA ENG-AUS ENG-CN ENG-HK ENG-IRL ENG-SGP ENG-ZAF">
 					<span class="progress-icon"></span>
-					<span data-region="ENG-GB ENG-CA ENG-AUS ENG-CN ENG-HK ENG-IRL ENG-SGP ENG-ZAF">Education</span>
-				</li><li class="js-specific-field  js-progress" data-pathway="exforces graduate b2b" data-section-id="2" data-region="USA">
+					<span>Education</span>
+				</li><li class="js-specific-field  js-progress"
+                         data-pathway="graduate"
+                         data-section-id="2"
+                         data-region="UK ENG-GB">
 					<span class="progress-icon"></span>
-					<span data-region="ENG-USA">Experience and Education</span>
+					<span>Education</span>
+				</li><li class="js-specific-field  js-progress"
+                         data-pathway="exforces graduate b2b"
+                         data-section-id="2"
+                         data-region="USA ENG-USA">
+					<span class="progress-icon"></span>
+					<span>Experience and Education</span>
 				</li><li class="js-progress" data-section-id="3">
 					<span class="progress-icon"></span>
 					<span data-region="ENG-USA ENG-CA">Self-Identification</span>
@@ -176,7 +188,7 @@
 				</li>
 				<li class="js-progress" data-section-id="4">
 					<span class="progress-icon"></span>
-					<span>Dokumenten Upload</span>
+					<span>DokumEnten-Upload</span>
 				</li>
 			</ul>
 		</header>
@@ -209,7 +221,7 @@
 					<span data-region="ENG-GB ENG-HK ENG-SGP ENG-CN ENG-IRL ENG-ZAF">Please select the programme you would like to apply for<span class="apply-form__required">*</span></span>
 					<span data-region="ENG-USA ENG-CA">Please select the program you would like to apply for<span class="apply-form__required">*</span></span>
 				</label>
-				<label class="js-hidden" data-region="DE">Bewerben Sie sich jetzt für das FDM Traineeprogramm*<span class="apply-form__required">*</span></label>
+				<label class="js-hidden" data-region="DE">Bewerben Sie sich jetzt für das FDM Traineeprogramm<span class="apply-form__required">*</span></label>
 				
 				<div class="program-type-boxes">
 				
@@ -277,7 +289,6 @@
 					<div>
 						<select id="details-form__title" name="Title">
 							<option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
-							 <option value="Keine-">Keine-</option>
 							 <option value="Frau">Frau</option>
 							 <option value="Herr">Herr</option>
 							 <option value="Dr.">Dr.</option>
@@ -409,6 +420,8 @@
 				<div class="form-row js-specific-field" data-pathway="graduate" data-region="Ireland">
 					<div>
 						<label>Eircode (if applicable)</label>
+                    </div>
+                    <div>
 						<input id="details-form__postcode" type="text" name="postcode"/>
 					</div>
 				</div>
@@ -422,6 +435,25 @@
 						<input id="details-form__country" type="text" name="Country" data-validation="required" data-validation-error-msg-container="#details-form__country-err"/>
 					</div>
 					<div class="apply-form__val-msg" id="details-form__country-err"></div>
+				</div>
+                
+                <!-- Education level - Only UK B2B -->
+                <div class="form-row js-specific-field" data-pathway="b2b" data-region="UK">
+					<div>
+						<label for="education-form__edu-level-b2b">Education Level<span class="apply-form__required">*</span></label>
+					</div>
+					<div>
+						<select id="education-form__edu-level-b2b" type="text" name="EducationLevel" data-validation="required" data-validation-error-msg-container="#education-form__edu-level-err-b2b">
+							<option class="js-default-select" value="" disabled selected hidden>Please select one</option>
+							<option value="A Level or equivalent">A Level or equivalent</option>
+							<option value="Bachelor's Degree">Bachelor's Degree</option>
+							<option value="Master's Degree/Post Graduate Qualification / MBA">Master's Degree/Post Graduate Qualification / MBA</option>
+							<option value="Doctorate Degree">Doctorate Degree</option>
+							<option value="Other">Other</option>
+
+						</select>
+					</div>
+					<div class="apply-form__val-msg" id="education-form__edu-level-err-b2b"></div>
 				</div>
 				
 				<div class="form-row js-specific-field" data-pathway="graduate exforces b2b" data-region="DE UK Australia Canada China HK Ireland Singapore SA USA">
@@ -508,7 +540,6 @@
 							<option class="js-specific-field" data-pathway="graduate" data-region="China" value="Workopolis">Workopolis</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="China" value="YouTube">YouTube</option>
 							<!-- DE - Grad -->
-							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="-Keine-">-Keine-</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Absolventa">Absolventa</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Campus Tours">Campus Tours</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="CareerBuilder">CareerBuilder</option>
@@ -758,7 +789,7 @@
 							<option class="js-specific-field" data-pathway="b2b" data-region="USA" value="Women For Hire">Women For Hire</option>
 							<option class="js-specific-field" data-pathway="b2b" data-region="USA" value="Women Who Code">Women Who Code</option>
 							<option class="js-specific-field" data-pathway="b2b" data-region="USA" value="YouTube">YouTube</option>
-							<option class="js-specific-field" data-pathway="b2b" data-region="USA" value="ZipRecuiter">ZipRecuiter</option>
+							<option class="js-specific-field" data-pathway="b2b" data-region="USA" value="ZipRecruiter">ZipRecruiter</option>
 							<!-- US - Grad -->
 							<option class="js-specific-field" data-pathway="graduate" data-region="USA" value="CareerBuilder">CareerBuilder</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="USA" value="Career Fair / Campus Event">Career Fair / Campus Event</option>
@@ -783,7 +814,7 @@
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Army CSP Program">Army CSP Program</option>
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Army PaYS Program">Army PaYS Program</option>
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="CareerBuilder">CareerBuilder</option>
-							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Career Fair/Veteran Event">Career Fair / Veteran Event</option>
+							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Career Fair / Veteran Event">Career Fair / Veteran Event</option>
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Facebook">Facebook</option>
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="FDM Blog">FDM Blog</option>
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Glassdoor">Glassdoor</option>
@@ -998,7 +1029,7 @@
 				
 				<div class="form-row [ js-specific-field ]" data-pathway="exforces" data-region="USA">
 					<div>
-						<label>Have you served in the US Military<span class="apply-form__required">*</span></label>
+						<label>Have you served in the US Military</label>
 					</div>
 					<div class="radio-group-horizontal">
 						<label>
@@ -1083,181 +1114,173 @@
 						</label>
 					</div>
 				</div>
+                
+                <!-- global Education -->
+                <div class="js-specific-field" data-pathway="graduate b2b" data-region="USA Canada DE Australia China HK Singapore">
+                    <!-- uni -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate b2b" data-region="DE Australia China HK Singapore">
+                        <div>
+                            <label for="education-form__uni">University<span class="apply-form__required">*</span></label>
+                            <label data-region="DE" for="education-form__uni">Universität<span class="apply-form__required">*</span></label>
+                        </div>
+                        <div>
+                            <span class="apply-form__info" data-region="ENG">As specified on degree certificate</span>
+                            <span class="apply-form__info" data-region="DE">Name der Universität wir auf Ihren Zeugnissen angegeben</span>
+                            <input id="education-form__uni" type="text" name="University" data-validation="required" data-validation-error-msg-container="#education-form__uni-err"/>
+                        </div>
+                        <div class="apply-form__val-msg" id="education-form__uni-err"></div>
+                    </div>
 
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b" data-region="DE UK Australia China HK Ireland SA Singapore">
-					<div>
-						<label for="education-form__uni">University<span class="apply-form__required">*</span></label>
-						<label data-region="DE" for="education-form__uni">Universität<span class="apply-form__required">*</span></label>
-					</div>
-					<div>
-						<span class="apply-form__info" data-region="ENG">As specified on degree certificate</span>
-						<span class="apply-form__info" data-region="DE">Name der Universität wir auf Ihren Zeugnissen angegeben</span>
-						<input id="education-form__uni" type="text" name="University" data-validation="required" data-validation-error-msg-container="#education-form__uni-err"/>
-					</div>
-					<div class="apply-form__val-msg" id="education-form__uni-err"></div>
-				</div>
-				
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="DE UK Australia USA Canada China HK Ireland SA Singapore">
-					<div>
-						<label for="education-form__grad-yr">Graduation Year<span class="apply-form__required">*</span></label>
-						<label data-region="DE" for="education-form__grad-yr">Abschlussjahr<span class="apply-form__required">*</span></label>
-					</div>
-					<div>
-						<select id="education-form__grad-yr" type="text" name="GraduationYear" data-validation="required" data-validation-error-msg-container="#education-form__grad-yr-err">
-							<option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
-							<option value="2018">2018</option>
-							<option valie="2019">2019</option>
-							<option valie="2020">2020</option>
-							<option valie="2021">2021</option>
-							<option valie="2022">2022</option>
-							<option valie="2023">2023</option>
-							<option data-region="ENG" value="Already graduated">Already graduated</option>
-							<option data-region="DE" value="Already graduated">bereits abgeschlossen haben</option>
-						</select>
-					</div>
-					<div class="apply-form__val-msg" id="education-form__grad-yr-err"></div>
-				</div>
+                    <!-- grad year -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="DE Australia USA Canada China HK Singapore">
+                        <div>
+                            <label for="education-form__grad-yr">Graduation Year<span class="apply-form__required">*</span></label>
+                            <label data-region="DE" for="education-form__grad-yr">Abschlussjahr<span class="apply-form__required">*</span></label>
+                        </div>
+                        <div>
+                            <select id="education-form__grad-yr" type="text" name="GraduationYear" data-validation="required" data-validation-error-msg-container="#education-form__grad-yr-err">
+                                <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
+                                <option value="2012">2012</option>
+                                <option valie="2013">2013</option>
+                                <option valie="2014">2014</option>
+                                <option valie="2015">2015</option>
+                                <option valie="2016">2016</option>
+                                <option valie="2017">2017</option>
+                                <option valie="2018">2018</option>
+                                <option valie="2019">2019</option>
+                                <option valie="2020">2020</option>
+                                <option data-region="ENG" value="Already graduated">Already graduated</option>
+                                <option data-region="DE" value="Already graduated">bereits abgeschlossen haben</option>
+                            </select>
+                        </div>
+                        <div class="apply-form__val-msg" id="education-form__grad-yr-err"></div>
+                    </div>
 
-				<div class="form-row [ js-specific-field ]" data-pathway="b2b" data-region="HK Singapore">
-					<div>
-						<label for="education-form__grad-yr">Graduation Year<span class="apply-form__required">*</span></label>
-					</div>
-					<div>
-						<input id="education-form__grad-yr-hk" type="text" name="GraduationYear" data-validation="required" data-validation-error-msg-container="#education-form__grad-yr-hk-err" />
-					</div>
-					<div class="apply-form__val-msg" id="education-form__grad-yr-hk-err"></div>
-				</div>
+                    <!-- grad year - hk Singapore -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="b2b" data-region="HK Singapore">
+                        <div>
+                            <label for="education-form__grad-yr">Graduation Year<span class="apply-form__required">*</span></label>
+                        </div>
+                        <div>
+                            <input id="education-form__grad-yr-hk" type="text" name="GraduationYear" data-validation="required" data-validation-error-msg-container="#education-form__grad-yr-hk-err" />
+                        </div>
+                        <div class="apply-form__val-msg" id="education-form__grad-yr-hk-err"></div>
+                    </div>
 
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="Ireland DE UK Australia USA Canada China HK Singapore SA">
-					<div>
-						<label for="education-form__edu-level">Education Level<span class="apply-form__required">*</span></label>
-						<label data-region="DE" for="education-form__edu-level">Höchster erwobener Abschluss<span class="apply-form__required">*</span></label>
-					</div>
-					<div>
-						<select id="education-form__edu-level" type="text" name="EducationLevel" data-validation="required" data-validation-error-msg-container="#education-form__edu-level-err">
-							<option class="js-default-select" value="" disabled selected hidden>Please select one</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="UK China Singapore" value="Bachelor's Degree">Bachelor's Degree</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="UK China Singapore" value="Master's Degree/Post Graduate Qualification/MBA">Master's Degree/Post Graduate Qualification/MBA</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="UK China Singapore" value="Doctorate Degree">Doctorate Degree</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="China Singapore" value="Higher Degree">Higher Degree</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="UK China Singapore" value="Other">Other</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="None">None</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Diploma">Diploma</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Advanced Diploma">Advanced Diploma</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Ordinary Bachelor">Ordinary Bachelor</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Graduate Diploma">Graduate Diploma</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Bachelor Honours">Bachelor Honours</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Master’s Degree">Master’s Degree</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Doctorate Degree">Doctorate Degree</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Other">Other</option>
-							<option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="High school degree or equivalent (e.g. GED)">High school degree or equivalent (e.g. GED)</option>
-							<option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="Canada" value="High school degree or equivalent)">High school degree or equivalent</option>
-							<option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA Canada" value="Some college or university, no degree">Some college or university, no degree</option>
-							<option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA Canada" value="Associate degree (e.g. AA, AS)">Associate degree (e.g. AA, AS)</option>
-							<option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA Canada" value="Bachelor’s degree (e.g. BA, BS)">Bachelor’s degree (e.g. BA, BS)</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Postgraduate diploma">Postgraduate diploma</option>
-							<option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA Canada" value="Master’s degree (e.g. MA, MS, MEd)">Master’s degree (e.g. MA, MS, MEd)</option>
-							<option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA Canada" value="Professional degree (e.g. MD, DDS">Professional degree (e.g. MD, DDS)</option>
-							<option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="Canada USA" value="Doctorate(e.g. PhD, EdD)">Doctorate (e.g. PhD, EdD)</option>
-							<option class="js-specific-field" data-pathway="b2b graduate" data-region="HK" value="Bachelor’s Degree">Bachelor’s Degree</option>
-							<option class="js-specific-field" data-pathway="b2b graduate" data-region="HK" value="Master’s Degree/Post Graduate Qualification/MBA">Master’s Degree/Post Graduate Qualification/MBA</option>
-							<option class="js-specific-field" data-pathway="b2b graduate" data-region="HK" value="Doctorate Degree">Doctorate Degree</option>
-							<option class="js-specific-field" data-pathway="b2b graduate" data-region="HK" value="Other">Other</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="None">None</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="High School (&lt;Grade 12)">High School (&lt;Grade 12)</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="High School Matric">High School Matric</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Trade School">Trade School</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Professional Qualification">Professional Qualification</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Certificate">Certificate</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Diploma">Diploma</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="National Diploma">National Diploma</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Degree">Degree</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Honours">Honours</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Masters">Masters</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Doctorate">Doctorate</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Other">Other</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Bachelor's Degree Ordinary (Level 7)">Bachelor's Degree Ordinary (Level 7)</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Bachelor’s Degree Honours (Level 8)">Bachelor’s Degree Honours (Level 8)</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Master’s Degree / Post Graduate Qualification / MBA">Master’s Degree / Post Graduate Qualification / MBA</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Doctorate Degree">Doctorate Degree</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Other">Other</option>
-							<option data-region="DE" value="Bachelor’s Degree">Bachelor’s Degree</option>
-							<option data-region="DE" value="Master’s Degree/MBA">Master’s Degree/MBA</option>
-							<option data-region="DE" value="Diplom">Diplom</option>
-							<option data-region="DE" value="Promotion">Promotion</option>
-						</select>
-					</div>
-					<div class="apply-form__val-msg" id="education-form__edu-level-err"></div>
-				</div>
-				
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate"	data-region="DE UK China HK">
-					<div>
-						<label for="education-form__grade">Grade</label>
-						<label data-region="DE" for="education-form__grade">Note/Voraussichtliche Note</label>
-					</div>
-					<div>
-						<span data-region="ENG" class="apply-form__info">If already graduated, please specify grade achieved</span>
-						<span data-region="DE" class="apply-form__info">Wenn Sie bereits abgeschlossen haben, geben Sie bitte Ihre erreichte Note an</span>
-						<select id="education-form__grade" type="text" name="Grade">
-							<option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="1st">1st</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="2:1">2:1</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="2:2">2:2</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="3rd">3rd</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="Pass">Pass</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="Fail">Fail</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="Merit">Merit</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="Distinction">Distinction</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK" value="Other">Other</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="High Distinction (A+)">High Distinction (A+)</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Distinction (A)">Distinction (A)</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Credit (B)">Credit (B)</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Pass (C)">Pass (C)</option>
-							<option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Fail">Fail</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="HK" value="3.5 or above">3.5 or above</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="HK" value="3.0 – 3.5">3.0 – 3.5</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="HK" value="2.5 – 3.0">2.5 – 3.0</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="HK" value="2.0 - 2.5">2.0 - 2.5</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="HK" value="2.0 or below">2.0 or below</option>
-							<option data-region="DE" value="-keine-">-keine-</option>
-							<option data-region="DE" value="sehr gut">sehr gut</option>
-							<option data-region="DE" value="gut">gut</option>
-							<option data-region="DE" value="befriedigend">befriedigend</option>
-							<option data-region="DE" value="ausreichend">ausreichend</option>
-						</select>
-					</div>
-				</div>
-				
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate"	data-region="USA Canada">
-					<div>
-						<label for="education-form__grade">Cumulative GPA</label>
-					</div>
-					<div>
-						<input id="education-form__grade" type="text" name="Grade" />
-					</div>
-				</div>
+                    <!-- Education level -->
+                    <div class="form-row js-specific-field" data-pathway="graduate b2b exforces" data-region="DE Australia USA Canada China HK Singapore">
+                        <div>
+                            <label for="education-form__edu-level">Education Level<span class="apply-form__required">*</span></label>
+                            <label data-region="DE" for="education-form__edu-level">Höchster erwobener Abschluss<span class="apply-form__required">*</span></label>
+                        </div>
+                        <div>
+                            <select id="education-form__edu-level" type="text" name="EducationLevel" data-validation="required" data-validation-error-msg-container="#education-form__edu-level-err">
+                                <option class="js-default-select" value="" disabled selected hidden>Please select one</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="UK China Singapore" value="Bachelor's Degree">Bachelor's Degree</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="UK China Singapore" value="Master's Degree/Post Graduate Qualification / MBA">Master's Degree / Post Graduate Qualification / MBA</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="UK China Singapore" value="Doctorate Degree">Doctorate Degree</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="China Singapore" value="Higher Degree">Higher Degree</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="UK China Singapore" value="Other">Other</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="None">None</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Diploma">Diploma</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Advanced Diploma">Advanced Diploma</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Ordinary Bachelor">Ordinary Bachelor</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Graduate Diploma">Graduate Diploma</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Bachelor Honours">Bachelor Honours</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Master’s Degree">Master’s Degree</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Doctorate Degree">Doctorate Degree</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Other">Other</option>
+                                <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="High school degree or equivalent (e.g. GED)">High school degree or equivalent (e.g. GED)</option>
+                                <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="Canada" value="High school degree or equivalent)">High school degree or equivalent</option>
+                                <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA Canada" value="Some college or university, no degree">Some college or university, no degree</option>
+                                <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA Canada" value="Associate degree (e.g. AA, AS)">Associate degree (e.g. AA, AS)</option>
+                                <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA Canada" value="Bachelor’s degree (e.g. BA, BS)">Bachelor’s degree (e.g. BA, BS)</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Postgraduate diploma">Postgraduate diploma</option>
+                                <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA Canada" value="Master’s degree (e.g. MA, MS, MEd)">Master’s degree (e.g. MA, MS, MEd)</option>
+                                <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA Canada" value="Professional degree (e.g. MD, DDS">Professional degree (e.g. MD, DDS)</option>
+                                <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="Canada USA" value="Doctorate(e.g. PhD, EdD)">Doctorate (e.g. PhD, EdD)</option>
+                                <option class="js-specific-field" data-pathway="b2b graduate" data-region="HK" value="Bachelor’s Degree">Bachelor’s Degree</option>
+                                <option class="js-specific-field" data-pathway="b2b graduate" data-region="HK" value="Master’s Degree/Post Graduate Qualification / MBA">Master’s Degree / Post Graduate Qualification / MBA</option>
+                                <option class="js-specific-field" data-pathway="b2b graduate" data-region="HK" value="Doctorate Degree">Doctorate Degree</option>
+                                <option class="js-specific-field" data-pathway="b2b graduate" data-region="HK" value="Other">Other</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="None">None</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="High School (&lt;Grade 12)">High School (&lt;Grade 12)</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="High School Matric">High School Matric</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Trade School">Trade School</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Professional Qualification">Professional Qualification</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Certificate">Certificate</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Diploma">Diploma</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="National Diploma">National Diploma</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Degree">Degree</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Honours">Honours</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Masters">Masters</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Doctorate">Doctorate</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Other">Other</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Bachelor's Degree Ordinary (Level 7)">Bachelor's Degree Ordinary (Level 7)</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Bachelor’s Degree Honours (Level 8)">Bachelor’s Degree Honours (Level 8)</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Master’s Degree / Post Graduate Qualification / MBA">Master’s Degree / Post Graduate Qualification / MBA</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Doctorate Degree">Doctorate Degree</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Other">Other</option>
+                                <option data-region="DE" value="Bachelor’s Degree">Bachelor’s Degree</option>
+                                <option data-region="DE" value="Master’s Degree/MBA">Master’s Degree/MBA</option>
+                                <option data-region="DE" value="Diplom">Diplom</option>
+                                <option data-region="DE" value="Promotion">Promotion</option>
+                            </select>
+                        </div>
+                        <div class="apply-form__val-msg" id="education-form__edu-level-err"></div>
+                    </div>
 
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate"	data-region="Ireland SA">
-					<div>
-						<label for="education-form__grade-ire">Grade</label>
-					</div>
-					<div>
-						<span class="apply-form__info">If already graduated, please specify grade achieved</span>
-						<input id="education-form__grade-ire" type="text" name="Grade" />
-					</div>
-				</div>
-				
-				<div class="form-row js-specific-field" data-pathway="graduate"	data-region="Ireland SA">
-					<div>
-						<label for="education-form__exp-grade-ire">Expected Grade</label>
-					</div>
-					<div>
-						<span class="apply-form__info">If not graduated, please specify expected grade</span>
-						<input id="education-form__exp-grade-ire" type="text" name="ExpectedGrade" />
-					</div>
-				</div>
+                    <!-- Grade -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate"	data-region="DE China HK">
+                        <div>
+                            <label for="education-form__grade">Grade</label>
+                            <label data-region="DE" for="education-form__grade">Note/Voraussichtliche Note</label>
+                        </div>
+                        <div>
+                            <span data-region="ENG" class="apply-form__info">If already graduated, please specify grade achieved</span>
+                            <span data-region="DE" class="apply-form__info">Wenn Sie bereits abgeschlossen haben, geben Sie bitte Ihre erreichte Note an</span>
+                            <select id="education-form__grade" type="text" name="Grade">
+                                <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="1st">1st</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="2:1">2:1</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="2:2">2:2</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="3rd">3rd</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="Pass">Pass</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="Fail">Fail</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="Merit">Merit</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="Distinction">Distinction</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK" value="Other">Other</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="High Distinction (A+)">High Distinction (A+)</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Distinction (A)">Distinction (A)</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Credit (B)">Credit (B)</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Pass (C)">Pass (C)</option>
+                                <option class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" value="Fail">Fail</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="HK" value="3.5 or above">3.5 or above</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="HK" value="3.0 – 3.5">3.0 – 3.5</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="HK" value="2.5 – 3.0">2.5 – 3.0</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="HK" value="2.0 - 2.5">2.0 - 2.5</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="HK" value="2.0 or below">2.0 or below</option>
+                                <option data-region="DE" value="-keine-">-keine-</option>
+                                <option data-region="DE" value="sehr gut">sehr gut</option>
+                                <option data-region="DE" value="gut">gut</option>
+                                <option data-region="DE" value="befriedigend">befriedigend</option>
+                                <option data-region="DE" value="ausreichend">ausreichend</option>
+                            </select>
+                        </div>
+                    </div>
 
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="UK China HK">
+                    <!-- GPA -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate"	data-region="USA Canada">
+                        <div>
+                            <label for="education-form__grade">Cumulative GPA</label>
+                        </div>
+                        <div>
+                            <input id="education-form__grade" type="text" name="Grade" />
+                        </div>
+                    </div>
+
+                    <!-- Expected grad - China HK -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="China HK">
 					<div>
 						<label for="education-form__exp-grade">Expected Grade</label>
 					</div>
@@ -1287,7 +1310,309 @@
 						</select>
 					</div>
 				</div>
-				
+				</div>
+                
+                <!-- Education UK SA Ireland -->
+                <div class="js-specific-field" data-pathway="graduate" data-region="UK Ireland SA">
+                    <div class="form-row">
+                        <div></div>
+                        <div>
+                            <p style="margin: 0;">List the educational experiences below, starting with the most relevant education.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div>
+                            <label>Education 1</label>
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    <!-- ############ 1st set ############ -->
+                    
+                    <!-- uni -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="UK Ireland SA">
+                        <div>
+                            <label for="education-form__uni1">University<span class="apply-form__required">*</span></label>
+                        </div>
+                        <div>
+                            <span class="apply-form__info" data-region="ENG">As specified on degree certificate</span>
+                            <input id="education-form__uni1" type="text" name="University" data-validation="required" data-validation-error-msg-container="#education-form__uni-err1"/>
+                        </div>
+                        <div class="apply-form__val-msg" id="education-form__uni-err1"></div>
+                    </div>
+
+                    <!-- grad year -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="UK Ireland SA">
+                        <div>
+                            <label for="education-form__grad-yr1">Graduation Year<span class="apply-form__required">*</span></label>
+                        </div>
+                        <div>
+                            <select id="education-form__grad-yr1" type="text" name="GraduationYear" data-validation="required" data-validation-error-msg-container="#education-form__grad-yr-err1">
+                                <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
+                                <option value="2012">2012</option>
+                                <option valie="2013">2013</option>
+                                <option valie="2014">2014</option>
+                                <option valie="2015">2015</option>
+                                <option valie="2016">2016</option>
+                                <option valie="2017">2017</option>
+                                <option valie="2018">2018</option>
+                                <option valie="2019">2019</option>
+                                <option valie="2020">2020</option>
+                                <option data-region="ENG" value="Already graduated">Already graduated</option>
+                                <option data-region="DE" value="Already graduated">bereits abgeschlossen haben</option>
+                            </select>
+                        </div>
+                        <div class="apply-form__val-msg" id="education-form__grad-yr-err1"></div>
+                    </div>
+
+                    <!-- Education level -->
+                    <div class="form-row js-specific-field" data-pathway="graduate" data-region="Ireland UK SA">
+                        <div>
+                            <label for="education-form__edu-level1">Education Level<span class="apply-form__required">*</span></label>
+                        </div>
+                        <div>
+                            <select id="education-form__edu-level1" type="text" name="EducationLevel" data-validation="required" data-validation-error-msg-container="#education-form__edu-level-err1">
+                                <option class="js-default-select" value="" disabled selected hidden>Please select one</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="UK" value="Bachelor's Degree">Bachelor's Degree</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="UK" value="Master's Degree/Post Graduate Qualification/MBA">Master's Degree/Post Graduate Qualification/MBA</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="UK" value="Doctorate Degree">Doctorate Degree</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="UK" value="Other">Other</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="None">None</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="High School (&lt;Grade 12)">High School (&lt;Grade 12)</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="High School Matric">High School Matric</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Trade School">Trade School</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Professional Qualification">Professional Qualification</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Certificate">Certificate</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Diploma">Diploma</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="National Diploma">National Diploma</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Degree">Degree</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Honours">Honours</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Masters">Masters</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Doctorate">Doctorate</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Other">Other</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Bachelor's Degree Ordinary (Level 7)">Bachelor's Degree Ordinary (Level 7)</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Bachelor’s Degree Honours (Level 8)">Bachelor’s Degree Honours (Level 8)</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Master’s Degree / Post Graduate Qualification / MBA">Master’s Degree / Post Graduate Qualification / MBA</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Doctorate Degree">Doctorate Degree</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="apply-form__val-msg" id="education-form__edu-level-err1"></div>
+                    </div>
+
+                    <!-- Grade -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate"	data-region="UK">
+                        <div>
+                            <label for="education-form__grade1">Grade</label>
+                        </div>
+                        <div>
+                            <span data-region="ENG" class="apply-form__info">If already graduated, please specify grade achieved</span>
+                            <select id="education-form__grade1" type="text" name="Grade">
+                                <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
+                                <option value="1st">1st</option>
+                                <option value="2:1">2:1</option>
+                                <option value="2:2">2:2</option>
+                                <option value="3rd">3rd</option>
+                                <option value="Pass">Pass</option>
+                                <option value="Fail">Fail</option>
+                                <option value="Merit">Merit</option>
+                                <option value="Distinction">Distinction</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Grade - Ireland SA -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate"	data-region="Ireland SA">
+                        <div>
+                            <label for="education-form__grade-ire1">Grade</label>
+                        </div>
+                        <div>
+                            <span class="apply-form__info">If already graduated, please specify grade achieved</span>
+                            <input id="education-form__grade-ire1" type="text" name="Grade" />
+                        </div>
+                    </div>
+
+                    <!-- Expected grad - Ireland SA -->
+                    <div class="form-row js-specific-field" data-pathway="graduate"	data-region="Ireland SA">
+                        <div>
+                            <label for="education-form__exp-grade-ire1">Expected Grade</label>
+                        </div>
+                        <div>
+                            <span class="apply-form__info">If not graduated, please specify expected grade</span>
+                            <input id="education-form__exp-grade-ire1" type="text" name="ExpectedGrade" />
+                        </div>
+                    </div>
+
+                    <!-- Expected grad - UK China HK -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="UK ">
+                        <div>
+                            <label for="education-form__exp-grade1">Expected Grade</label>
+                        </div>
+                        <div>
+                            <span class="apply-form__info">If not graduated, please specify expected grade</span>
+                            <select id="education-form__exp-grade1" type="text" name="ExpectedGrade">
+                                <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
+                                <option value="1st">1st</option>
+                                <option value="2:1">2:1</option>
+                                <option value="2:2">2:2</option>
+                                <option value="3rd">3rd</option>
+                                <option value="Pass">Pass</option>
+                                <option value="Fail">Fail</option>
+                                <option value="Merit">Merit</option>
+                                <option value="Distinction">Distinction</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- ############ 2nd set ############ -->
+                    <div class="form-row">
+                        <div>
+                            <label>Education 2</label>
+                        </div>
+                        <div>
+                        </div>
+                    </div>
+                    <!-- uni -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="UK Ireland SA">
+                        <div>
+                            <label for="education-form__uni2">University</label>
+                        </div>
+                        <div>
+                            <span class="apply-form__info" data-region="ENG">As specified on degree certificate</span>
+                            <input id="education-form__uni1" type="text" name="UniversityTwo"/>
+                        </div>
+                    </div>
+
+                    <!-- grad year -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="UK Ireland SA">
+                        <div>
+                            <label for="education-form__grad-yr2">Graduation Year</label>
+                        </div>
+                        <div>
+                            <select id="education-form__grad-yr1" type="text" name="GraduationYearTwo">
+                                <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
+                                <option value="2012">2012</option>
+                                <option valie="2013">2013</option>
+                                <option valie="2014">2014</option>
+                                <option valie="2015">2015</option>
+                                <option valie="2016">2016</option>
+                                <option valie="2017">2017</option>
+                                <option valie="2018">2018</option>
+                                <option valie="2019">2019</option>
+                                <option valie="2020">2020</option>
+                                <option data-region="ENG" value="Already graduated">Already graduated</option>
+                                <option data-region="DE" value="Already graduated">bereits abgeschlossen haben</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Education level -->
+                    <div class="form-row js-specific-field" data-pathway="graduate" data-region="Ireland UK SA">
+                        <div>
+                            <label for="education-form__edu-level2">Education Level</label>
+                        </div>
+                        <div>
+                            <select id="education-form__edu-level1" type="text" name="EducationLevelTwo">
+                                <option class="js-default-select" value="" disabled selected hidden>Please select one</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="UK" value="Bachelor's Degree">Bachelor's Degree</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="UK" value="Master's Degree / Post Graduate Qualification / MBA">Master's Degree / Post Graduate Qualification / MBA</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="UK" value="Doctorate Degree">Doctorate Degree</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="UK" value="Other">Other</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="None">None</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="High School (&lt;Grade 12)">High School (&lt;Grade 12)</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="High School Matric">High School Matric</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Trade School">Trade School</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Professional Qualification">Professional Qualification</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Certificate">Certificate</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Diploma">Diploma</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="National Diploma">National Diploma</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Degree">Degree</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Honours">Honours</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Masters">Masters</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Doctorate">Doctorate</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="SA" value="Other">Other</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Bachelor's Degree Ordinary (Level 7)">Bachelor's Degree Ordinary (Level 7)</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Bachelor’s Degree Honours (Level 8)">Bachelor’s Degree Honours (Level 8)</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Master’s Degree / Post Graduate Qualification / MBA">Master’s Degree / Post Graduate Qualification / MBA</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Doctorate Degree">Doctorate Degree</option>
+                                <option class="js-specific-field" data-pathway="graduate" data-region="Ireland" value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Grade -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate"	data-region="UK">
+                        <div>
+                            <label for="education-form__grade2">Grade</label>
+                        </div>
+                        <div>
+                            <span data-region="ENG" class="apply-form__info">If already graduated, please specify grade achieved</span>
+                            <select id="education-form__grade2" type="text" name="GradeTwo">
+                                <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
+                                <option value="1st">1st</option>
+                                <option value="2:1">2:1</option>
+                                <option value="2:2">2:2</option>
+                                <option value="3rd">3rd</option>
+                                <option value="Pass">Pass</option>
+                                <option value="Fail">Fail</option>
+                                <option value="Merit">Merit</option>
+                                <option value="Distinction">Distinction</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Grade - Ireland SA -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate"	data-region="Ireland SA">
+                        <div>
+                            <label for="education-form__grade-ire2">Grade</label>
+                        </div>
+                        <div>
+                            <span class="apply-form__info">If already graduated, please specify grade achieved</span>
+                            <input id="education-form__grade-ire2" type="text" name="GradeTwo" />
+                        </div>
+                    </div>
+
+                    <!-- Expected grad - Ireland SA -->
+                    <div class="form-row js-specific-field" data-pathway="graduate"	data-region="Ireland SA">
+                        <div>
+                            <label for="education-form__exp-grade-ire2">Expected Grade</label>
+                        </div>
+                        <div>
+                            <span class="apply-form__info">If not graduated, please specify expected grade</span>
+                            <input id="education-form__exp-grade-ire2" type="text" name="ExpectedGradeTwo" />
+                        </div>
+                    </div>
+
+                    <!-- Expected grad - UK China HK -->
+                    <div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="UK ">
+                        <div>
+                            <label for="education-form__exp-grade2">Expected Grade</label>
+                        </div>
+                        <div>
+                            <span class="apply-form__info">If not graduated, please specify expected grade</span>
+                            <select id="education-form__exp-grade2" type="text" name="ExpectedGradeTwo">
+                                <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
+                                <option value="1st">1st</option>
+                                <option value="2:1">2:1</option>
+                                <option value="2:2">2:2</option>
+                                <option value="3rd">3rd</option>
+                                <option value="Pass">Pass</option>
+                                <option value="Fail">Fail</option>
+                                <option value="Merit">Merit</option>
+                                <option value="Distinction">Distinction</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+				</div>
+                
+                
+                
+                <!-- Clubs -->
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate"	data-region="UK Australia China HK Ireland SA Singapore">
 					<div>
 						<label for="education-form__clubs">Please list any clubs or societies you have been a part of</label>
@@ -1299,9 +1624,9 @@
 					<div class="apply-form__val-msg" id="education-form__clubs-err"></div>
 				</div>
 				
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b"	data-region="Australia USA Canada China HK SA Ireland Singapore">
+				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b"	data-region="Australia USA Canada China HK Singapore">
 					<div>
-						<label class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="UK China Ireland SA" for="education-form__personal">Why do you think you would be a good fit for FDM's Careers Programme?</label>
+						<label class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="China" for="education-form__personal">Why do you think you would be a good fit for FDM's Careers Programme?</label>
 						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia HK" for="education-form__personal">Why do you think you would be a good fit for FDM's Graduate Programme?</label>
 						<label class="[ js-specific-field ]" data-pathway="b2b" data-region="USA" for="education-form__personal">Please tell us a bit about your past experience. Why do you think you’re well suited to FDM’s Getting Back to Business Program?</label>
 						<label class="[ js-specific-field ]" data-pathway="b2b" data-region="HK Singapore" for="education-form__personal">Why do you think you would be a good fit for FDM’s Getting Back to Business Programme?</label>
@@ -1315,9 +1640,9 @@
 					<div class="apply-form__val-msg" id="education-form__personal-err"></div>
 				</div>
 				
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b"	data-region="UK ">
+				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b"	data-region="UK Ireland SA">
 					<div>
-						<label class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="UK Australia China Ireland SA" for="education-form__personal">Why do you think you would be a good fit for FDM's Careers Programme?<span class="apply-form__required">*</span></label>
+						<label for="education-form__personal-uk">Why do you think you would be a good fit for FDM's Careers Programme?<span class="apply-form__required">*</span></label>
 					</div>
 					<div>
 						<textarea id="education-form__personal-uk" rows="10" name="PersonalStatement" data-validation="required length" data-validation-length="max700" data-validation-error-msg-container="#education-form__personal-uk-err"></textarea>
@@ -1351,10 +1676,11 @@
 					</div>
 					<div>
 						<select id="location-form__training-loc" name="PreferredTrainingLocation" data-validation="required" data-validation-error-msg-container="#location-form__training-loc-err">
-							<option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
+							<option class="js-default-select" value="" disabled selected hidden>Please select one</option>
 							<option value="London">London</option>
 							<option class="js-specific-field" data-pathway="graduate exforces" data-region="UK Ireland China" value="Leeds">Leeds</option>
 							<option value="Glasgow">Glasgow</option>
+                            <option class="js-specific-field" data-pathway="graduate" data-region="UK" value="Birmingham">Birmingham</option>
 							<option class="js-specific-field" data-pathway="graduate b2b" data-region="China" value="New York">New York</option>
 							<option value="Flexible">Flexible</option>
 							<option value="Don't know">Don't know</option>
@@ -1670,11 +1996,13 @@
 				
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b" data-region="UK Australia China Ireland SA" >
 					<div>
-						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="UK Ireland SA China">Are you able to fund yourself through our initial 8-14 week training programme?<span class="apply-form__required">*</span></label>
+						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="UK Ireland SA">Are you able to fund yourself through our initial 8-14 week training programme?<span class="apply-form__required">*</span></label>
 						<label class="[ js-specific-field ]" data-pathway="b2b" data-region="UK" >Can you commit to seven weeks of training?<span class="apply-form__required">*</span></label>
 						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia">Can you commit to 12-16 weeks of paid training?<span class="apply-form__required">*</span></label>
+						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="China">Can you commit to 8-14 weeks of training?<span class="apply-form__required">*</span></label>
+                        
 						<span class="[ js-specific-field ]" data-pathway="graduate" data-region="UK Ireland China">Please note: FDM is able to offer a travel bursary giving you the opportunity to expense back up to £100 a week in travel expenses during the training period.</span>
-						<span class="[ js-specific-field ]" data-pathway="b2b" data-region="UK">Please note: FDM is able to offer a living allowance giving you the opportunity to expense back up to £170 a week during the training period.</span>
+						<span class="[ js-specific-field ]" data-pathway="b2b" data-region="UK">Please note: FDM is able to offer a living allowance giving you the opportunity to claim expenses up to £170 a week during the training period.</span>
 						<span class="[ js-specific-field ]" data-pathway="graduate" data-region="SA">We arrange to cover accomodation, travel to/from training and meals. (Accomodation only for those who don't live locally).</span>
 					</div>
 					<div class="radio-group-horizontal">
@@ -1743,6 +2071,34 @@
 					</div>
 					<div class="apply-form__val-msg" id="regional-form__eligible-err"></div>
 				</div>
+                
+                <div class="form-row js-specific-field" data-pathway="graduate exforces b2b" data-region="Canada USA">
+					<div>
+						<label for="location-form__visa-type-ca">If yes, what is your right to work?</label>
+					</div>
+					<div>
+						<select id="location-form__visa-type-ca" name="VisaType">
+                            <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
+                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Canadian Citizen / Permanent Resident">Canadian Citizen / Permanent Resident</option>
+                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Temporary Resident">Temporary Resident</option>
+                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Post-Graduate Work Permit">Post-Graduate Work Permit</option>
+                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="NAFTA Work Permit">NAFTA Work Permit</option>
+                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Student Visa">Student Visa</option>
+                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Other">Other</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="US Citizen">US Citizen</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="Green Card / Permanent Resident">Green Card / Permanent Resident</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="EAD (Employment Authorization Document)">EAD (Employment Authorization Document)</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="TN Visa (Canadian / Mexican Citizen)">TN Visa (Canadian / Mexican Citizen)</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="F1/OPT Visa">F1/OPT Visa</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="H1-B Visa (Sponsored by another employer)">H1-B Visa (Sponsored by another employer)</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="J Visa – Exchange students">J Visa – Exchange students</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="K Visa – Spouse of a US citizen">K Visa – Spouse of a US citizen</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="Canadian Citizen">Canadian Citizen</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="Other">Other</option>
+                        </select>
+					</div>
+				</div>
+                
 
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate exforces b2b" data-region="USA Canada">
 					<div>
@@ -1784,11 +2140,9 @@
 					<div class="apply-form__val-msg" id="selection-form__overall-commit-err"></div>
 				</div>
 				
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="UK Australia China Ireland SA Singapore HK Canada USA">
+                <!-- world geoflex -->
+				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="Australia China Ireland SA Singapore HK Canada USA">
 					<div>
-						<label class="js-specific-field" data-pathway="graduate" data-region="UK">Are you geographically flexible to relocate within the UK?<span class="apply-form__required">*</span></label>
-						<label class="js-specific-field" data-pathway="b2b" data-region="UK">Are you flexible to work across our client base?<span class="apply-form__required">*</span></label>
-						<label class="js-specific-field" data-pathway="exforces" data-region="UK">If you are applying for the traditional route, are you geographically flexible to relocate within the UK if required?</label>
 						<label class="js-specific-field" data-pathway="graduate b2b" data-region="HK">Are you geographically flexible to relocate within Hong Kong, or to Singapore or China if required?<span class="apply-form__required">*</span></label>
 						<label class="js-specific-field" data-pathway="graduate" data-region="Australia">Are you geographically flexible to relocate to Sydney, Melbourne or Brisbane if required?<span class="apply-form__required">*</span></label>
 						<label class="js-specific-field" data-pathway="graduate" data-region="China">Are you geographically flexible to relocate within China, or to Hong Kong or Singapore if required?<span class="apply-form__required">*</span></label>
@@ -1811,6 +2165,43 @@
 					</div>
 					<div class="apply-form__val-msg" id="selection-form__geoflex-commit-err"></div>
 				</div>
+                
+                <!-- UK GeoFlex -->
+                <div class="form-row [ js-specific-field ]" data-pathway="graduate exforces" data-region="UK">
+					<div>
+						<label class="js-specific-field" data-pathway="graduate" data-region="UK">Are you geographically flexible to relocate within the UK?<span class="apply-form__required">*</span></label>
+						<label class="js-specific-field" data-pathway="exforces" data-region="UK">If you are applying for the traditional route, are you geographically flexible to relocate within the UK if required?</label>
+				    </div>
+					<div class="radio-group-horizontal">
+						<label>
+							<input id="selection-form__geoflex-commit" type="radio" value="yes" name="GeographicalFlexibility" data-validation="required" data-validation-error-msg-container="#selection-form__geoflex-commit-err-uk"/>
+							<span>Yes</span>
+						</label>
+						<label>
+							<input id="selection-form__geoflex-commit" type="radio" value="no" name="GeographicalFlexibility"/>
+							<span>No</span>
+						</label>
+					</div>
+					<div class="apply-form__val-msg" id="selection-form__geoflex-commit-err-uk"></div>
+				</div>
+                
+                <!-- b2b Have you taken a career break of one year or more? -->
+                <div class="form-row [ js-specific-field ]" data-pathway="b2b" data-region="UK">
+					<div>
+						<label class="js-specific-field" data-pathway="b2b" data-region="UK">Have you taken a career break of one year or more?<span class="apply-form__required">*</span></label>
+				    </div>
+					<div class="radio-group-horizontal">
+						<label>
+							<input id="selection-form__geoflex-commit" type="radio" value="yes" name="CareerBreak" data-validation="required" data-validation-error-msg-container="#selection-form__geoflex-commit-err"/>
+							<span>Yes</span>
+						</label>
+						<label>
+							<input id="selection-form__geoflex-commit" type="radio" value="no" name="CareerBreak"/>
+							<span>No</span>
+						</label>
+					</div>
+					<div class="apply-form__val-msg" id="selection-form__geoflex-commit-err"></div>
+				</div>
 				
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="UK Australia China Ireland SA Singapore HK ">
 					<div>
@@ -1824,21 +2215,50 @@
 					</div>
 				</div>
 				
-				<h3>
+				<h3 class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="Australia Ireland China Canada Singapore HK SA">
 					<span data-region="ENG">Please upload your </span>
 					<span class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="USA Canada">résumé</span>
-					<span class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="UK Australia Ireland China Singapore HK SA">CV</span>
+					<span class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="Australia Ireland China Singapore HK SA">CV</span>
 					<span data-region="DE">Bitte laden Sie Ihre Bewerbungsunterlagen hoch</span>
 					<span class="apply-form__required">*</span>
 				</h3>
+
+                <h3 class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="UK">
+					<span data-region="ENG">Please upload your CV</span>
+					<span class="apply-form__required  js-specific-field"  data-pathway="graduate b2b" data-region="UK">*</span>
+				</h3>
+                
+                <p style="text-align: center;" class="js-specific-field	" data-pathway="graduate exforces b2b" data-region="UK Australia Canada China HK Ireland Singapore SA USA">Please Note, the maximum file size is 5MB</p>
 				
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="DE UK Australia Canada China Singapore HK SA Ireland USA">
+                <!-- Required CV -->
+				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="DE Australia Canada China Singapore HK SA Ireland USA">
 					<div>
 					</div>
 					<div>
-						<input type="file" name="file" id="cv-form__upload" data-validation="required" data-validation-error-msg-container="#cv-form__upload-err"/>
+						<input class="js-upload-input" type="file" name="file" data-validation="required size" data-validation-max-size="5M" data-validation-error-msg-container="#cv-form__upload-err"/>
 					</div>
 					<div class="apply-form__val-msg" id="cv-form__upload-err"></div>
+				</div>
+                
+                <!-- Required CV UK -->
+				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b" data-region="UK">
+					<div>
+					</div>
+					<div>
+						<input class="js-upload-input" type="file" name="file" data-validation="required size" data-validation-max-size="5M" data-validation-error-msg-container="#cv-form__upload-err-uk"/>
+					</div>
+					<div class="apply-form__val-msg" id="cv-form__upload-err-uk"></div>
+				</div>
+                
+                <!-- NOT Required CV -->
+                <div class="form-row [ js-specific-field ]" data-pathway="exforces" data-region="UK">
+					<div>
+					</div>
+					<div>
+						<input class="js-upload-input" type="file" name="file" data-validation="size" data-validation-max-size="5M" data-validation-error-msg-container="#cv-form__upload-err-uk-ex"/>
+					</div>
+                    <div class="apply-form__val-msg" id="cv-form__upload-err-uk-ex"></div>
+
 				</div>
 				
 				<p data-region="DE">Laden Sie bitte Ihre vollständigen Bewerbungsunterlagen in einer pdf-Datei hoch inkl. Anschreiben, Lebenslauf und Zeugnisse (max. 5 MB)*</p>
@@ -1847,7 +2267,7 @@
 					<div>
 						<label class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="UK Canada China Singapore HK SA Ireland USA">I have read and accept the <a href="<?= Hodes\FDM\get_translated_permalink(1966) ?>" target="_blank">Terms and Conditions</a> of use, <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>" target="_blank">Privacy Policy</a> and consent to receiving information from FDM Group in relation to this request. FDM values the privacy of your personal details and we will not share or otherwise distribute your Personal Data to third parties except as provided in this Privacy Policy.</label>
 						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia" for="selection-form__gdpr">I have read and accept the <a href="<?= Hodes\FDM\get_translated_permalink(1966) ?>" target="_blank">Terms and Conditions</a> of use, <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>" target="_blank">Privacy Policy</a> and consent to receiving information from FDM Group in relation to this request. FDM agrees to treat private information disclosed by you through your use of the Site in accordance with the Data Protection Act 1998 (UK) or equivalent legislation in the jurisdiction in which you applied.</label>
-						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="DE" for="selection-form__gdpr-de">Ich habe die <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>" target="_blank" >Nutzungsbedingungen</a> und <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>" target="_blank">Datenschutzrichtlinie</a> gelesen bin damit einverstanden, dass ich im Hinblick auf diese Anfrage Informationen der FDM Group erhalte. FDM legt großen Wert auf den Schutz Ihrer persönlichen Angaben und wir werden Ihre personenbezogenen Daten nicht an Dritte weitergeben oder anderweitig verbreiten, es sei denn, wie in der Datenschutzrichtlinie vorgesehen.</label>
+						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="DE" for="selection-form__gdpr-de">Ich habe die <a href="<?= Hodes\FDM\get_translated_permalink(1966) ?>" target="_blank" >Nutzungsbedingungen</a> und <a href="<?= Hodes\FDM\get_translated_permalink(1963) ?>" target="_blank">Datenschutzrichtlinie</a> gelesen bin damit einverstanden, dass ich im Hinblick auf diese Anfrage Informationen der FDM Group erhalte. FDM legt großen Wert auf den Schutz Ihrer persönlichen Angaben und wir werden Ihre personenbezogenen Daten nicht an Dritte weitergeben oder anderweitig verbreiten, es sei denn, wie in der Datenschutzrichtlinie vorgesehen.</label>
 					</div>
 					<div class="single-checkbox">
 						<label>
@@ -1972,10 +2392,7 @@
         });
     };
         
-    
-	
-			
-	function objectifyForm(formArray) {//serialize data function
+	function objectifyForm(formArray) {
 		var returnArray = {};
 		for (var i = 0; i < formArray.length; i++){
 			if (formArray[i]['value'] == "") {
@@ -1987,11 +2404,19 @@
 	};
 	
 	function uploadCv(sfId) {
-		var reader = new FileReader(),
-			
-		file = $('#cv-form__upload')[0];
-
-		if (!file.files.length) {
+		var reader = new FileReader();
+        
+		var file;
+        
+        $(".js-upload-input").each(function(){
+            var input = this;
+            
+            if( input.files.length ){
+                file = this;
+            }
+        });
+        
+		if (file === undefined) {
 			return false;
 		}
 
@@ -2015,7 +2440,7 @@
 				contentType: "application/json; charset=UTF-8",
 				data: JSON.stringify(cv),
 				processData: false,
-				url: "https://applications.fdmgroup.com/services/apexrest/CVService"
+				url: "https://fdmsaldev-fdmgroup.cs89.force.com/apply/services/apexrest/CVService"
 			}).fail(function(jqXHR, textStatus) {
 				return false;
 			});
@@ -2075,14 +2500,6 @@
 		
 		var setProgress = function() {
 			$('.progress-bar:visible').each(function(){
-				$('.js-progress',this).each(function(){
-					//$(this).removeClass('js-hidden');
-					// find children who are visible and contain some text
-					var $content = $(this).children(':visible').filter(function() {return $(this).text();});
-					// if there are any, then show this pip, otherwise it's a blank, so hide it
-					$(this)[$content.length > 0 ? 'show' : 'hide']();
-				});
-				// set 'current' class on the current section
 				$('.js-progress',this).removeClass('current');
 			});
 			$('.js-progress[data-section-id="' + currentSection + '"]').addClass('current');
@@ -2145,6 +2562,7 @@
 			$('.js-section[data-section="' + currentSection + '"]').hide();
 			
 			if ((nextSelection == 2 && pathway == "exforces" && region == "UK") 
+                || (nextSelection == 2 && pathway == "b2b" && region == "UK")
 				|| (nextSelection == 3 && region == "DE")) {
 				currentSection++;
 				nextSelection++;
@@ -2197,7 +2615,8 @@
 			
 			$('.js-section[data-section="' + currentSection + '"]').hide();
 			
-			if (preSelection == 2 && pathway == "exforces" && region == "UK") {
+			if ((preSelection == 2 && pathway == "exforces" && region == "UK")
+                || (preSelection == 2 && pathway == "b2b" && region == "UK")) {
 				currentSection--;
 				nextSelection--;
 				preSelection--;
@@ -2241,7 +2660,7 @@
 					'Content-Type': 'application/json' 
 				},
 				data: JSON.stringify(formJson),
-				url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService",
+				url: "https://fdmsaldev-fdmgroup.cs89.force.com/apply/services/apexrest/ApplicationService",
 				success: function(responseData, textStatus, jqXHR) {
 					var value = responseData;
 					uploadCv(value);
@@ -2472,7 +2891,7 @@
 		
 		// set a data attribute indicating the number of boxes visible - this is used in styling
 		var $ptb = $('.program-type-boxes');
-		$ptb.attr('data-num-visible', $ptb.children(':not(.js-hidden)').length );
+		$ptb.attr('data-num-visible', $ptb.children(':visible').length );
 		
 	}
 
