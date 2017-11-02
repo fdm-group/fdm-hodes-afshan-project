@@ -36,7 +36,7 @@ add_filter( 'login_errors', function() {
 add_action( 'lost_password', function() {
 
 	global $errors;
-	
+
 	$error_codes_to_mask = [
 		'invalid_email',
 		'invalidcombo',
@@ -66,7 +66,7 @@ add_filter( 'cn_cookie_notice_args', function($args) {
 include( 'include/ip-whitelist.php' );
 
 add_action( 'after_setup_theme', function() {
-	
+
 	// Create our extra VC Components
 	$map = new Map();
 	$our_people = new OurPeople();
@@ -81,7 +81,7 @@ add_action( 'after_setup_theme', function() {
 
 // Very simple password protection on staging sites to keep the general public / search engine bots
 if ( STAGING ) {
-	add_action('init', function(){
+/*	add_action('init', function(){
 		$auth_user = trim( strtolower( $_SERVER['PHP_AUTH_USER'] ?? '' ) );
 		$auth_pw = trim( strtolower( $_SERVER['PHP_AUTH_PW'] ?? '' ) );
 		if ( $auth_user != 'fdm' || $auth_pw != 'hodes123' ) {
@@ -91,12 +91,35 @@ if ( STAGING ) {
 		    exit;
 		}
 	});
+*/
 }
 
-// Implement our redirects
+
 add_action( 'init', function() {
+	// Implement our redirects
 	include( 'include/redirects.php' );
+
+	// Add image sizes, these will also then be made available to select in the CMS.
+	add_image_size( 'blog-listing', 740, 370, true );
+	add_image_size( 'people-thumb', 375, 375, true );
+	add_image_size( 'people-profile', 500, 500, true );
+	add_image_size( 'home-service-thumb', 570, 602, true );
+	add_image_size( 'alt-service-thumb', 570, 380, true );
+	add_image_size( 'heading-banner', 1800, 1200, false );
+	add_image_size( 'investors-stat', 520, 520, false );
 } );
+
+
+add_filter( 'image_size_names_choose', function( $sizes ) {
+    return array_merge( $sizes, array(
+        'people-thumb' => __( 'FDM Person thumb' ),
+		  'investors-stat' => __( 'Investors Stat Slide' )
+    ) );
+});
+
+add_filter( 'jpeg_quality', function() {
+	return 95;
+});
 
 //use non minified version of core Zephyr script, with some modifications.
 add_action( 'wp_enqueue_scripts', function() {
@@ -130,20 +153,20 @@ add_action( 'wp_head', function() {
 	$css_path = get_stylesheet_directory() . '/css/style.css';
 	$less_path = get_stylesheet_directory() . '/css/style.less';
 	$timestamp = filemtime( $css_path ) ?: 0;
-	
+
 	if ( $timestamp < filemtime( $less_path ) ) {
-	
-		error_log( "Custom CSS file is out of date - recompiling from less file $less_path to $css_path" );	
+
+		error_log( "Custom CSS file is out of date - recompiling from less file $less_path to $css_path" );
 
 		// load and set up the compiler
 		require_once( __DIR__ . '/include/lessc.php' );
 		$lesscompiler = new \lessc();
-		
+
 		$lesscompiler->setImportDir( __DIR__ . '/css' );
-	
+
 		// use compressed output
 		$lesscompiler->setFormatter( "compressed" );
-	
+
 		// compose the input string
 		$input = file_get_contents( $less_path );
 
@@ -153,13 +176,13 @@ add_action( 'wp_head', function() {
 		} else {
 			error_log( "Failed writing custom CSS file to $css_path - check this file is writable by webserver - css may be out of date" );
 		};
-	
+
 	}
 
 	?>
-	<link rel="stylesheet" href="<?= get_stylesheet_directory_uri() . '/css/style.css?t=' . $timestamp ?>" /> 
+	<link rel="stylesheet" href="<?= get_stylesheet_directory_uri() . '/css/style.css?t=' . $timestamp ?>" />
 	<?php
-	
+
 }, 999 );
 
 // Add Analytics
@@ -170,7 +193,7 @@ add_action( 'wp_head', function() {
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag(){dataLayer.push(arguments)};
-		gtag('js', new Date());		
+		gtag('js', new Date());
 		gtag('config', 'UA-236343-7');
 	</script>
 	<?php
@@ -193,13 +216,13 @@ add_action( 'wp_head', function() {
 // Insert addthis sharing buttons on single post pages
 add_filter( 'wp', function() {
 	if ( is_singular( ['post'] ) ) {
-		
+
 		// insert the share buttons after the post metadata
 		add_filter( 'us_single_post_meta_html', function( $meta_html ) {
 			$meta_html[] = '&nbsp;&nbsp;&nbsp; <div class="addthis_sharing_toolbox"></div>';
 			return $meta_html;
 		} );
-		
+
 		// insert the addthis script at the bottom of the page
 		add_filter( 'wp_footer', function() {
 			?>
@@ -315,15 +338,15 @@ function get_mobile_detect() {
 // We need to resolve a conflict here between Ubermenu and Polylang
 // Both of them try to 'take over' the menus, so we create a new shortcode which will merge the functionality of both
 add_shortcode( 'fdm-main-nav', function() {
-	
+
 	ob_start();
-	
+
 	// Attempt to get a translated menu
 	// NOTE: the 'us' in 'us_main_menu' doesn't refer to the United States or anything to do with languages
 	// Actually it seems like the Zephyr theme uses 'us' as a prefix for all of their variables, methods etc
 	// 'us_main_menu' is the name registered in Zephyr for the primary nav menu
 	$menu_id = hodes_get_translated_menu_id( 'us_main_menu' );
-	
+
 	if ( $menu_id ) {
 		// If we successfully got a translated menu id, we'll feed it to Ubermenu for the rendering
 		ubermenu( 'main', [ 'menu_id' => 'fdm-main-nav', 'menu' => $menu_id ] );
@@ -331,15 +354,15 @@ add_shortcode( 'fdm-main-nav', function() {
 		// Otherwise use default
 		ubermenu( 'main', [ 'menu_id' => 'fdm-main-nav', 'theme_location' => 'us_main_menu' ] );
 	}
-	
+
 	return ob_get_clean();
 
 } );
 
 add_shortcode( 'fdm-footer-nav', function() {
-	
+
 	ob_start();
-	wp_nav_menu( ['theme_location'=>'footer'] );	
+	wp_nav_menu( ['theme_location'=>'footer'] );
 	return ob_get_clean();
 
 } );
@@ -391,9 +414,9 @@ function get_translated_post_id( $post_id, $lang = null ) {
 // @param	$args	array	Arguments passed to shortcode. If 'post-id' defined, this should be the ID OF THE UK POST/PAGE.
 add_shortcode( 'fdm-translated-button', function( $args ) {
 
-	// Get the translated post id (default to current post)	
+	// Get the translated post id (default to current post)
 	$translated_post_id = get_translated_post_id( $args['post_id'] ?? get_the_ID() );
-	
+
 	// Calculate link and label
 	$link = get_permalink( $translated_post_id ) . ( isset( $args['hash'] ) ? '#' . $args['hash'] : '' );
 	$label = isset($args['link_text']) ? $args['link_text'] : get_the_title( $translated_post_id );

@@ -1,6 +1,6 @@
 <!-- /template/header-banner.php -->
 <?php $show_video = ( $background_video && ! Hodes\FDM\get_mobile_detect()->isMobile() ); ?>
-<section <?= $show_video ? "" : 'style="background-image:url(' . $background_image['url'] . ')"' ?> class="fdm-header-banner" data-num-ctas="<?= $call_to_actions ? count( $call_to_actions ) : 0 ?>">
+<section <?= $show_video ? "" : 'style="background-image:url(' . $background_image['sizes']['heading-banner'] . ')"' ?> class="fdm-header-banner" data-num-ctas="<?= $call_to_actions ? count( $call_to_actions ) : 0 ?>">
 
 	<?php if( $show_video ) { ?>
 		<div class="background-video">
