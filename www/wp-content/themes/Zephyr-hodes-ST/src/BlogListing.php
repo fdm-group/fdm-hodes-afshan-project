@@ -159,7 +159,7 @@ class BlogListing extends VCComponent {
 					<span name="author"><i class="material-icons">person</i> <?= get_field('author') ?></span>
 					<time name="updated" datetime="<?= get_the_date( 'Y-m-d H:i:s' ) ?>"><i class="material-icons">access_time</i> <?= get_the_date() ?></time>
 				</div>
-				<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' ); ?>
+				<?php $image = wp_get_attachment_image_src( get_post_thumbnail_id(), 'blog-listing' ); ?>
 				<div class="teaser-image" style="background-image:url(<?= $image[0] ?>);"></div>
 			</a>
 		</div>

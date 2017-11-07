@@ -159,7 +159,7 @@ class OurPeople extends VCComponent {
 						 */
 						?>
 						<div class="fdm-person-teaser" data-person="<?= $person['slug'] ?>" data-pathway="|<?= implode('|',$person['pathway']) ?>|"  data-country="<?= $person['country'] ?>" data-role="|<?= implode('|',$person['role']) ?>|" >
-							<div name="image"><img src="<?= $person['image']['url'] ?>" alt="" /></div>
+							<div name="image"><img src="<?= $person['image']['sizes']['people-profile'] ?>" alt="" /></div>
 							<div name="info">
 								<span name="name"><?= $person['name'] ?></span>
 								<span name="job-title"><?= $person['job_title'] ?></span>
@@ -182,7 +182,7 @@ class OurPeople extends VCComponent {
 						<button class="fdm-overlay-close" title="close"><?= __( 'Close', 'fdm' ) ?></button>
 						<span name="department"><?= $person['department'] ?></span>
 						<div class="inner">
-							<img src="<?= $person['image']['url'] ?>" alt="<?= $person['name'] ?>" />
+							<img src="<?= $person['image']['sizes']['people-profile']; ?>" alt="<?= $person['name']; ?>" />
 							<h3 name="name"><?= $person['name'] ?></h3>
 							<span name="job-title"><?= $person['job_title'] ?></span>
 							<span name="city"><?= __( 'Location', 'fdm' ) ?>: <?= $person['city'] ?></span>
