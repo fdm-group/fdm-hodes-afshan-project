@@ -878,7 +878,7 @@
 						<label class="js-specific-field" data-pathway="exforces b2b" data-region="USA">Preferred career program<span class="apply-form__required">*</span></label>
 					</div>
 					<div>
-						<select id="details-form__pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err">
+						<select id="details-form__pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err-usa">
 							<option class="js-default-select" value="" selected disabled hidden>Please select one</option>
 							<option value="IT Service Management (ITSM)">IT Service Management (ITSM)</option>
 							<option value="Project Management (PMO)">Project Management (PMO)</option>
@@ -886,7 +886,7 @@
 							<option value="No preference">No preference</option>
 						</select>
 					</div>
-					<div class="apply-form__val-msg" id="details-form__pathway-err"></div>
+					<div class="apply-form__val-msg" id="details-form__pathway-err-usa"></div>
 				</div>
 
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="DE">
@@ -993,7 +993,7 @@
 			</h1>
 			<form class="[ apply-form ]	 [ js-form ]" data-section="2">
 			
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="UK Australia HK Ireland Singapore">
+				<div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="SA UK Australia HK Ireland Singapore">
 					<div>
 						<label>Applicant status<span class="apply-form__required">*</span></label>
 					</div>
@@ -1150,7 +1150,6 @@
                                 <option valie="2019">2019</option>
                                 <option valie="2020">2020</option>
                                 <option data-region="ENG" value="Already graduated">Already graduated</option>
-                                <option data-region="DE" value="Already graduated">bereits abgeschlossen haben</option>
                             </select>
                         </div>
                         <div class="apply-form__val-msg" id="education-form__grad-yr-err"></div>
@@ -1317,16 +1316,12 @@
                     <div class="form-row">
                         <div></div>
                         <div>
-                            <p style="margin: 0;">List the educational experiences below, starting with the most relevant education.</p>
+                            <p style="margin: 0;">List your educational experiences below, starting with the most recent.</p>
                         </div>
                     </div>
                     
                     <div class="form-row">
-                        <div>
-                            <label>Education 1</label>
-                        </div>
-                        <div>
-                        </div>
+                        <p style="text-align: center; font-weight: bold;">Education (recent)</p>
                     </div>
                     <!-- ############ 1st set ############ -->
                     
@@ -1469,11 +1464,7 @@
                     
                     <!-- ############ 2nd set ############ -->
                     <div class="form-row">
-                        <div>
-                            <label>Education 2</label>
-                        </div>
-                        <div>
-                        </div>
+                        <p style="text-align: center; font-weight: bold;">Education (other)</p>
                     </div>
                     <!-- uni -->
                     <div class="form-row [ js-specific-field ]" data-pathway="graduate" data-region="UK Ireland SA">
@@ -1482,7 +1473,7 @@
                         </div>
                         <div>
                             <span class="apply-form__info" data-region="ENG">As specified on degree certificate</span>
-                            <input id="education-form__uni1" type="text" name="UniversityTwo"/>
+                            <input id="education-form__uni1" type="text" name="University2"/>
                         </div>
                     </div>
 
@@ -1492,7 +1483,7 @@
                             <label for="education-form__grad-yr2">Graduation Year</label>
                         </div>
                         <div>
-                            <select id="education-form__grad-yr1" type="text" name="GraduationYearTwo">
+                            <select id="education-form__grad-yr1" type="text" name="GraduationYear2">
                                 <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
                                 <option value="2012">2012</option>
                                 <option valie="2013">2013</option>
@@ -1515,7 +1506,7 @@
                             <label for="education-form__edu-level2">Education Level</label>
                         </div>
                         <div>
-                            <select id="education-form__edu-level1" type="text" name="EducationLevelTwo">
+                            <select id="education-form__edu-level1" type="text" name="EducationLevel2">
                                 <option class="js-default-select" value="" disabled selected hidden>Please select one</option>
                                 <option class="js-specific-field" data-pathway="graduate" data-region="UK" value="Bachelor's Degree">Bachelor's Degree</option>
                                 <option class="js-specific-field" data-pathway="graduate" data-region="UK" value="Master's Degree / Post Graduate Qualification / MBA">Master's Degree / Post Graduate Qualification / MBA</option>
@@ -1550,7 +1541,7 @@
                         </div>
                         <div>
                             <span data-region="ENG" class="apply-form__info">If already graduated, please specify grade achieved</span>
-                            <select id="education-form__grade2" type="text" name="GradeTwo">
+                            <select id="education-form__grade2" type="text" name="Grade2">
                                 <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
                                 <option value="1st">1st</option>
                                 <option value="2:1">2:1</option>
@@ -1572,7 +1563,7 @@
                         </div>
                         <div>
                             <span class="apply-form__info">If already graduated, please specify grade achieved</span>
-                            <input id="education-form__grade-ire2" type="text" name="GradeTwo" />
+                            <input id="education-form__grade-ire2" type="text" name="Grade2" />
                         </div>
                     </div>
 
@@ -1583,7 +1574,7 @@
                         </div>
                         <div>
                             <span class="apply-form__info">If not graduated, please specify expected grade</span>
-                            <input id="education-form__exp-grade-ire2" type="text" name="ExpectedGradeTwo" />
+                            <input id="education-form__exp-grade-ire2" type="text" name="ExpectedGrade2" />
                         </div>
                     </div>
 
@@ -1594,7 +1585,7 @@
                         </div>
                         <div>
                             <span class="apply-form__info">If not graduated, please specify expected grade</span>
-                            <select id="education-form__exp-grade2" type="text" name="ExpectedGradeTwo">
+                            <select id="education-form__exp-grade2" type="text" name="ExpectedGrade2">
                                 <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
                                 <option value="1st">1st</option>
                                 <option value="2:1">2:1</option>
@@ -1624,7 +1615,7 @@
 					<div class="apply-form__val-msg" id="education-form__clubs-err"></div>
 				</div>
 				
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b"	data-region="Australia USA Canada China HK Singapore">
+				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b"	data-region="USA Canada China HK Singapore">
 					<div>
 						<label class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="China" for="education-form__personal">Why do you think you would be a good fit for FDM's Careers Programme?</label>
 						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia HK" for="education-form__personal">Why do you think you would be a good fit for FDM's Graduate Programme?</label>
@@ -1640,9 +1631,11 @@
 					<div class="apply-form__val-msg" id="education-form__personal-err"></div>
 				</div>
 				
-				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b"	data-region="UK Ireland SA">
+				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b"	data-region="Australia UK Ireland SA">
 					<div>
-						<label for="education-form__personal-uk">Why do you think you would be a good fit for FDM's Careers Programme?<span class="apply-form__required">*</span></label>
+						<label class="js-specific-field" data-pathway="graduate" data-region="UK Ireland SA" for="education-form__personal-uk">Why do you think you would be a good fit for FDM's Careers Programme?<span class="apply-form__required">*</span></label>
+						<label class="js-specific-field" data-pathway="graduate" data-region="Australia" for="education-form__personal">Why do you think you would be a good fit for FDM's Graduate Programme?<span class="apply-form__required">*</span></label>
+
 					</div>
 					<div>
 						<textarea id="education-form__personal-uk" rows="10" name="PersonalStatement" data-validation="required length" data-validation-length="max700" data-validation-error-msg-container="#education-form__personal-uk-err"></textarea>
@@ -1783,10 +1776,10 @@
 				
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b" data-region="China SA">
 					<div>
-						<label for="location-form__visa-type-ch">If yes, what type of visa fo you currently hold?</label>
+						<label for="location-form__visa-type-ch">If yes, what type of visa do you currently hold?</label>
 					</div>
 					<div>
-						<input id="location-form__visa-type-ch" name="VisaType"/>
+						<input id="location-form__visa-type-ch" name="VisaType" type="text"/>
 					</div>
 				</div>
 				
@@ -2001,7 +1994,8 @@
 						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="Australia">Can you commit to 12-16 weeks of paid training?<span class="apply-form__required">*</span></label>
 						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="China">Can you commit to 8-14 weeks of training?<span class="apply-form__required">*</span></label>
                         
-						<span class="[ js-specific-field ]" data-pathway="graduate" data-region="UK Ireland China">Please note: FDM is able to offer a travel bursary giving you the opportunity to expense back up to £100 a week in travel expenses during the training period.</span>
+						<span class="[ js-specific-field ]" data-pathway="graduate" data-region="UK">Please note: FDM is able to offer a travel bursary giving you the opportunity to expense back up to £100 a week in travel expenses during the training period.</span>
+						<span class="[ js-specific-field ]" data-pathway="graduate" data-region="Ireland">Please note: FDM is able to offer a travel bursary giving you the opportunity to expense back up to £170 a week in travel expenses during the training period.</span>
 						<span class="[ js-specific-field ]" data-pathway="b2b" data-region="UK">Please note: FDM is able to offer a living allowance giving you the opportunity to claim expenses up to £170 a week during the training period.</span>
 						<span class="[ js-specific-field ]" data-pathway="graduate" data-region="SA">We arrange to cover accomodation, travel to/from training and meals. (Accomodation only for those who don't live locally).</span>
 					</div>
@@ -2072,7 +2066,7 @@
 					<div class="apply-form__val-msg" id="regional-form__eligible-err"></div>
 				</div>
                 
-                <div class="form-row js-specific-field" data-pathway="graduate exforces b2b" data-region="Canada USA">
+                <div class="form-row js-specific-field" data-pathway="graduate exforces b2b" data-region="Canada">
 					<div>
 						<label for="location-form__visa-type-ca">If yes, what is your right to work?</label>
 					</div>
@@ -2085,6 +2079,17 @@
                             <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="NAFTA Work Permit">NAFTA Work Permit</option>
                             <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Student Visa">Student Visa</option>
                             <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Other">Other</option>
+                        </select>
+					</div>
+				</div>
+                
+                <div class="form-row js-specific-field" data-pathway="graduate exforces b2b" data-region="USA">
+					<div>
+						<label for="location-form__visa-type-usa">What is your right to work?</label>
+					</div>
+					<div>
+						<select id="location-form__visa-type-usa" name="VisaType" data-validation="required" data-validation-error-msg-container="#location-form__visa-type-usa-err">
+                            <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
                             <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="US Citizen">US Citizen</option>
                             <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="Green Card / Permanent Resident">Green Card / Permanent Resident</option>
                             <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="EAD (Employment Authorization Document)">EAD (Employment Authorization Document)</option>
@@ -2097,6 +2102,7 @@
                             <option class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA" value="Other">Other</option>
                         </select>
 					</div>
+                    <div class="apply-form__val-msg" id="location-form__visa-type-usa-err"></div>
 				</div>
                 
 
@@ -2192,11 +2198,11 @@
 				    </div>
 					<div class="radio-group-horizontal">
 						<label>
-							<input id="selection-form__geoflex-commit" type="radio" value="yes" name="CareerBreak" data-validation="required" data-validation-error-msg-container="#selection-form__geoflex-commit-err"/>
+							<input id="selection-form__geoflex-commit" type="radio" value="Yes" name="CareerBreak" data-validation="required" data-validation-error-msg-container="#selection-form__geoflex-commit-err"/>
 							<span>Yes</span>
 						</label>
 						<label>
-							<input id="selection-form__geoflex-commit" type="radio" value="no" name="CareerBreak"/>
+							<input id="selection-form__geoflex-commit" type="radio" value="No" name="CareerBreak"/>
 							<span>No</span>
 						</label>
 					</div>
@@ -2228,14 +2234,14 @@
 					<span class="apply-form__required  js-specific-field"  data-pathway="graduate b2b" data-region="UK">*</span>
 				</h3>
                 
-                <p style="text-align: center;" class="js-specific-field	" data-pathway="graduate exforces b2b" data-region="UK Australia Canada China HK Ireland Singapore SA USA">Please Note, the maximum file size is 5MB</p>
+                <p style="text-align: center;" class="js-specific-field	" data-pathway="graduate exforces b2b" data-region="UK Australia Canada China HK Ireland Singapore SA USA">Please Note, the maximum file size is 4.3MB</p>
 				
                 <!-- Required CV -->
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="DE Australia Canada China Singapore HK SA Ireland USA">
 					<div>
 					</div>
 					<div>
-						<input class="js-upload-input" type="file" name="file" data-validation="required size" data-validation-max-size="5M" data-validation-error-msg-container="#cv-form__upload-err"/>
+						<input class="js-upload-input" type="file" name="file" data-validation="required size" data-validation-max-size="4300kb" data-validation-error-msg-container="#cv-form__upload-err"/>
 					</div>
 					<div class="apply-form__val-msg" id="cv-form__upload-err"></div>
 				</div>
@@ -2245,7 +2251,7 @@
 					<div>
 					</div>
 					<div>
-						<input class="js-upload-input" type="file" name="file" data-validation="required size" data-validation-max-size="5M" data-validation-error-msg-container="#cv-form__upload-err-uk"/>
+						<input class="js-upload-input" type="file" name="file" data-validation="required size" data-validation-max-size="4300kb" data-validation-error-msg-container="#cv-form__upload-err-uk"/>
 					</div>
 					<div class="apply-form__val-msg" id="cv-form__upload-err-uk"></div>
 				</div>
@@ -2255,7 +2261,7 @@
 					<div>
 					</div>
 					<div>
-						<input class="js-upload-input" type="file" name="file" data-validation="size" data-validation-max-size="5M" data-validation-error-msg-container="#cv-form__upload-err-uk-ex"/>
+						<input class="js-upload-input" type="file" name="file" data-validation="size" data-validation-max-size="4300kb" data-validation-error-msg-container="#cv-form__upload-err-uk-ex"/>
 					</div>
                     <div class="apply-form__val-msg" id="cv-form__upload-err-uk-ex"></div>
 
@@ -2477,6 +2483,10 @@
 		}
 		
 		$(".js-wrapper").removeClass('js-hidden');
+        
+        // set a data attribute indicating the number of boxes visible - this is used in styling
+		var $ptb = $('.program-type-boxes');
+		$ptb.attr('data-num-visible', $ptb.children(':visible').length );
 		
 		$(".js-region").change(function(){
 			var selectedRegion = this.value;
