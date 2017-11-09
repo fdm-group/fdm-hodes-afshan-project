@@ -188,7 +188,7 @@
 				</li>
 				<li class="js-progress" data-section-id="4">
 					<span class="progress-icon"></span>
-					<span>DokumEnten-Upload</span>
+					<span>Dokumenten Upload</span>
 				</li>
 			</ul>
 		</header>
@@ -204,7 +204,7 @@
 			</h1>
 			<form class="[ js-form ]" data-section="0">
 				<label>Please select a location<span class="apply-form__required">*</span></label>
-				<select name="ApplyingTo" class="js-region">
+				<select id="applying-to" name="ApplyingTo" class="js-region">
 					<option selected="selected" value="UK">UK</option>
 					<option value="Ireland">Ireland</option>
 					<option value="USA">USA</option>
@@ -456,7 +456,7 @@
 					<div class="apply-form__val-msg" id="education-form__edu-level-err-b2b"></div>
 				</div>
 				
-				<div class="form-row js-specific-field" data-pathway="graduate exforces b2b" data-region="DE UK Australia Canada China HK Ireland Singapore SA USA">
+				<div class="form-row js-specific-field js-campaign-name" data-pathway="graduate exforces b2b" data-region="DE UK Australia Canada China HK Ireland Singapore SA USA">
 					<div>
 						<label for="details-form__hear-about">Where did you hear about us?<span class="apply-form__required">*</span></label>
 						<label data-region="DE" for="details-form__hear-about">Wie haben Sie von uns erfahren?<span class="apply-form__required">*</span></label>
@@ -1029,7 +1029,7 @@
 				
 				<div class="form-row [ js-specific-field ]" data-pathway="exforces" data-region="USA">
 					<div>
-						<label>Have you served in the US Military</label>
+						<label>Have you served in the US Military?</label>
 					</div>
 					<div class="radio-group-horizontal">
 						<label>
@@ -2267,7 +2267,7 @@
 
 				</div>
 				
-				<p data-region="DE">Laden Sie bitte Ihre vollständigen Bewerbungsunterlagen in einer pdf-Datei hoch inkl. Anschreiben, Lebenslauf und Zeugnisse (max. 5 MB)*</p>
+				<p data-region="DE">Laden Sie bitte Ihre vollständigen Bewerbungsunterlagen in einer pdf-Datei hoch inkl. Anschreiben, Lebenslauf und Zeugnisse (max. 4.3 MB)*</p>
 				
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="DE UK Australia Canada China Singapore HK SA Ireland USA">
 					<div>
@@ -2350,6 +2350,8 @@
 	</div>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 </div>
+    
+<form class="js-form  js-additional-fields" style="display: none"></form>
 
 <script type="text/javascript">
     jQuery(function($){
@@ -2396,6 +2398,21 @@
                 }
             }
         });
+    };
+        
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : sParameterName[1];
+            }
+        }
     };
         
 	function objectifyForm(formArray) {
@@ -2458,7 +2475,46 @@
 	
 	$(function(){
 		
-		var regionParam = $('.fdm-application-form-component').attr('data-default-region');
+        var shortCode = getUrlParameter("cs");
+        var regionOverride;
+        
+        if(shortCode != undefined) {
+            $.ajax({
+                url: "https://fdmsaldev-fdmgroup.cs89.force.com/apply/services/apexrest/ApplicationService?cs=" + shortCode,
+                type: "get",
+                async: false,
+                success: function(data){
+                    
+                
+                    var campaingDetails = data.CampaignDetails;
+
+                    if( campaingDetails.CampaignName != undefined ){
+
+                        $('#details-form__hear-about').append($('<option>', {
+                            value: campaingDetails.CampaignName,
+                            text: campaingDetails.CampaignName,
+                            selected: 'selected'
+                        }));
+                        $(".js-campaign-name").hide();
+
+                    }
+
+                    if( campaingDetails.CampaignId != undefined ){
+                        $('<input />').attr('type', 'hidden')
+                            .attr('name', "CampaignId")
+                            .attr('value', campaingDetails.CampaignId)
+                            .appendTo('.js-additional-fields');
+                    }
+
+                    if( campaingDetails.ApplyingTo != undefined ){
+                        regionOverride = campaingDetails.ApplyingTo;
+                    }
+                }
+            });
+        }
+        
+        
+		var regionParam = regionOverride != undefined ? regionOverride : $('.fdm-application-form-component').attr('data-default-region');
 		
 		if (regionParam != undefined && regionParam != false) {
 			
