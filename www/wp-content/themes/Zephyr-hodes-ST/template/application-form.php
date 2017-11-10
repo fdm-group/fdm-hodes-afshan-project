@@ -1237,7 +1237,7 @@
                         </div>
                         <div>
                             <span data-region="ENG" class="apply-form__info">If already graduated, please specify grade achieved</span>
-                            <span data-region="DE" class="apply-form__info">Wenn Sie bereits abgeschlossen haben, geben Sie bitte Ihre erreichte Note an</span>
+                            <span data-region="DE" class="apply-form__info" style="white-space: nowrap;">Wenn Sie bereits abgeschlossen haben, geben Sie bitte Ihre erreichte Note an</span>
                             <select id="education-form__grade" type="text" name="Grade">
                                 <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
                                 <option class="[ js-specific-field ]" data-pathway="graduate" data-region="UK China" value="1st">1st</option>
@@ -2463,7 +2463,7 @@
 				contentType: "application/json; charset=UTF-8",
 				data: JSON.stringify(cv),
 				processData: false,
-				url: "https://fdmsaldev-fdmgroup.cs89.force.com/apply/services/apexrest/CVService"
+				url: "https://applications.fdmgroup.com/services/apexrest/CVService"
 			}).fail(function(jqXHR, textStatus) {
 				return false;
 			});
@@ -2480,7 +2480,7 @@
         
         if(shortCode != undefined) {
             $.ajax({
-                url: "https://fdmsaldev-fdmgroup.cs89.force.com/apply/services/apexrest/ApplicationService?cs=" + shortCode,
+                url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService?cs=" + shortCode,
                 type: "get",
                 async: false,
                 success: function(data){
@@ -2514,7 +2514,7 @@
         }
         
         
-		var regionParam = regionOverride != undefined ? regionOverride : $('.fdm-application-form-component').attr('data-default-region');
+		var regionParam = regionOverride === undefined || regionOverride === "" ? $('.fdm-application-form-component').attr('data-default-region') : regionOverride;
 		
 		if (regionParam != undefined && regionParam != false) {
 			
@@ -2726,7 +2726,7 @@
 					'Content-Type': 'application/json' 
 				},
 				data: JSON.stringify(formJson),
-				url: "https://fdmsaldev-fdmgroup.cs89.force.com/apply/services/apexrest/ApplicationService",
+				url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService",
 				success: function(responseData, textStatus, jqXHR) {
 					var value = responseData;
 					uploadCv(value);
