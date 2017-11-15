@@ -847,7 +847,7 @@
 						<label class="js-specific-field" data-pathway="graduate" data-region="DE" for="details-form__pathway">Bevorzugter Trainingsbereich<span class="apply-form__required">*</span></label>
 					</div>
 					<div>
-						<select id="details-form__pathway" class="js-pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err">
+						<select id="details-form__pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err">
 							<option class="js-default-select" value="" selected disabled hidden>Please select one</option>
 							<option data-region="DE" value="Business Analyse">Business Analyse</option>
 							<option data-region="DE" value="Business Intelligence">Business Intelligence</option>
@@ -868,7 +868,6 @@
 							<option class="js-specific-field" data-pathway="graduate" data-region="Australia Singapore" value="Mx.3 Support">Mx.3 Support</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Singapore" value="Testing">Testing</option>
 						</select>
-                        <input class="js-pre-def-pathway js-hidden" name="Pathway" type="text" disabled/>
 					</div>
 					<div class="apply-form__val-msg" id="details-form__pathway-err"></div>
 				</div>
@@ -879,14 +878,13 @@
 						<label class="js-specific-field" data-pathway="exforces b2b" data-region="USA">Preferred career program<span class="apply-form__required">*</span></label>
 					</div>
 					<div>
-						<select id="details-form__pathway" class="js-pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err-usa">
+						<select id="details-form__pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err-usa">
 							<option class="js-default-select" value="" selected disabled hidden>Please select one</option>
 							<option value="IT Service Management (ITSM)">IT Service Management (ITSM)</option>
 							<option value="Project Management (PMO)">Project Management (PMO)</option>
 							<option value="Software Development">Software Development</option>
 							<option value="No preference">No preference</option>
 						</select>
-                        <input class="js-pre-def-pathway js-hidden" name="Pathway" type="text" disabled/>
 					</div>
 					<div class="apply-form__val-msg" id="details-form__pathway-err-usa"></div>
 				</div>
@@ -957,13 +955,12 @@
 						<label for="details-form__route">Route you are applying for</label>
 					</div>
 					<div>
-						<select id="details-form__service" class="js-pathway" type="text" name="Pathway">
+						<select id="details-form__service" type="text" name="Pathway">
 							<option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
 							<option value="Traditional">Traditional</option>
 							<option value="Advanced">Advanced</option>
 							<option value="Don't know">Don't know</option>
 						</select>
-                        <input class="js-pre-def-pathway js-hidden" name="Pathway" type="text" disabled/>
 					</div>
 				</div>
 				
@@ -2088,7 +2085,7 @@
                 
                 <div class="form-row js-specific-field" data-pathway="graduate exforces b2b" data-region="USA">
 					<div>
-						<label for="location-form__visa-type-usa">What is your right to work?<span class="apply-form__required">*</span></label>
+						<label for="location-form__visa-type-usa">What is your right to work?</label>
 					</div>
 					<div>
 						<select id="location-form__visa-type-usa" name="VisaType" data-validation="required" data-validation-error-msg-container="#location-form__visa-type-usa-err">
@@ -2224,7 +2221,7 @@
 					</div>
 				</div>
 				
-				<h3 class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="USA Australia Ireland China Canada Singapore HK SA">
+				<h3 class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="Australia Ireland China Canada Singapore HK SA">
 					<span data-region="ENG">Please upload your </span>
 					<span class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="USA Canada">résumé</span>
 					<span class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="Australia Ireland China Singapore HK SA">CV</span>
@@ -2466,7 +2463,7 @@
 				contentType: "application/json; charset=UTF-8",
 				data: JSON.stringify(cv),
 				processData: false,
-				url: "https://fdmsaldev-fdmgroup.cs89.force.com/apply/services/apexrest/CVService"
+				url: "https://applications.fdmgroup.com/services/apexrest/CVService"
 			}).fail(function(jqXHR, textStatus) {
 				return false;
 			});
@@ -2479,12 +2476,11 @@
 	$(function(){
 		
         var shortCode = getUrlParameter("cs");
-        var streamCode = getUrlParameter("stream");
         var regionOverride;
         
         if(shortCode != undefined) {
             $.ajax({
-                url: "https://fdmsaldev-fdmgroup.cs89.force.com/apply/services/apexrest/ApplicationService?cs=" + shortCode,
+                url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService?cs=" + shortCode,
                 type: "get",
                 async: false,
                 success: function(data){
@@ -2515,12 +2511,6 @@
                     }
                 }
             });
-        }
-        
-        if(streamCode != undefined) {
-            $(".js-pathway").addClass("js-hidden");
-            $(".js-pre-def-pathway").removeClass("js-hidden");
-            $(".js-pre-def-pathway").val(streamCode);   
         }
         
         
@@ -2722,14 +2712,8 @@
 			$(".js-spinner").removeClass('js-hidden');
 			$(".js-apply-btn").prop("disabled",true);
 			
-            var allForms = $(".js-form:not(.js-cv-form)");
-            
-            var disabled = allForms.find(':input:disabled').removeAttr('disabled');
-            
-            var data = allForms.serializeArray();
-            
-            disabled.attr('disabled','disabled');
-            			
+			var data = $(".js-form:not(.js-cv-form)").serializeArray();
+			
 			var formJson = {application: objectifyForm(data) };
 			
 			delete formJson.application.file;
@@ -2742,7 +2726,7 @@
 					'Content-Type': 'application/json' 
 				},
 				data: JSON.stringify(formJson),
-				url: "https://fdmsaldev-fdmgroup.cs89.force.com/apply/services/apexrest/ApplicationService",
+				url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService",
 				success: function(responseData, textStatus, jqXHR) {
 					var value = responseData;
 					uploadCv(value);
