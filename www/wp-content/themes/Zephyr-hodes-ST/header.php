@@ -10,9 +10,6 @@ $us_layout = US_Layout::instance();
 <head>
 	<meta charset="UTF-8">
 
-	<?php /* Don't remove the semicolon in the title tag below: it's needed for Theme Check */ ?>
-	<title><?php wp_title( '' ); ?></title>
-
 	<?php wp_head() ?>
 
 	<?php global $us_generate_css_file;

@@ -81,7 +81,7 @@ add_action( 'after_setup_theme', function() {
 
 // Very simple password protection on staging sites to keep the general public / search engine bots
 if ( STAGING ) {
-/*	add_action('init', function(){
+	add_action('init', function(){
 		$auth_user = trim( strtolower( $_SERVER['PHP_AUTH_USER'] ?? '' ) );
 		$auth_pw = trim( strtolower( $_SERVER['PHP_AUTH_PW'] ?? '' ) );
 		if ( $auth_user != 'fdm' || $auth_pw != 'hodes123' ) {
@@ -91,9 +91,7 @@ if ( STAGING ) {
 		    exit;
 		}
 	});
-*/
 }
-
 
 add_action( 'init', function() {
 	// Implement our redirects
@@ -425,5 +423,120 @@ add_shortcode( 'fdm-translated-button', function( $args ) {
 
 });
 
+if( function_exists('acf_add_local_field_group') ) {
+
+	acf_add_local_field_group(array (
+		'key' => 'group_5a0c6a0d833a4',
+		'title' => 'Meta Tags',
+		'fields' => array (
+			array (
+				'key' => 'field_5a0c6a18ed495',
+				'label' => 'Meta Title',
+				'name' => 'fdm_meta_title',
+				'type' => 'text',
+				'value' => NULL,
+				'instructions' => 'Contents of HTML title tag to be used. Aim to keep titles under 70 characters. For best practice see: http://moz.com/learn/seo/title-tag',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => array (
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'placeholder' => '',
+				'prepend' => '',
+				'append' => '',
+				'maxlength' => '',
+			),
+			array (
+				'key' => 'field_5a0c6aaced496',
+				'label' => 'Meta Description',
+				'name' => 'fdm_meta_desc',
+				'type' => 'textarea',
+				'value' => NULL,
+				'instructions' => 'Meta description to be used on event archive pages. Aim for approximately 155 characters. For best practice see: http://moz.com/learn/seo/meta-description.',
+				'required' => 0,
+				'conditional_logic' => 0,
+				'wrapper' => array (
+					'width' => '',
+					'class' => '',
+					'id' => '',
+				),
+				'default_value' => '',
+				'placeholder' => '',
+				'maxlength' => '',
+				'rows' => '',
+				'new_lines' => '',
+			),
+		),
+		'location' => array (
+			array (
+				array (
+					'param' => 'post_type',
+					'operator' => '==',
+					'value' => 'post',
+				),
+			),
+			array (
+				array (
+					'param' => 'post_type',
+					'operator' => '==',
+					'value' => 'page',
+				),
+			),
+			array (
+				array (
+					'param' => 'post_type',
+					'operator' => '==',
+					'value' => 'us_testimonial',
+				),
+			),
+			array (
+				array (
+					'param' => 'post_type',
+					'operator' => '==',
+					'value' => 'us_portfolio',
+				),
+			),
+		),
+		'menu_order' => 30,
+		'position' => 'normal',
+		'style' => 'default',
+		'label_placement' => 'top',
+		'instruction_placement' => 'label',
+		'hide_on_screen' => '',
+		'active' => 1,
+		'description' => '',
+	));
+
+	function output_meta_tags() {
+		$meta_title = ($post_title = get_the_title()) ? $post_title : get_bloginfo();
+		$meta_description = '';
+
+		if( is_singular() ) {
+			$post_id = get_the_ID();
+			$meta_title = ($custom_title = get_field( 'fdm_meta_title', $post_id )) ? $custom_title : $meta_title;
+
+			$meta_description = get_field( 'fdm_meta_desc', $post_id );
+			if( empty($meta_description) ) {
+				$this_post = get_post( $post_id );
+				$meta_description = wp_trim_words( strip_shortcodes( $this_post->post_content ), 20 );
+			}
+		}
+
+		echo "<title>$meta_title</title>";
+		echo '<meta name="description" content="'.$meta_description.'">';
+	}
+
+	add_action( 'wp_head', function() {
+		output_meta_tags();
+	}, 5 );
+
+	// Add Options page for custom post type archive meta tags
+	// Commented out as not required at this time, but added for future extensibility
+	//acf_add_options_page( ['page_title' => 'Archive Meta Tags', 'menu_slug' => 'archive_meta_tags'] );
+
+}
 
 //include('include/dh-content-find-replace.php');
