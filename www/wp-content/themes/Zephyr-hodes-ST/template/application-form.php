@@ -131,6 +131,7 @@
 </style>
 
 <div class="fdm-application-form-component" data-default-region="<?= $default_region ?>">
+    <div class="loader  js-hidden">Loading...</div>
 	<div class="js-wrapper  js-hidden">
 		<header>
 		
@@ -847,7 +848,7 @@
 						<label class="js-specific-field" data-pathway="graduate" data-region="DE" for="details-form__pathway">Bevorzugter Trainingsbereich<span class="apply-form__required">*</span></label>
 					</div>
 					<div>
-						<select id="details-form__pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err">
+						<select id="details-form__pathway" class="js-pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err">
 							<option class="js-default-select" value="" selected disabled hidden>Please select one</option>
 							<option data-region="DE" value="Business Analyse">Business Analyse</option>
 							<option data-region="DE" value="Business Intelligence">Business Intelligence</option>
@@ -868,6 +869,7 @@
 							<option class="js-specific-field" data-pathway="graduate" data-region="Australia Singapore" value="Mx.3 Support">Mx.3 Support</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Singapore" value="Testing">Testing</option>
 						</select>
+                        <input class="js-pre-def-pathway js-hidden" name="Pathway" type="text" disabled/>
 					</div>
 					<div class="apply-form__val-msg" id="details-form__pathway-err"></div>
 				</div>
@@ -878,13 +880,14 @@
 						<label class="js-specific-field" data-pathway="exforces b2b" data-region="USA">Preferred career program<span class="apply-form__required">*</span></label>
 					</div>
 					<div>
-						<select id="details-form__pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err-usa">
+						<select id="details-form__pathway" class="js-pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err-usa">
 							<option class="js-default-select" value="" selected disabled hidden>Please select one</option>
 							<option value="IT Service Management (ITSM)">IT Service Management (ITSM)</option>
 							<option value="Project Management (PMO)">Project Management (PMO)</option>
 							<option value="Software Development">Software Development</option>
 							<option value="No preference">No preference</option>
 						</select>
+                        <input class="js-pre-def-pathway js-hidden" name="Pathway" type="text" disabled/>
 					</div>
 					<div class="apply-form__val-msg" id="details-form__pathway-err-usa"></div>
 				</div>
@@ -955,12 +958,13 @@
 						<label for="details-form__route">Route you are applying for</label>
 					</div>
 					<div>
-						<select id="details-form__service" type="text" name="Pathway">
+						<select id="details-form__service" class="js-pathway" type="text" name="Pathway">
 							<option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
 							<option value="Traditional">Traditional</option>
 							<option value="Advanced">Advanced</option>
 							<option value="Don't know">Don't know</option>
 						</select>
+                        <input class="js-pre-def-pathway js-hidden" name="Pathway" type="text" disabled/>
 					</div>
 				</div>
 				
@@ -2085,7 +2089,7 @@
                 
                 <div class="form-row js-specific-field" data-pathway="graduate exforces b2b" data-region="USA">
 					<div>
-						<label for="location-form__visa-type-usa">What is your right to work?</label>
+						<label for="location-form__visa-type-usa">What is your right to work?<span class="apply-form__required">*</span></label>
 					</div>
 					<div>
 						<select id="location-form__visa-type-usa" name="VisaType" data-validation="required" data-validation-error-msg-container="#location-form__visa-type-usa-err">
@@ -2221,7 +2225,7 @@
 					</div>
 				</div>
 				
-				<h3 class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="Australia Ireland China Canada Singapore HK SA">
+				<h3 class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="USA Australia Ireland China Canada Singapore HK SA">
 					<span data-region="ENG">Please upload your </span>
 					<span class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="USA Canada">résumé</span>
 					<span class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="Australia Ireland China Singapore HK SA">CV</span>
@@ -2354,6 +2358,8 @@
 <form class="js-form  js-additional-fields" style="display: none"></form>
 
 <script type="text/javascript">
+    
+    
     jQuery(function($){
 	
 	var validationConfigs = {
@@ -2414,6 +2420,20 @@
             }
         }
     };
+        
+    function appendStyle(styles) {
+        var css = document.createElement('style');
+        css.type = 'text/css';
+
+        if (css.styleSheet) {
+            css.styleSheet.cssText = styles;
+        }
+        else {
+            css.appendChild(document.createTextNode(styles));
+        }
+
+        document.getElementsByTagName("head")[0].appendChild(css);
+    }
         
 	function objectifyForm(formArray) {
 		var returnArray = {};
@@ -2476,16 +2496,29 @@
 	$(function(){
 		
         var shortCode = getUrlParameter("cs");
+        var streamCode = getUrlParameter("stream");
         var regionOverride;
         
+        var styles = '.loader,.loader:before,.loader:after {background: #1DADED;-webkit-animation: load1 1s infinite ease-in-out;animation: load1 1s infinite ease-in-out;  width: 1em;  height: 4em;}';
+        styles += '.loader {position: absolute;top: 35%;left: 50%;color: #1DADED;text-indent: -9999em;margin: 88px auto;font-size: 11px;-webkit-transform:translateX(-50%);  -ms-transform: translateX(-50%);  transform: translateX(-50%);  -webkit-animation-delay: -0.16s;  animation-delay: -0.16s;}';
+        styles += '.loader:before,.loader:after {  position: absolute;  top: 0;  content: "";}';
+        styles += '.loader:before {left: -1.5em;  -webkit-animation-delay: -0.32s;  animation-delay: -0.32s;}';
+        styles += '.loader:after {left: 1.5em;}';
+        styles += '@-webkit-keyframes load1 {0%,80%,100% {box-shadow: 0 0;    height: 4em;  }  40% {box-shadow: 0 -2em;    height: 5em;  }}';
+        styles += '@keyframes load1 {0%,80%,100% {box-shadow: 0 0; height: 4em;}  40% {box-shadow: 0 -2em;    height: 5em;  }}';
+        
+        appendStyle(styles);
+        
         if(shortCode != undefined) {
+            
+            $(".loader").removeClass("js-hidden");
+            
             $.ajax({
                 url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService?cs=" + shortCode,
                 type: "get",
                 async: false,
                 success: function(data){
                     
-                
                     var campaingDetails = data.CampaignDetails;
 
                     if( campaingDetails.CampaignName != undefined ){
@@ -2513,6 +2546,12 @@
             });
         }
         
+        if(streamCode != undefined) {
+            $(".js-pathway").addClass("js-hidden");
+            $(".js-pre-def-pathway").removeClass("js-hidden");
+            $(".js-pre-def-pathway").val(streamCode);   
+        }
+        
         
 		var regionParam = regionOverride === undefined || regionOverride === "" ? $('.fdm-application-form-component').attr('data-default-region') : regionOverride;
 		
@@ -2538,6 +2577,7 @@
 			
 		}
 		
+        $(".loader").addClass("js-hidden");
 		$(".js-wrapper").removeClass('js-hidden');
         
         // set a data attribute indicating the number of boxes visible - this is used in styling
@@ -2712,8 +2752,14 @@
 			$(".js-spinner").removeClass('js-hidden');
 			$(".js-apply-btn").prop("disabled",true);
 			
-			var data = $(".js-form:not(.js-cv-form)").serializeArray();
-			
+            var allForms = $(".js-form:not(.js-cv-form)");
+            
+            var disabled = allForms.find(':input:disabled').removeAttr('disabled');
+            
+            var data = allForms.serializeArray();
+            
+            disabled.attr('disabled','disabled');
+            			
 			var formJson = {application: objectifyForm(data) };
 			
 			delete formJson.application.file;
