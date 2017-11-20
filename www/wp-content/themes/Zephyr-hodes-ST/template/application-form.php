@@ -131,7 +131,7 @@
 </style>
 
 <div class="fdm-application-form-component" data-default-region="<?= $default_region ?>">
-    <div class="loader  js-hidden">Loading...</div>
+    <h2 class="js-loading" style="text-align: center; padding-top: 50px;">Loading</h2>
 	<div class="js-wrapper  js-hidden">
 		<header>
 		
@@ -2498,20 +2498,8 @@
         var shortCode = getUrlParameter("cs");
         var streamCode = getUrlParameter("stream");
         var regionOverride;
-        
-        var styles = '.loader,.loader:before,.loader:after {background: #1DADED;-webkit-animation: load1 1s infinite ease-in-out;animation: load1 1s infinite ease-in-out;  width: 1em;  height: 4em;}';
-        styles += '.loader {position: absolute;top: 35%;left: 50%;color: #1DADED;text-indent: -9999em;margin: 88px auto;font-size: 11px;-webkit-transform:translateX(-50%);  -ms-transform: translateX(-50%);  transform: translateX(-50%);  -webkit-animation-delay: -0.16s;  animation-delay: -0.16s;}';
-        styles += '.loader:before,.loader:after {  position: absolute;  top: 0;  content: "";}';
-        styles += '.loader:before {left: -1.5em;  -webkit-animation-delay: -0.32s;  animation-delay: -0.32s;}';
-        styles += '.loader:after {left: 1.5em;}';
-        styles += '@-webkit-keyframes load1 {0%,80%,100% {box-shadow: 0 0;    height: 4em;  }  40% {box-shadow: 0 -2em;    height: 5em;  }}';
-        styles += '@keyframes load1 {0%,80%,100% {box-shadow: 0 0; height: 4em;}  40% {box-shadow: 0 -2em;    height: 5em;  }}';
-        
-        appendStyle(styles);
-        
+                
         if(shortCode != undefined) {
-            
-            $(".loader").removeClass("js-hidden");
             
             $.ajax({
                 url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService?cs=" + shortCode,
@@ -2577,7 +2565,7 @@
 			
 		}
 		
-        $(".loader").addClass("js-hidden");
+        $(".js-loading").addClass("js-hidden");
 		$(".js-wrapper").removeClass('js-hidden');
         
         // set a data attribute indicating the number of boxes visible - this is used in styling
