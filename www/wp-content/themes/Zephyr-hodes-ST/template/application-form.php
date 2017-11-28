@@ -882,8 +882,10 @@
 					<div>
 						<select id="details-form__pathway" class="js-pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err-usa">
 							<option class="js-default-select" value="" selected disabled hidden>Please select one</option>
+							<option value="Data Analysis">Data Analysis</option>
 							<option value="IT Service Management (ITSM)">IT Service Management (ITSM)</option>
 							<option value="Project Management (PMO)">Project Management (PMO)</option>
+							<option value="Risk, Regulation & Compliance">Risk, Regulation &amp; Compliance</option>
 							<option value="Software Development">Software Development</option>
 							<option value="No preference">No preference</option>
 						</select>
