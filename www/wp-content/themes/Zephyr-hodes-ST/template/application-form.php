@@ -854,6 +854,7 @@
 							<option data-region="DE" value="Business Intelligence">Business Intelligence</option>
 							<option data-region="DE" value="Financial Application Management">Financial Application Management</option>
 							<option data-region="DE" value="IT Service Management">IT Service Management</option>
+							<option data-region="DE" value="Java / Mainframe Entwicklung">Java / Mainframe Entwicklung</option>
 							<option data-region="DE" value="Projekt Management / Business Analyse">Projekt Management / Business Analyse</option>
 							<option data-region="DE" value="Software Entwicklung">Software Entwicklung</option>
 							<option data-region="DE" value="Software Testing">Software Testing</option>
