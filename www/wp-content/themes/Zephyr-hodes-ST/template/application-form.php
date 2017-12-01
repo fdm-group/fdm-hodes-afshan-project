@@ -2779,6 +2779,9 @@
 				}
 			});
 			
+			// notify Google Analytics of the application
+			gtag('event', 'apply', {'event_category': 'application-form','event_label': 'Apply button clicked'});
+			
 		});
 	});
 	
