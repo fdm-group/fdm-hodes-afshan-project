@@ -1,6 +1,9 @@
 <?php
 
 $redirects = [
+
+	'wolves' => '/',
+
 	'social-hub' => '/culture/social-hub/',
 	'uk/about'=>'/our-work/',
 	'uk/about/our-culture'=>'/culture/',
