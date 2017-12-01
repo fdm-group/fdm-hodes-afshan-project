@@ -2,7 +2,7 @@
 
 $redirects = [
 
-	'wolves' => '/',
+	'wolves' => '/careers/',
 
 	'social-hub' => '/culture/social-hub/',
 	'uk/about'=>'/our-work/',
