@@ -1,137 +1,5 @@
-<style>
-	.sk-circle {
-	display: none;
-	position: absolute;
-	width: 30px;
-	height: 30px;
-	top: 50%;
-	right: 10px;
-	transform: translateY(-50%);
-	}
-	.sk-circle .sk-child {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	left: 0;
-	top: 0;
-	}
-	.sk-circle .sk-child:before {
-	content: '';
-	display: block;
-	margin: 0 auto;
-	width: 15%;
-	height: 15%;
-	background-color: #1daded;
-	border-radius: 100%;
-	-webkit-animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
-			animation: sk-circleBounceDelay 1.2s infinite ease-in-out both;
-	}
-	.sk-circle .sk-circle2 {
-	-webkit-transform: rotate(30deg);
-	  -ms-transform: rotate(30deg);
-			transform: rotate(30deg); }
-	.sk-circle .sk-circle3 {
-	-webkit-transform: rotate(60deg);
-	  -ms-transform: rotate(60deg);
-			transform: rotate(60deg); }
-	.sk-circle .sk-circle4 {
-	-webkit-transform: rotate(90deg);
-	  -ms-transform: rotate(90deg);
-			transform: rotate(90deg); }
-	.sk-circle .sk-circle5 {
-	-webkit-transform: rotate(120deg);
-	  -ms-transform: rotate(120deg);
-			transform: rotate(120deg); }
-	.sk-circle .sk-circle6 {
-	-webkit-transform: rotate(150deg);
-	  -ms-transform: rotate(150deg);
-			transform: rotate(150deg); }
-	.sk-circle .sk-circle7 {
-	-webkit-transform: rotate(180deg);
-	  -ms-transform: rotate(180deg);
-			transform: rotate(180deg); }
-	.sk-circle .sk-circle8 {
-	-webkit-transform: rotate(210deg);
-	  -ms-transform: rotate(210deg);
-			transform: rotate(210deg); }
-	.sk-circle .sk-circle9 {
-	-webkit-transform: rotate(240deg);
-	  -ms-transform: rotate(240deg);
-			transform: rotate(240deg); }
-	.sk-circle .sk-circle10 {
-	-webkit-transform: rotate(270deg);
-	  -ms-transform: rotate(270deg);
-			transform: rotate(270deg); }
-	.sk-circle .sk-circle11 {
-	-webkit-transform: rotate(300deg);
-	  -ms-transform: rotate(300deg);
-			transform: rotate(300deg); }
-	.sk-circle .sk-circle12 {
-	-webkit-transform: rotate(330deg);
-	  -ms-transform: rotate(330deg);
-			transform: rotate(330deg); }
-	.sk-circle .sk-circle2:before {
-	-webkit-animation-delay: -1.1s;
-			animation-delay: -1.1s; }
-	.sk-circle .sk-circle3:before {
-	-webkit-animation-delay: -1s;
-			animation-delay: -1s; }
-	.sk-circle .sk-circle4:before {
-	-webkit-animation-delay: -0.9s;
-			animation-delay: -0.9s; }
-	.sk-circle .sk-circle5:before {
-	-webkit-animation-delay: -0.8s;
-			animation-delay: -0.8s; }
-	.sk-circle .sk-circle6:before {
-	-webkit-animation-delay: -0.7s;
-			animation-delay: -0.7s; }
-	.sk-circle .sk-circle7:before {
-	-webkit-animation-delay: -0.6s;
-			animation-delay: -0.6s; }
-	.sk-circle .sk-circle8:before {
-	-webkit-animation-delay: -0.5s;
-			animation-delay: -0.5s; }
-	.sk-circle .sk-circle9:before {
-	-webkit-animation-delay: -0.4s;
-			animation-delay: -0.4s; }
-	.sk-circle .sk-circle10:before {
-	-webkit-animation-delay: -0.3s;
-			animation-delay: -0.3s; }
-	.sk-circle .sk-circle11:before {
-	-webkit-animation-delay: -0.2s;
-			animation-delay: -0.2s; }
-	.sk-circle .sk-circle12:before {
-	-webkit-animation-delay: -0.1s;
-			animation-delay: -0.1s; }
-
-	@-webkit-keyframes sk-circleBounceDelay {
-	0%, 80%, 100% {
-	-webkit-transform: scale(0);
-			transform: scale(0);
-	} 40% {
-	-webkit-transform: scale(1);
-			transform: scale(1);
-	   }
-	}
-
-	@keyframes sk-circleBounceDelay {
-		0%, 80%, 100% {
-		-webkit-transform: scale(0);
-			transform: scale(0);
-	} 40% {
-		-webkit-transform: scale(1);
-				transform: scale(1);
-		}
-	}
-
-	.fdm-application-form-component button {
-		position: relative;
-	}
-
-</style>
-
 <div class="fdm-application-form-component" data-default-region="<?= $default_region ?>">
-    <h2 class="js-loading" style="text-align: center; padding-top: 50px;">Loading</h2>
+    <h2 class="js-loading" style="text-align: center; display:relative;">Loading</h2>
 	<div class="js-wrapper  js-hidden">
 		<header>
 		
@@ -784,6 +652,7 @@
 							<option class="js-specific-field" data-pathway="b2b" data-region="USA" value="News Article / Press">News Article / Press</option>
 							<option class="js-specific-field" data-pathway="b2b" data-region="USA" value="NY State Job Bank">NY State Job Bank</option>
 							<option class="js-specific-field" data-pathway="b2b" data-region="USA" value="Referral">Referral</option>
+                            <option class="js-specific-field" data-pathway="b2b" data-region="USA" value="Symplicity">Symplicity</option>
 							<option class="js-specific-field" data-pathway="b2b" data-region="USA" value="The Muse">The Muse</option>
 							<option class="js-specific-field" data-pathway="b2b" data-region="USA" value="Twitter">Twitter</option>
 							<option class="js-specific-field" data-pathway="b2b" data-region="USA" value="Women’s Job List">Women’s Job List</option>
@@ -806,6 +675,7 @@
 							<option class="js-specific-field" data-pathway="graduate" data-region="USA" value="Monster">Monster</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="USA" value="News Article/Press">News Article / Press</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="USA" value="Referral">Referral</option>
+                            <option class="js-specific-field" data-pathway="graduate" data-region="USA" value="Symplicity">Symplicity</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="USA" value="The Muse">The Muse</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="USA" value="Twitter">Twitter</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="USA" value="University Job Board">University Job Board</option>
@@ -831,11 +701,14 @@
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="NY State Job Bank">NY State Job Bank</option>
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="RecruitMilitary">RecruitMilitary</option>
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Referral">Referral</option>
+                            <option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Symplicity">Symplicity</option>
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="The Muse">The Muse</option>
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Twitter">Twitter</option>
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="University Job Board">University Job Board</option>
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="YouTube">YouTube</option>
 							<option class="js-specific-field" data-pathway="exforces" data-region="USA" value="ZipRecruiter">ZipRecruiter</option>
+                            
+							
 						</select>
 					</div>
 					<div class="apply-form__val-msg" id="details-form__hear-about-err"></div>
@@ -856,7 +729,8 @@
 							<option data-region="DE" value="IT Service Management">IT Service Management</option>
 							<option data-region="DE" value="Java / Mainframe Entwicklung">Java / Mainframe Entwicklung</option>
 							<option data-region="DE" value="Projekt Management / Business Analyse">Projekt Management / Business Analyse</option>
-							<option data-region="DE" value="Software Entwicklung">Software Entwicklung</option>
+							<option data-region="DE" value="Risk Regulation &amp; Compliance">Risk Regulation &amp; Compliance</option>
+                            <option data-region="DE" value="Software Entwicklung">Software Entwicklung</option>
 							<option data-region="DE" value="Software Testing">Software Testing</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="UK China Ireland" value="Business">Business</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="UK China Ireland" value="Technical">Technical</option>
@@ -883,6 +757,7 @@
 					<div>
 						<select id="details-form__pathway" class="js-pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err-usa">
 							<option class="js-default-select" value="" selected disabled hidden>Please select one</option>
+                            <option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Advanced Project Management (PMO)">Advanced Project Management (PMO)</option>
 							<option value="Data Analysis">Data Analysis</option>
 							<option value="IT Service Management (ITSM)">IT Service Management (ITSM)</option>
 							<option value="Project Management (PMO)">Project Management (PMO)</option>
@@ -2327,7 +2202,7 @@
 				<span data-region="ENG">Apply</span>
 				<span class="js-hidden" data-region="DE">Abschicken</span>
 			
-				<div class="sk-circle  js-spinner">
+				<div class="sk-circle  js-spinner js-hidden">
 					  <div class="sk-circle1 sk-child"></div>
 					  <div class="sk-circle2 sk-child"></div>
 					  <div class="sk-circle3 sk-child"></div>
@@ -2343,9 +2218,14 @@
 				</div>
 			</button>
 			
-			<p class="js-hidden	 js-apply-error">
+			<p class="js-hidden	 js-apply-error" style="text-align:center;">
 				<span data-region="ENG">Something went wrong, please try again.</span>
 				<span data-region="DE">Etwas ist schief gelaufen. Bitte versuche es erneut.</span>
+			</p>
+            
+            <p class="js-hidden	 js-apply-wait" style="text-align:center;">
+				<span data-region="ENG">Please wait.</span>
+				<span data-region="DE">Warten Sie mal.</span>
 			</p>
 	
 			<button class="[ js-pre-btn ]  [ btn ]	[ js-hidden ]">
@@ -2449,7 +2329,7 @@
 		return returnArray;
 	};
 	
-	function uploadCv(sfId) {
+	function uploadCv(sfId, callback) {
 		var reader = new FileReader();
         
 		var file;
@@ -2483,12 +2363,14 @@
 			$.ajax({
 				type: "POST",
 				dataType: "json",
+                async: false,
 				contentType: "application/json; charset=UTF-8",
 				data: JSON.stringify(cv),
 				processData: false,
-				url: "https://applications.fdmgroup.com/services/apexrest/CVService"
+				url: "https://applications.fdmgroup.com/services/apexrest/CVService",
+                success: callback
 			}).fail(function(jqXHR, textStatus) {
-				return false;
+				callback
 			});
 		};
 		reader.readAsDataURL(file.files[0]);
@@ -2498,6 +2380,8 @@
 	
 	$(function(){
 		
+        appendStyle(".fdm-application-form-component button{position:relative}.sk-circle{position:absolute;width:30px;height:30px;top:50%;right:10px;transform:translateY(-50%)}.sk-circle .sk-child{width:100%;height:100%;position:absolute;left:0;top:0}.sk-circle .sk-child:before{content:'';display:block;margin:0 auto;width:15%;height:15%;background-color:#000;border-radius:100%;-webkit-animation:sk-circleBounceDelay 1.2s infinite ease-in-out both;animation:sk-circleBounceDelay 1.2s infinite ease-in-out both}.sk-circle .sk-circle2{-webkit-transform:rotate(30deg);-ms-transform:rotate(30deg);transform:rotate(30deg)}.sk-circle .sk-circle3{-webkit-transform:rotate(60deg);-ms-transform:rotate(60deg);transform:rotate(60deg)}.sk-circle .sk-circle4{-webkit-transform:rotate(90deg);-ms-transform:rotate(90deg);transform:rotate(90deg)}.sk-circle .sk-circle5{-webkit-transform:rotate(120deg);-ms-transform:rotate(120deg);transform:rotate(120deg)}.sk-circle .sk-circle6{-webkit-transform:rotate(150deg);-ms-transform:rotate(150deg);transform:rotate(150deg)}.sk-circle .sk-circle7{-webkit-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg)}.sk-circle .sk-circle8{-webkit-transform:rotate(210deg);-ms-transform:rotate(210deg);transform:rotate(210deg)}.sk-circle .sk-circle9{-webkit-transform:rotate(240deg);-ms-transform:rotate(240deg);transform:rotate(240deg)}.sk-circle .sk-circle10{-webkit-transform:rotate(270deg);-ms-transform:rotate(270deg);transform:rotate(270deg)}.sk-circle .sk-circle11{-webkit-transform:rotate(300deg);-ms-transform:rotate(300deg);transform:rotate(300deg)}.sk-circle .sk-circle12{-webkit-transform:rotate(330deg);-ms-transform:rotate(330deg);transform:rotate(330deg)}.sk-circle .sk-circle2:before{-webkit-animation-delay:-1.1s;animation-delay:-1.1s}.sk-circle .sk-circle3:before{-webkit-animation-delay:-1s;animation-delay:-1s}.sk-circle .sk-circle4:before{-webkit-animation-delay:-.9s;animation-delay:-.9s}.sk-circle .sk-circle5:before{-webkit-animation-delay:-.8s;animation-delay:-.8s}.sk-circle .sk-circle6:before{-webkit-animation-delay:-.7s;animation-delay:-.7s}.sk-circle .sk-circle7:before{-webkit-animation-delay:-.6s;animation-delay:-.6s}.sk-circle .sk-circle8:before{-webkit-animation-delay:-.5s;animation-delay:-.5s}.sk-circle .sk-circle9:before{-webkit-animation-delay:-.4s;animation-delay:-.4s}.sk-circle .sk-circle10:before{-webkit-animation-delay:-.3s;animation-delay:-.3s}.sk-circle .sk-circle11:before{-webkit-animation-delay:-.2s;animation-delay:-.2s}.sk-circle .sk-circle12:before{-webkit-animation-delay:-.1s;animation-delay:-.1s}@-webkit-keyframes sk-circleBounceDelay{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}@keyframes sk-circleBounceDelay{0%,100%,80%{-webkit-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);transform:scale(1)}}");
+        
         var shortCode = getUrlParameter("cs");
         var streamCode = getUrlParameter("stream");
         var regionOverride;
@@ -2742,6 +2626,7 @@
 			
 			$(".js-spinner").removeClass('js-hidden');
 			$(".js-apply-btn").prop("disabled",true);
+            $(".js-apply-wait").removeClass('js-hidden');
 			
             var allForms = $(".js-form:not(.js-cv-form)");
             
@@ -2766,17 +2651,22 @@
 				url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService",
 				success: function(responseData, textStatus, jqXHR) {
 					var value = responseData;
-					uploadCv(value);
+					uploadCv(value, function(){
+                        $(".js-apply-error").addClass('js-hidden');
+                        $(".js-next-btn").trigger("click");
+                        $(".js-spinner").addClass('js-hidden');
+                        $(".js-apply-btn").removeProp("disabled");
+                        $(".js-apply-wait").addClass('js-hidden');
+                    });
                     
-                    $(".js-apply-error").addClass('js-hidden');
-                    $(".js-next-btn").trigger("click");
-					$(".js-spinner").addClass('js-hidden');
-					$(".js-apply-btn").removeProp("disabled");
+                    
 				},
 				error: function (responseData, textStatus, errorThrown) {
 					$(".js-apply-error").removeClass('js-hidden');
 					$(".js-spinner").addClass('js-hidden');
 					$(".js-apply-btn").removeProp("disabled");
+					$(".js-apply-wait").addClass('js-hidden');
+                    
 				}
 			});
 			
@@ -2788,217 +2678,217 @@
 	
 	function getRegionSpecifics(region) {
 		
-	$('label').removeClass('js-hidden');
-	validationConfigs.lang = "en";
-	$.validate(validationConfigs);
-		
-	if( region == "Deutschland" ){
-		$(".js-default-select").html("Bitte auswählen");
-	}else{
-		$(".js-default-select").html("Please select one");
-	}
-        
-    $('option[data-region~="DE"]').toggleDisplay(false);
-		
-	switch(region) {
-				case "UK":
-					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
-					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
-					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
-					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
-					$('*[data-region~="ENG-IRL"]').addClass('js-hidden');
-					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
-					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
-					$('*[data-region~="DE"]').addClass('js-hidden');
-			
-					$('*[data-region~="ENG"]').removeClass('js-hidden');
-					$('*[data-region~="ENG-GB"]').removeClass('js-hidden');
-					break;
-				case "USA":
-					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
-					$('*[data-region~="DE-DE"]').addClass('js-hidden');
-					$('*[data-region~="DE"]').addClass('js-hidden');
-					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
-					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
-					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
-					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
-					$(".js-grad-only").addClass('js-hidden');
-					$('*[data-region~="ENG"]').removeClass('js-hidden');
-					$('*[data-region~="ENG-USA"]').removeClass('js-hidden');
-					$(".js-grad").removeClass('js-hidden');
-					$(".js-common-used").removeClass('js-hidden');
-					$(".js-exforces").removeClass('js-hidden');
-					$(".js-b2b").removeClass('js-hidden');
-					break;
-				case "Australia":
-					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
-					$('*[data-region~="DE"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
-					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
-					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
-					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
-					$(".js-exforces").addClass('js-hidden');
-					$(".js-b2b").addClass('js-hidden');
-					$(".js-common-used").addClass('js-hidden');
-					$('*[data-region~="ENG-AUS"]').removeClass('js-hidden');
-					$('*[data-region~="ENG"]').removeClass('js-hidden');
-					$('*[data-region~="ENG-Graduate"]').removeClass('js-hidden');
-					$(".js-grad").removeClass('js-hidden');
-					$(".js-grad-only").removeClass('js-hidden');
-					break;
-				case "Canada":
-					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
-					$('*[data-region~="DE"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
-					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
-					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
-					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
-					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
-					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
-					$(".js-grad-only").addClass('js-hidden');
-					$(".js-exforces").addClass('js-hidden');
-					$(".js-b2b").addClass('js-hidden');
-					$(".js-grad").removeClass('js-hidden');
-					$(".js-common-used").removeClass('js-hidden');
-					$('*[data-region~="ENG"]').removeClass('js-hidden');
-					$('*[data-region~="ENG-CA"]').removeClass('js-hidden');
-					break;
-				case "China":
-					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
-					$('*[data-region~="DE"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
-					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
-					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
-					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
-					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
-					$(".js-exforces").addClass('js-hidden');
-					$(".js-b2b").addClass('js-hidden');
-					$(".js-common-used").addClass('js-hidden');
-					$(".js-grad").removeClass('js-hidden');
-					$(".js-grad-only").removeClass('js-hidden');
-					$('*[data-region="ENG"]').removeClass('js-hidden');
-					$('*[data-region~="ENG-CN"]').removeClass('js-hidden');
-					$('*[data-region="ENG-Graduate"]').removeClass('js-hidden');
-					break;
-				case "Hong Kong":
-					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
-					$('*[data-region="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="DE"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
-					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
-					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
-					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
-					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
-					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
-					$(".js-exforces").addClass('js-hidden');
-					$(".js-b2b").addClass('js-hidden');
-					$(".js-common-used").addClass('js-hidden');
-					$(".js-grad-only").addClass('js-hidden');
-					$('*[data-region~="ENG"]').removeClass('js-hidden');
-					$('*[data-region~="ENG-HK"]').removeClass('js-hidden');
-					break;
-				case "Ireland":
-					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
-					$('*[data-region="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="DE"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
-					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
-					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
-					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
-					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
-					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
-			
-					$('*[data-region~="ENG"]').removeClass('js-hidden');
-					$('*[data-region~="ENG-IRL"]').removeClass('js-hidden');
-					break;
-				case "Singapore":
-					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
-					$('*[data-region="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="DE"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
-					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
-					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
-					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
-					$('*[data-region~="ENG-IRL"]').addClass('js-hidden');
-					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
-					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
-			
-					$('*[data-region~="ENG"]').removeClass('js-hidden');
-					$('*[data-region~="ENG-SGP"]').removeClass('js-hidden');
-					break;
-				case "South Africa":
-					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
-					$('*[data-region="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="DE"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
-					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
-					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
-					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
-					$('*[data-region~="ENG-IRL"]').addClass('js-hidden');
-					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
-			
-					$('*[data-region~="ENG-ZAF"]').removeClass('js-hidden');
-					break;
-				case "Deutschland":
-					$('*[data-region~="ENG-Programme"]').addClass('js-hidden');
-					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-USA"]').addClass('js-hidden');
-					$('*[data-region~="ENG-GB"]').addClass('js-hidden');
-					$('*[data-region~="ENG-AUS"]').addClass('js-hidden');
-					$('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
-					$('*[data-region~="ENG-CN"]').addClass('js-hidden');
-					$('*[data-region~="ENG-HK"]').addClass('js-hidden');
-					$('*[data-region~="ENG-IRL"]').addClass('js-hidden');
-					$('*[data-region~="ENG-SGP"]').addClass('js-hidden');
-					$('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
-					$('*[data-region~="ENG"]').addClass('js-hidden');
-					$('label:not([data-region~="' + region + '"])').addClass('js-hidden');
-			
-					$('*[data-region~="DE"]').removeClass('js-hidden');
-            
-                    $('select *[data-region~="DE"]').toggleDisplay(true);
-			
-					validationConfigs.lang = "de";
-					$.validate(validationConfigs);
-					break;
-				default:
-					break;
-			}
-		
-		// set a data attribute indicating the number of boxes visible - this is used in styling
-		var $ptb = $('.program-type-boxes');
-		$ptb.attr('data-num-visible', $ptb.children(':visible').length );
-		
-	}
+        $('label').removeClass('js-hidden');
+        validationConfigs.lang = "en";
+        $.validate(validationConfigs);
 
-    });</script>
+        if( region == "Deutschland" ){
+            $(".js-default-select").html("Bitte auswählen");
+        }else{
+            $(".js-default-select").html("Please select one");
+        }
+
+        $('option[data-region~="DE"]').toggleDisplay(false);
+
+        switch(region) {
+                case "UK":
+                    $('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-USA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CN"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-HK"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-IRL"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+                    $('*[data-region~="DE"]').addClass('js-hidden');
+
+                    $('*[data-region~="ENG"]').removeClass('js-hidden');
+                    $('*[data-region~="ENG-GB"]').removeClass('js-hidden');
+                    break;
+                case "USA":
+                    $('*[data-region~="ENG-GB"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+                    $('*[data-region~="DE-DE"]').addClass('js-hidden');
+                    $('*[data-region~="DE"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CN"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-HK"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+                    $(".js-grad-only").addClass('js-hidden');
+                    $('*[data-region~="ENG"]').removeClass('js-hidden');
+                    $('*[data-region~="ENG-USA"]').removeClass('js-hidden');
+                    $(".js-grad").removeClass('js-hidden');
+                    $(".js-common-used").removeClass('js-hidden');
+                    $(".js-exforces").removeClass('js-hidden');
+                    $(".js-b2b").removeClass('js-hidden');
+                    break;
+                case "Australia":
+                    $('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+                    $('*[data-region~="DE"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-USA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-GB"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CN"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-HK"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+                    $(".js-exforces").addClass('js-hidden');
+                    $(".js-b2b").addClass('js-hidden');
+                    $(".js-common-used").addClass('js-hidden');
+                    $('*[data-region~="ENG-AUS"]').removeClass('js-hidden');
+                    $('*[data-region~="ENG"]').removeClass('js-hidden');
+                    $('*[data-region~="ENG-Graduate"]').removeClass('js-hidden');
+                    $(".js-grad").removeClass('js-hidden');
+                    $(".js-grad-only").removeClass('js-hidden');
+                    break;
+                case "Canada":
+                    $('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+                    $('*[data-region~="DE"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-USA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-GB"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CN"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-HK"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+                    $(".js-grad-only").addClass('js-hidden');
+                    $(".js-exforces").addClass('js-hidden');
+                    $(".js-b2b").addClass('js-hidden');
+                    $(".js-grad").removeClass('js-hidden');
+                    $(".js-common-used").removeClass('js-hidden');
+                    $('*[data-region~="ENG"]').removeClass('js-hidden');
+                    $('*[data-region~="ENG-CA"]').removeClass('js-hidden');
+                    break;
+                case "China":
+                    $('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+                    $('*[data-region~="DE"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-USA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-GB"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-HK"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+                    $(".js-exforces").addClass('js-hidden');
+                    $(".js-b2b").addClass('js-hidden');
+                    $(".js-common-used").addClass('js-hidden');
+                    $(".js-grad").removeClass('js-hidden');
+                    $(".js-grad-only").removeClass('js-hidden');
+                    $('*[data-region="ENG"]').removeClass('js-hidden');
+                    $('*[data-region~="ENG-CN"]').removeClass('js-hidden');
+                    $('*[data-region="ENG-Graduate"]').removeClass('js-hidden');
+                    break;
+                case "Hong Kong":
+                    $('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+                    $('*[data-region="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="DE"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-USA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-GB"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CN"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-HK"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+                    $(".js-exforces").addClass('js-hidden');
+                    $(".js-b2b").addClass('js-hidden');
+                    $(".js-common-used").addClass('js-hidden');
+                    $(".js-grad-only").addClass('js-hidden');
+                    $('*[data-region~="ENG"]').removeClass('js-hidden');
+                    $('*[data-region~="ENG-HK"]').removeClass('js-hidden');
+                    break;
+                case "Ireland":
+                    $('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+                    $('*[data-region="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="DE"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-USA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-GB"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CN"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-HK"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+
+                    $('*[data-region~="ENG"]').removeClass('js-hidden');
+                    $('*[data-region~="ENG-IRL"]').removeClass('js-hidden');
+                    break;
+                case "Singapore":
+                    $('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+                    $('*[data-region="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="DE"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-USA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-GB"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CN"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-HK"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-IRL"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+
+                    $('*[data-region~="ENG"]').removeClass('js-hidden');
+                    $('*[data-region~="ENG-SGP"]').removeClass('js-hidden');
+                    break;
+                case "South Africa":
+                    $('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+                    $('*[data-region="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="DE"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-USA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-GB"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CN"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-HK"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-IRL"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+
+                    $('*[data-region~="ENG-ZAF"]').removeClass('js-hidden');
+                    break;
+                case "Deutschland":
+                    $('*[data-region~="ENG-Programme"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-USA"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-GB"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-AUS"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-Graduate"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-CN"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-HK"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-IRL"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-SGP"]').addClass('js-hidden');
+                    $('*[data-region~="ENG-ZAF"]').addClass('js-hidden');
+                    $('*[data-region~="ENG"]').addClass('js-hidden');
+                    $('label:not([data-region~="' + region + '"])').addClass('js-hidden');
+
+                    $('*[data-region~="DE"]').removeClass('js-hidden');
+
+                    $('select *[data-region~="DE"]').toggleDisplay(true);
+
+                    validationConfigs.lang = "de";
+                    $.validate(validationConfigs);
+                    break;
+                default:
+                    break;
+            }
+
+        // set a data attribute indicating the number of boxes visible - this is used in styling
+        var $ptb = $('.program-type-boxes');
+        $ptb.attr('data-num-visible', $ptb.children(':visible').length );
+
+    }
+
+});</script>
