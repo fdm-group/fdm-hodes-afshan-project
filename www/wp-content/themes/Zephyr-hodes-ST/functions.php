@@ -539,4 +539,15 @@ if( function_exists('acf_add_local_field_group') ) {
 
 }
 
+// Filter to get Zephyr to display our custom Author info in their blog page template
+add_filter( 'us_single_post_meta_html', function( $meta_html, $post_id ) {
+	$author = get_field( 'author', $post_id );
+	if ( empty( $author ) ) {
+		unset( $meta_html['author'] );
+	} else {
+		$meta_html['author'] = '<span class="w-blog-post-meta-author vcard author">'.htmlspecialchars($author).'</span>';
+	}
+	return $meta_html;
+}, 10, 2 );
+
 //include('include/dh-content-find-replace.php');
