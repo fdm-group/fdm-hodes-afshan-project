@@ -65,6 +65,47 @@ class OurPeople extends VCComponent {
 			require_once( dirname( __DIR__ ) . '/acf/fdm-people.php' );
 		}
 
+		// Cache the people data when updated, to avoid hundreds of database queries
+		// Note priority of 20 means the function will run *after* the data are updated
+		add_action( 'acf/save_post', function( $post_id ) {
+			if ( strpos( $post_id, 'fdm_people' ) === 0 ) {
+				$this->update_people_data_cache();
+			}
+		}, 20);
+
+	}
+
+	// Collect the information for the people and serialize in a single value in the database options table
+	public function update_people_data_cache() {
+		error_log("Updating FDM people data cache");
+
+		$people = [];
+		if ( function_exists( 'get_field' ) ) {
+			foreach( $this->countries as $country ) {
+	
+				$country_people = get_field( 'fdm_people', $country['acf_post'] ) ?: [];
+				foreach( $country_people as $person ){
+					$person['country'] = $country['name'];
+					$person['lang_code'] = $country['lang_code'];
+					$person['slug'] = sanitize_title_with_dashes( $person['name'] ) . ( $country['lang_code']=='cn' ? '-cn' : '' ); // some people are duplicated in Chinese, so add suffix to make slugs unique
+					$people[] = $person;
+				}
+			}
+		}
+		
+		delete_option( 'fdm_people_cache' );
+		add_option( 'fdm_people_cache', json_encode( $people ) , '', 'no' );
+		return $people;
+	}
+	
+	// Get the people data from the database (caching if not already cached)
+	public function get_people_data() {
+		$json = get_option( 'fdm_people_cache', false );
+		if ( $json ) {
+			return json_decode( $json, true );
+		} else {
+			return $this->update_people_data_cache();
+		}
 	}
 
 	public function base() {
@@ -91,18 +132,11 @@ class OurPeople extends VCComponent {
 			/* Hide China for now - some debate about how it's going to work for them */
 			return $country['lang_code'] != 'cn';
 		} );
-
-		$people = [];
-		foreach( $countries as $country ) {
-
-			$country_people = get_field( 'fdm_people', $country['acf_post'] ) ?: [];
-			foreach( $country_people as $person ){
-				$person['country'] = $country['name'];
-				$person['lang_code'] = $country['lang_code'];
-				$person['slug'] = sanitize_title_with_dashes( $person['name'] ) . ( $country['lang_code']=='cn' ? '-cn' : '' ); // some people are duplicated in Chinese, so add suffix to make slugs unique
-				$people[] = $person;
-			}
-		}
+		
+		$people = array_filter( $this->get_people_data(), function( $person ) {
+			/* Hide China for now - some debate about how it's going to work for them */
+			return $person['lang_code'] != 'cn';
+		} ); ;
 
 		// Sort the people so that the current country is first, and alphabetical by name after that
 		if ( function_exists('pll_current_language') ) {

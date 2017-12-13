@@ -21,7 +21,34 @@ class Map extends VCComponent {
 		if ( function_exists( 'acf_add_local_field_group' ) ) {
 			require_once( dirname( __DIR__ ) . '/acf/fdm-map.php' );
 		}
+		
+		// Cache the map marker data when updated, to avoid hundreds of database queries
+		// Note priority of 20 means the function will run *after* the data are updated
+		add_action( 'acf/save_post', function( $post_id ) {
+			if ( $post_id == 'fdm_map_markers' ) {
+				$this->update_location_data_cache();
+			}
+		}, 20);
 	
+	}
+	
+	// Collect the information for the map locations and serialize in a single value in the database options table
+	public function update_location_data_cache() {
+		error_log("Updating FDM location data cache");
+		$locations = function_exists( 'get_field' ) ? get_field( 'map_locations', 'fdm_map_markers' ) : [];
+		delete_option( 'fdm_map_locations_cache' );
+		add_option( 'fdm_map_locations_cache', json_encode( $locations ) , '', 'no' );
+		return $locations;
+	}
+	
+	// Get the locations data from the database (caching if not already cached)
+	public function get_location_data() {
+		$json = get_option( 'fdm_map_locations_cache', false );
+		if ( $json ) {
+			return json_decode( $json, true );
+		} else {
+			return $this->update_location_data_cache();
+		}
 	}
 
 	public function base() {
@@ -44,7 +71,7 @@ class Map extends VCComponent {
 	
 	public function render_shortcode( $atts, $content ) {
 	
-		$locations = function_exists( 'get_field' ) ? get_field( 'map_locations', 'fdm_map_markers' ) : [];
+		$locations = $this->get_location_data();
 		
 		ob_start();
 		?>
