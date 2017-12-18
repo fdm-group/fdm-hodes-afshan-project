@@ -2670,11 +2670,48 @@
 				}
 			});
 			
-			// notify Google Analytics of the application
-			gtag('event', 'apply', {'event_category': 'application-form','event_label': 'Apply button clicked'});
-			
+			// notify Google Analytics of the application by region
+            getGoogleAnalytics(region);			
 		});
 	});
+    
+    function getGoogleAnalytics(region) {
+        switch(region) {
+            case: "UK":
+                gtag('event', 'apply', {'event_category': 'application-form','event_label': 'UK Apply button clicked'});
+                break;
+            case "USA":
+                gtag('event', 'apply', {'event_category': 'application-form','event_label': 'USA Apply button clicked'});
+                break;
+            case "Australia":
+                gtag('event', 'apply', {'event_category': 'application-form','event_label': 'Australia Apply button clicked'});
+                break;
+            case "Canada":
+                gtag('event', 'apply', {'event_category': 'application-form','event_label': 'Canada Apply button clicked'});
+                break;
+            case "China":
+                gtag('event', 'apply', {'event_category': 'application-form','event_label': 'China Apply button clicked'});
+                break;
+            case "Hong Kong":
+                gtag('event', 'apply', {'event_category': 'application-form','event_label': 'Hong Kong Apply button clicked'});
+                break;
+            case "Singapore":
+                gtag('event', 'apply', {'event_category': 'application-form','event_label': 'Singapore Apply button clicked'});
+                break;
+            case "Ireland":
+                gtag('event', 'apply', {'event_category': 'application-form','event_label': 'Ireland Apply button clicked'});
+                break;
+            case "South Africa":
+                gtag('event', 'apply', {'event_category': 'application-form','event_label': 'South Africa Apply button clicked'});
+                break;
+            case "Deutschland":
+                gtag('event', 'apply', {'event_category': 'application-form','event_label': 'Germany Apply button clicked'});
+                break;
+            default:
+                gtag('event', 'apply', {'event_category': 'application-form','event_label': 'Apply button clicked'});
+                break;
+        }
+    }
 	
 	function getRegionSpecifics(region) {
 		
