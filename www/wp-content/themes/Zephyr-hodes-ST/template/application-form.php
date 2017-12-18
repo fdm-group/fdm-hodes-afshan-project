@@ -2677,7 +2677,7 @@
     
     function getGoogleAnalytics(region) {
         switch(region) {
-            case: "UK":
+            case "UK":
                 gtag('event', 'apply', {'event_category': 'application-form','event_label': 'UK Apply button clicked'});
                 break;
             case "USA":
