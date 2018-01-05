@@ -110,7 +110,7 @@
 						<p>For those with military experience looking to transition to a civilian career</p>
 					</label>
 					
-					<label data-region="ENG-GB ENG-USA ENG-HK ENG-SGP">
+					<label data-region="ENG-GB ENG-HK ENG-SGP">
 						<img src="<?= Hodes\FDM\asset_url('img/b2b.svg') ?>" />
 						<label>Getting Back to Business</label>
 						<input type="radio" name="RecruitmentType" value="ReturnToWork" />
@@ -735,6 +735,7 @@
 							<option class="js-specific-field" data-pathway="graduate" data-region="UK China Ireland" value="Business">Business</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="UK China Ireland" value="Technical">Technical</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="UK China Ireland" value="No preference">No preference</option>
+                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Data Analysis / Business Intelligence">Data Analysis / Business Intelligence</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada Singapore HK" value="IT Service Management (ITSM)">IT Service Management (ITSM)</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada Singapore HK" value="Project Management (PMO)">Project Management (PMO)</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada Singapore HK" value="Software Development">Software Development</option>
@@ -758,7 +759,8 @@
 						<select id="details-form__pathway" class="js-pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err-usa">
 							<option class="js-default-select" value="" selected disabled hidden>Please select one</option>
                             <option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Advanced Project Management (PMO)">Advanced Project Management (PMO)</option>
-							<option value="Data Analysis">Data Analysis</option>
+							<option value="Data Analysis / Business Intelligence">Data Analysis / Business Intelligence</option>
+							<option value="DevOps">DevOps</option>
 							<option value="IT Service Management (ITSM)">IT Service Management (ITSM)</option>
 							<option value="Project Management (PMO)">Project Management (PMO)</option>
 							<option value="Risk, Regulation & Compliance">Risk, Regulation &amp; Compliance</option>
