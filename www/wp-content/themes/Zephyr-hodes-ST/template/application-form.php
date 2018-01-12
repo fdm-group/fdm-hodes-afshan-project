@@ -748,6 +748,7 @@
 							<option class="js-specific-field" data-pathway="graduate" data-region="UK China Ireland" value="No preference">No preference</option>
                             <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Data Analysis / Business Intelligence">Data Analysis / Business Intelligence</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada Singapore HK" value="IT Service Management (ITSM)">IT Service Management (ITSM)</option>
+							<option class="js-specific-field" data-pathway="graduate" data-region="Singapore" value="Risk, Regulation and Compliance">Risk, Regulation and Compliance</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada Singapore HK" value="Project Management (PMO)">Project Management (PMO)</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada Singapore HK" value="Software Development">Software Development</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="No preference">No preference</option>
