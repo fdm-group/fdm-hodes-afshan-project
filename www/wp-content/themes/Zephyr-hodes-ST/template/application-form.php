@@ -1571,7 +1571,7 @@
 						<select id="location-form__training-loc" name="PreferredTrainingLocation" data-validation="required" data-validation-error-msg-container="#location-form__training-loc-err">
 							<option class="js-default-select" value="" disabled selected hidden>Please select one</option>
 							<option value="London">London</option>
-							<option class="js-specific-field" data-pathway="graduate exforces" data-region="UK Ireland China" value="Leeds">Leeds</option>
+							<option class="js-specific-field" data-pathway="graduate exforces b2b" data-region="UK Ireland China" value="Leeds">Leeds</option>
 							<option value="Glasgow">Glasgow</option>
                             <option class="js-specific-field" data-pathway="graduate" data-region="UK" value="Birmingham">Birmingham</option>
 							<option class="js-specific-field" data-pathway="graduate b2b" data-region="China" value="New York">New York</option>
