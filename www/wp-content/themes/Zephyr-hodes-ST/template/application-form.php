@@ -751,6 +751,7 @@
 							<option class="js-specific-field" data-pathway="graduate" data-region="Singapore" value="Risk, Regulation and Compliance">Risk, Regulation and Compliance</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada Singapore HK" value="Project Management (PMO)">Project Management (PMO)</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada Singapore HK" value="Software Development">Software Development</option>
+							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Test Automation">Test Automation</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="No preference">No preference</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Australia HK" value="Business Analysis">Business Analysis</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Australia" value="Software Development">Software Development</option>
@@ -771,12 +772,15 @@
 						<select id="details-form__pathway" class="js-pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err-usa">
 							<option class="js-default-select" value="" selected disabled hidden>Please select one</option>
                             <option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Advanced Project Management (PMO)">Advanced Project Management (PMO)</option>
+							<option value="Cyber / Information Security">Cyber / Information Security</option>
 							<option value="Data Analysis / Business Intelligence">Data Analysis / Business Intelligence</option>
+							<option value="Data Science">Data Science</option>
 							<option value="DevOps">DevOps</option>
 							<option value="IT Service Management (ITSM)">IT Service Management (ITSM)</option>
 							<option value="Project Management (PMO)">Project Management (PMO)</option>
 							<option value="Risk, Regulation & Compliance">Risk, Regulation &amp; Compliance</option>
 							<option value="Software Development">Software Development</option>
+							<option value="Test Automation">Test Automation</option>
 							<option value="No preference">No preference</option>
 						</select>
                         <input class="js-pre-def-pathway js-hidden" name="Pathway" type="text" disabled/>
