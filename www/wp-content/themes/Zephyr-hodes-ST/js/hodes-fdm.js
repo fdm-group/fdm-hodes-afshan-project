@@ -30,7 +30,7 @@ if (Array.prototype.indexOf === undefined) {Array.prototype.indexOf = function(e
 
 // Modify the UK link on the country selector to add "?noredirect"
 // The link is always the first in the list
-jQuery(document).ready(function($) {
+jQuery(function($) {
 	var element = $(".fdm-location-selector-list:first li:first a");
   	var newlink = element.attr("href") + "?noredirect";
   	element.attr("href", newlink);
