@@ -28,8 +28,13 @@ if (Array.prototype.map === undefined) {Array.prototype.map = function(fn) {var 
 if (Array.prototype.filter === undefined) {Array.prototype.filter = function(fn) {var out = []; for (var i=0; i<this.length; i++) {if (fn(this[i], i, this)) {out.push(this[i]);}} return out;};}
 if (Array.prototype.indexOf === undefined) {Array.prototype.indexOf = function(ele, start) {if (!start) {start = 0;} for (var i=start; i<this.length; i++) {if (this[i] === ele) {return i;}} return -1;};}
 
-
-
+// Modify the UK link on the country selector to add "?noredirect"
+// The link is always the first in the list
+jQuery(document).ready(function() {
+	var element = $(".fdm-location-selector-list:first li:first a");
+  	var newlink = element.attr("href") + "?noredirect";
+  	element.attr("href", newlink);
+});
 
 jQuery(function($){
 	/***** In page navigation pips *****/
