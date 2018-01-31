@@ -1,3 +1,33 @@
+<?php
+// Geo Redirection code - dependent on HTTP_CF_IPCOUNTRY from Cloudflare
+// Don't do anything if not home page or if a query string is used
+
+if ($_SERVER["REQUEST_URI"] == '/') {
+       
+       $location = 'none';
+       if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
+              $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
+       }
+       
+       switch (strtoupper($location)) {
+              case 'SG':
+                     header('Location: /en-sg/sg-home/');
+                     exit;
+              case 'DE':
+                     header('Location: /de/de-home/');
+		     exit;   	
+              case 'CN':
+                     header('Location: /cn/cn-home/');
+                     exit;
+              case 'HK':
+                     header('Location: /en-hk/hk-home/');
+                     exit;
+       }
+
+}
+// End of Geo Redirection
+?>
+
 <?php defined( 'ABSPATH' ) OR die( 'This script cannot be accessed directly.' );
 
 /**
