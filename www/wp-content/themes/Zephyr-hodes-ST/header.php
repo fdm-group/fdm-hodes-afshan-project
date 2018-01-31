@@ -10,6 +10,12 @@ if ($_SERVER["REQUEST_URI"] == '/') {
        }
        
        switch (strtoupper($location)) {
+              case 'US':
+                     header('Location: /en-us/home-us/');
+                     exit;
+              case 'CA':
+                     header('Location: /en-ca/ca-home/');
+                     exit;
               case 'SG':
                      header('Location: /en-sg/sg-home/');
                      exit;
