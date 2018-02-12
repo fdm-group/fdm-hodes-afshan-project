@@ -209,7 +209,7 @@
 					<div>
 						<span class="[ apply-form__info ]	 [ js-specific-field ]" data-pathway="graduate" data-region="Australia">E.g. +61 123 456 7891</span>
 						<span class="[ apply-form__info ]	 [ js-specific-field ]" data-pathway="graduate exforces b2b" data-region="UK">E.g. +44 123 456 7891</span>
-						<span class="[ apply-form__info ]	 [ js-specific-field ]" data-pathway="graduate" data-region="Canada">E.g. +1 647 693 9302</span>
+						<span class="[ apply-form__info ]	 [ js-specific-field ]" data-pathway="graduate b2b" data-region="Canada">E.g. +1 647 693 9302</span>
 						<span class="[ apply-form__info ]	 [ js-specific-field ]" data-pathway="graduate" data-region="China">E.g. +86 647 693 9302</span>
 						<span class="[ apply-form__info ]	 [ js-specific-field ]" data-pathway="graduate" data-region="Ireland">E.g. +353 1 234 5678</span>
 						<span class="[ apply-form__info ]	 [ js-specific-field ]" data-pathway="graduate b2b" data-region="HK">E.g. +852 1234 5678</span>
@@ -262,7 +262,7 @@
 						<label class="js-specific-field" data-pathway="graduate b2b" data-region="Singapore HK" for="details-form__county">County/State/Province<span class="apply-form__required">*</span></label>
 						<label class="js-specific-field" data-pathway="graduate exforces b2b" data-region="SA Ireland" for="details-form__county">County/Province<span class="apply-form__required">*</span></label>
 						<label class="js-specific-field" data-pathway="graduate exforces b2b" data-region="USA" for="details-form__county">State/Province<span class="apply-form__required">*</span></label>
-						<label class="js-specific-field" data-pathway="graduate" data-region="Canada" for="details-form__county">Province<span class="apply-form__required">*</span></label>
+						<label class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" for="details-form__county">Province<span class="apply-form__required">*</span></label>
 						<label class="js-specific-field" data-pathway="graduate" data-region="Australia" for="details-form__city">State<span class="apply-form__required">*</span></label>
 					</div>
 					<div>
@@ -275,6 +275,7 @@
 					<div>
 						<label class="js-specific-field" data-pathway="graduate exforces b2b" data-region="UK China" for="details-form__postcode">Postcode<span class="apply-form__required">*</span></label>
 						<label class="js-specific-field" data-pathway="graduate" data-region="Canada SA" for="details-form__postcode">Postal Code<span class="apply-form__required">*</span></label>
+						<label class="js-specific-field" data-pathway="b2b" data-region="Canada" for="details-form__postcode">Postal Code<span class="apply-form__required">*</span></label>
 						<label class="js-specific-field" data-pathway="graduate b2b" data-region="Singapore HK" for="details-form__postcode">Postal Code/Zip<span class="apply-form__required">*</span></label>
 						<label class="js-specific-field" data-pathway="graduate exforces b2b" data-region="USA" for="details-form__postcode">Zip Code<span class="apply-form__required">*</span></label>
 						<label class="js-specific-field" data-pathway="graduate" data-region="Australia" for="details-form__city">Zip/Postcode<span class="apply-form__required">*</span></label>
