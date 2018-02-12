@@ -110,7 +110,7 @@
 						<p>For those with military experience looking to transition to a civilian career</p>
 					</label>
 					
-					<label data-region="ENG-GB ENG-HK ENG-SGP">
+					<label data-region="ENG-GB ENG-HK ENG-SGP ENG-CA">
 						<img src="<?= Hodes\FDM\asset_url('img/b2b.svg') ?>" />
 						<label>Getting Back to Business</label>
 						<input type="radio" name="RecruitmentType" value="ReturnToWork" />
@@ -356,23 +356,23 @@
 							<option class="js-specific-field" data-pathway="graduate" data-region="Australia" value="YouTube">YouTube</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Australia" value="Referral">Referral</option>
 							<!-- CA - Grad -->
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="CareerBuilder.ca">CareerBuilder.ca</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Career Fair / Campus Event">Career Fair / Campus Event</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Facebook">Facebook</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="FDM Blog">FDM Blog</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Glassdoor">Glassdoor</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Google">Google</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Indeed">Indeed</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Instagram">Instagram</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Job Board - Other">Job Board - Other</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="LinkedIn">LinkedIn</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Monster.ca">Monster.ca</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="News Article/Press">News Article / Press</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Referral">Referral</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Twitter">Twitter</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="University Job Board">University Job Board</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Workopolis">Workopolis</option>
-							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="YouTube">YouTube</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="CareerBuilder.ca">CareerBuilder.ca</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Career Fair / Campus Event">Career Fair / Campus Event</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Facebook">Facebook</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="FDM Blog">FDM Blog</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Glassdoor">Glassdoor</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Google">Google</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Indeed">Indeed</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Instagram">Instagram</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Job Board - Other">Job Board - Other</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="LinkedIn">LinkedIn</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Monster.ca">Monster.ca</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="News Article/Press">News Article / Press</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Referral">Referral</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Twitter">Twitter</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="University Job Board">University Job Board</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Workopolis">Workopolis</option>
+							<option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="YouTube">YouTube</option>
 							<!-- China - Grad -->
 							<option class="js-specific-field" data-pathway="graduate" data-region="China" value="Alumni University Careers Service">Alumni University Careers Service</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="China" value="Careers Group">Careers Group</option>
@@ -415,8 +415,10 @@
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Empfehlung durch Bekannte">Empfehlung durch Bekannte</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Facebook">Facebook</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="FDM Blog">FDM Blog</option>
+							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Guardian Jobs">Guardian Jobs</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Get in IT">Get in IT</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Glassdoor">Glassdoor</option>
+							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Gradcracker">Gradcracker</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Google">Google</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Hochschule">Hochschule</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Indeed">Indeed</option>
@@ -426,15 +428,18 @@
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Karriereseite der Universität">Karriereseite der Universität</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Komm mach MINT">Komm mach MINT</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="LinkedIn">LinkedIn</option>
+							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Milkround">Milkround</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Monster">Monster</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Presse/Nachrichten">Presse / Nachrichten</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Sonstige">Sonstige</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Staufenbiel">Staufenbiel</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="StepStone">StepStone</option>
+							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="TARGETJobs">TARGETJobs</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Talents-Connect">Talents-Connect</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Trainee Geflüster">Trainee Geflüster</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Truffls">Truffls</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Twitter">Twitter</option>
+							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="UK University Careers Service">UK University Careers Service</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Unicum">Unicum</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="Xing">Xing</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="DE" value="YouTube">YouTube</option>
@@ -751,12 +756,29 @@
 							<option class="js-specific-field" data-pathway="graduate" data-region="Singapore" value="Risk, Regulation and Compliance">Risk, Regulation and Compliance</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada Singapore HK" value="Project Management (PMO)">Project Management (PMO)</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada Singapore HK" value="Software Development">Software Development</option>
+							<option class="js-specific-field" data-pathway="graduate" data-region="HK" value="Testing">Software Testing</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Test Automation">Test Automation</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="No preference">No preference</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Australia HK" value="Business Analysis">Business Analysis</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Australia" value="Software Development">Software Development</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Australia Singapore" value="Mx.3 Support">Mx.3 Support</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Singapore" value="Testing">Testing</option>
+						</select>
+                        <input class="js-pre-def-pathway js-hidden" name="Pathway" type="text" disabled/>
+					</div>
+					<div class="apply-form__val-msg" id="details-form__pathway-err"></div>
+				</div>
+				
+				<div class="form-row js-specific-field" data-pathway="b2b" data-region="Canada">
+					<div>
+						<label for="details-form__pathway">Preferred career program<span class="apply-form__required">*</span></label>
+					</div>
+					<div>
+						<select id="details-form__pathway" class="js-pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err">
+							<option class="js-default-select" value="" selected disabled hidden>Please select one</option>
+							<option value="Data Analysis / Business Intelligence">Data Analysis / Business Intelligence</option>
+							<option value="Test Automation">Test Automation</option>
+							<option value="No preference">No preference</option>
 						</select>
                         <input class="js-pre-def-pathway js-hidden" name="Pathway" type="text" disabled/>
 					</div>
@@ -1523,6 +1545,7 @@
 						<label class="[ js-specific-field ]" data-pathway="b2b" data-region="HK Singapore" for="education-form__personal">Why do you think you would be a good fit for FDM’s Getting Back to Business Programme?</label>
 						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="Singapore" for="education-form__personal">Why do you think you would be a good fit for FDM's Careers Programme?</label>
 						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="USA Canada" for="education-form__personal">Please list any clubs, student organizations or volunteer involvement you have been a part of and any leadership roles held</label>
+						<label class="[ js-specific-field ]" data-pathway="b2b" data-region="Canada" for="education-form__personal">Please tell us a bit about your past experience. Why do you think you're well suited to FDM's Getting Back to Business Program?</label>
 					</div>
 					<div>
 						<textarea id="education-form__personal" rows="10" name="PersonalStatement" data-validation="length" data-validation-length="max700" data-validation-error-msg-container="#education-form__personal-err"></textarea>
@@ -1717,8 +1740,8 @@
 					<p class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA">FDM is an Equal Opportunity Employer and all qualified applicants receive consideration for employment without regard to race, color, religion, sex, sexual orientation, marital status, national origin, age, disability, veteran status or any other status protected by federal, provincial, or local laws.</p>
 					<p class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA">FDM collects voluntary information from our applicants in order to track the effectiveness of our recruiting efforts of candidates from all backgrounds. To help us measure this, please consider the following optional questions. Any answer you give will be kept private and will not be used during consideration of your employment.</p>
 						
-					<p class="js-specific-field" data-pathway="graduate" data-region="Canada">FDM is an Equal Opportunity Employer in compliance with the Employer Equity Act (“the Act) and all qualified applicants receive consideration for employment without regard to race, color, religion, sex, sexual orientation, marital status, national origin, age, disability or any other status protected by federal, provincial, or local laws.</p>
-					<p class="js-specific-field" data-pathway="graduate" data-region="Canada">FDM collects voluntary information from our applicants in order to track the effectiveness of our recruiting efforts of candidates from all backgrounds in order to ensure continued compliance with the Act. To help us measure this, please consider the following optional questions. Any answer you give will be kept private and will not be used during consideration of your employment. Submission of this information is voluntary and refusal to provide it will not subject you to any adverse treatment.</p>
+					<p class="js-specific-field" data-pathway="graduate b2b" data-region="Canada">FDM is an Equal Opportunity Employer in compliance with the Employer Equity Act (“the Act) and all qualified applicants receive consideration for employment without regard to race, color, religion, sex, sexual orientation, marital status, national origin, age, disability or any other status protected by federal, provincial, or local laws.</p>
+					<p class="js-specific-field" data-pathway="graduate b2b" data-region="Canada">FDM collects voluntary information from our applicants in order to track the effectiveness of our recruiting efforts of candidates from all backgrounds in order to ensure continued compliance with the Act. To help us measure this, please consider the following optional questions. Any answer you give will be kept private and will not be used during consideration of your employment. Submission of this information is voluntary and refusal to provide it will not subject you to any adverse treatment.</p>
 
 					<div class="form-row js-specific-field" data-pathway="graduate b2b exforces" data-region="USA">
 						<div>
@@ -1761,7 +1784,7 @@
 						<div class="apply-form__val-msg" id="identification-form__ethinc-err"></div>
 					</div>
 					
-					<div class="form-row js-specific-field" data-pathway="graduate" data-region="Canada">
+					<div class="form-row js-specific-field" data-pathway="graduate b2b" data-region="Canada">
 						<div>
 							<label>Ethnic Background: Check on box that best describes how you self-identify<span class="apply-form__required">*</span></label>
 						</div>
@@ -1822,7 +1845,7 @@
 							<label>
 								<input type="radio" value="I don’t wish to answer" name="Gender"/>
 								<span class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA">I don’t wish to answer</span>
-								<span class="js-specific-field" data-pathway="graduate" data-region="Canada">Prefer not to answer</span>
+								<span class="js-specific-field" data-pathway="graduate b2b" data-region="Canada">Prefer not to answer</span>
 							</label>
 						</div>
 						<div class="apply-form__val-msg" id="identification-form__gender-err"></div>
@@ -1853,7 +1876,7 @@
 					<div class="form-row">
 						<div>
 							<label class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA">Disability: You are considered to have a disability if you have a physical or mental impairment or medical condition that substantially limits a major life activity, or if you have a history or record of such an impairment or condition. Please select one of the boxes:<span class="apply-form__required">*</span></label>
-							<label class="js-specific-field" data-pathway="graduate" data-region="Canada">Disability: Do you identify as someone with a disability, either physical or mental, or with an associated medical condition?<span class="apply-form__required">*</span></label>
+							<label class="js-specific-field" data-pathway="graduate b2b" data-region="Canada">Disability: Do you identify as someone with a disability, either physical or mental, or with an associated medical condition?<span class="apply-form__required">*</span></label>
 						</div>
 						<div class="radio-group-vertical">
 							<label>
@@ -1867,7 +1890,7 @@
 							<label>
 								<input type="radio" value="I don’t wish to answer" name="Disability"/>
 								<span class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA">I don’t wish to answer</span>
-								<span class="js-specific-field" data-pathway="graduate" data-region="Canada">Prefer not to answer</span>
+								<span class="js-specific-field" data-pathway="graduate b2b" data-region="Canada">Prefer not to answer</span>
 							</label>
 						</div>
 						<div class="apply-form__val-msg" id="identification-form__disability-err"></div>
@@ -1950,7 +1973,7 @@
 
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="Canada USA">
 					<div>
-						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="Canada">Are you legally authorized to work in Canada?<span class="apply-form__required">*</span></label>
+						<label class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="Canada">Are you legally authorized to work in Canada?<span class="apply-form__required">*</span></label>
 						<label class="[ js-specific-field ]" data-pathway="graduate exforces b2b" data-region="USA">Are you legally authorized to work in the US?<span class="apply-form__required">*</span></label>
 					</div>
 					<div class="radio-group-horizontal">
@@ -1973,12 +1996,12 @@
 					<div>
 						<select id="location-form__visa-type-ca" name="VisaType">
                             <option class="js-default-select" value="" disabled selected hidden>Please select one</option>	
-                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Canadian Citizen / Permanent Resident">Canadian Citizen / Permanent Resident</option>
-                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Temporary Resident">Temporary Resident</option>
-                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Post-Graduate Work Permit">Post-Graduate Work Permit</option>
-                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="NAFTA Work Permit">NAFTA Work Permit</option>
-                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Student Visa">Student Visa</option>
-                            <option class="js-specific-field" data-pathway="graduate" data-region="Canada" value="Other">Other</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Canadian Citizen / Permanent Resident">Canadian Citizen / Permanent Resident</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Temporary Resident">Temporary Resident</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Post-Graduate Work Permit">Post-Graduate Work Permit</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="NAFTA Work Permit">NAFTA Work Permit</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Student Visa">Student Visa</option>
+                            <option class="js-specific-field" data-pathway="graduate b2b" data-region="Canada" value="Other">Other</option>
                         </select>
 					</div>
 				</div>
@@ -2009,7 +2032,7 @@
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate exforces b2b" data-region="USA Canada">
 					<div>
 						<label class="[ js-specific-field ]" data-pathway="graduate exforces b2b" data-region="USA">Do you require sponsorship now or at any point in the future to work in the US?<span class="apply-form__required">*</span></label>
-						<label class="[ js-specific-field ]" data-pathway="graduate" data-region="Canada">Do you require sponsorship now or at any point in the future to work in Canada?<span class="apply-form__required">*</span></label>
+						<label class="[ js-specific-field ]" data-pathway="graduate b2b" data-region="Canada">Do you require sponsorship now or at any point in the future to work in Canada?<span class="apply-form__required">*</span></label>
 					</div>
 					<div class="radio-group-horizontal">
 						<label>
@@ -2055,8 +2078,8 @@
 						<label class="js-specific-field" data-pathway="graduate" data-region="Ireland">Are you geographically flexible to relocate within the UK/Ireland if required?<span class="apply-form__required">*</span></label>
 						<label class="js-specific-field" data-pathway="graduate" data-region="SA">Are you geographically flexible to relocate within South Africa if required?<span class="apply-form__required">*</span></label>
 						<label class="js-specific-field" data-pathway="graduate b2b" data-region="Singapore">Are you geographically flexible to relocate within Singapore or to Hong Kong if required?<span class="apply-form__required">*</span></label>
-						<label class="js-specific-field" data-pathway="graduate" data-region="Canada">We have clients in major metro cities in Canada – primarily Toronto, Montreal and Vancouver. Are you open to national placement opportunities?<span class="apply-form__required">*</span></label>
-						<span class="js-specific-field" data-pathway="graduate" data-region="Canada">* Please note geographical flexibility is not a requirement of the program.</span>
+						<label class="js-specific-field" data-pathway="graduate b2b" data-region="Canada">We have clients in major metro cities in Canada – primarily Toronto, Montreal and Vancouver. Are you open to national placement opportunities?<span class="apply-form__required">*</span></label>
+						<span class="js-specific-field" data-pathway="graduate b2b" data-region="Canada">* Please note geographical flexibility is not a requirement of the program.</span>
 						<label class="js-specific-field" data-pathway="graduate b2b exforces" data-region="USA">We have clients in major metro cities throughout the US. Are you open to national placement opportunities?<span class="apply-form__required">*</span></label>
 					</div>
 					<div class="radio-group-horizontal">
@@ -2710,7 +2733,7 @@
             case "China":
                 gtag('event', 'apply', {'event_category': 'application-form','event_label': 'China Apply button clicked'});
                 break;
-            case "Hong Kong":
+            case "HK":
                 gtag('event', 'apply', {'event_category': 'application-form','event_label': 'Hong Kong Apply button clicked'});
                 break;
             case "Singapore":
@@ -2719,10 +2742,10 @@
             case "Ireland":
                 gtag('event', 'apply', {'event_category': 'application-form','event_label': 'Ireland Apply button clicked'});
                 break;
-            case "South Africa":
+            case "SA":
                 gtag('event', 'apply', {'event_category': 'application-form','event_label': 'South Africa Apply button clicked'});
                 break;
-            case "Deutschland":
+            case "DE":
                 gtag('event', 'apply', {'event_category': 'application-form','event_label': 'Germany Apply button clicked'});
                 break;
             default:
@@ -2954,4 +2977,4 @@
     function gtag(){dataLayer.push(arguments)};
     gtag('js', new Date());
     gtag('config', 'UA-236343-7');
-</script>
+</script> 
