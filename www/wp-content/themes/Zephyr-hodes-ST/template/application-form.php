@@ -775,7 +775,6 @@
 					<div>
 						<select id="details-form__pathway" class="js-pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err">
 							<option class="js-default-select" value="" selected disabled hidden>Please select one</option>
-							<option value="Data Analysis / Business Intelligence">Data Analysis / Business Intelligence</option>
 							<option value="IT Service Management (ITSM)">IT Service Management (ITSM)</option>
 							<option value="Project Management (PMO)">Project Management (PMO)</option>
 							<option value="Software Development">Software Development</option>
@@ -901,7 +900,7 @@
 				<p class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="China Australia Ireland">Please note: We provide our trainees with individual learning pathways to suit their specific skill sets. Due to this, we cannot guarantee that you will be trained in your preferred learning pathway. If you are interested in more than one career path you do not need to submit multiple applications, we will discuss all the options with you once we have reviewed your submission.</p>
 				<p class="[ js-specific-field ]" data-pathway="graduate" data-region="UK">Please note: We provide our trainees with individual learning pathways to suit their specific skill sets. Due to this, we cannot guarantee that you will be trained in your preferred learning pathway. If you are interested in more than one career path you do not need to submit multiple applications, we will discuss all the options with you once we have reviewed your submission.</p>
 				<p class="[ js-specific-field ]" data-pathway="graduate" data-region="HK Singapore">Please note: We provide our trainees with individual learning pathways to suit their specific skill sets. Due to this, we cannot guarantee that you will be trained in your preferred learning pathway. If you are interested in more than one career path you do not need to submit multiple applications, we will discuss all the options with you once we have reviewed your submission.</p>
-				<p class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="Canada">Please note: If you are interested in more than one career path, please only submit one application. We will review your submission and discuss the options available to you.</p>
+				<p class="[ js-specific-field ]" data-pathway="graduate" data-region="Canada">Please note: If you are interested in more than one career path, please only submit one application. We will review your submission and discuss the options available to you.</p>
 				<p class="[ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="USA">Please note: If you are interested in more than one career path, please only submit one application. We will review your submission and discuss the options available to you.</p>
 				<p class="[ js-specific-field ]" data-pathway="graduate" data-region="DE">Sollten Sie sich für mehr als einen Trainingsbereich interessieren, genügt eine einzige Bewerbung. Nach Durchsicht Ihrer Unterlagen besprechen wir mögliche Optionen gerne persönlich mit Ihnen.</p>
 			</form>
