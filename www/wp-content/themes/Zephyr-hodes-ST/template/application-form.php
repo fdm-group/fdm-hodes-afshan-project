@@ -768,7 +768,7 @@
 					<div class="apply-form__val-msg" id="details-form__pathway-err"></div>
 				</div>
 				
-				<div class="form-row js-specific-field" data-pathway="graduate b2b" data-region="Canada">
+				<div class="form-row js-specific-field" data-pathway="graduate" data-region="Canada">
 					<div>
 						<label for="details-form__pathway">Preferred career program<span class="apply-form__required">*</span></label>
 					</div>
@@ -798,7 +798,6 @@
                             <option class="js-specific-field" data-pathway="exforces" data-region="USA" value="Advanced Project Management (PMO)">Advanced Project Management (PMO)</option>
 							<option value="Cyber / Information Security">Cyber / Information Security</option>
 							<option value="Data Analysis / Business Intelligence">Data Analysis / Business Intelligence</option>
-							<option value="Data Science">Data Science</option>
 							<option value="DevOps">DevOps</option>
 							<option value="IT Service Management (ITSM)">IT Service Management (ITSM)</option>
 							<option value="Project Management (PMO)">Project Management (PMO)</option>
