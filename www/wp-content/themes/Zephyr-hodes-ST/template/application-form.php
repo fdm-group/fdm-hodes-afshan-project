@@ -775,6 +775,7 @@
 					<div>
 						<select id="details-form__pathway" class="js-pathway" type="text" name="Pathway" data-validation="required" data-validation-error-msg-container="#details-form__pathway-err">
 							<option class="js-default-select" value="" selected disabled hidden>Please select one</option>
+							<option value="Data Science">Data Science</option>
 							<option value="IT Service Management (ITSM)">IT Service Management (ITSM)</option>
 							<option value="Project Management (PMO)">Project Management (PMO)</option>
 							<option value="Software Development">Software Development</option>
@@ -2678,6 +2679,10 @@
             disabled.attr('disabled','disabled');
             			
 			var formJson = {application: objectifyForm(data) };
+			
+			if(formJson.RecruitmentType !== null && formJson.RecruitmentType === 'Military'){
+				delete formJson.application.Pathway;
+			}
 			
 			delete formJson.application.file;
 
