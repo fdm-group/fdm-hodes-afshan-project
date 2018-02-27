@@ -2680,7 +2680,7 @@
             			
 			var formJson = {application: objectifyForm(data) };
 			
-			if(formJson.RecruitmentType !== null && formJson.RecruitmentType === 'Military'){
+			if(formJson.application.RecruitmentType !== null && formJson.application.RecruitmentType === 'ReturnToWork'){
 				delete formJson.application.Pathway;
 			}
 			
