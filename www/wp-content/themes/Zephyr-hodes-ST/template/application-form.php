@@ -2715,7 +2715,7 @@
 					'Content-Type': 'application/json' 
 				},
 				data: JSON.stringify(formJson),
-				url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService",
+				url: "https://fdmsaldev-fdmgroup.cs88.force.com/apply/services/apexrest/ApplicationService",
 				success: function(responseData, textStatus, jqXHR) {
 					var value = responseData;
 					uploadCv(value, function(){
