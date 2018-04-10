@@ -2430,7 +2430,7 @@
 				contentType: "application/json; charset=UTF-8",
 				data: JSON.stringify(cv),
 				processData: false,
-				url: "https://applications.fdmgroup.com/services/apexrest/CVService",
+				url: "https://fdmsaldev-fdmgroup.cs88.force.com/apply/services/apexrest/CVService",
                 success: callback
 			}).fail(function(jqXHR, textStatus) {
 				callback
@@ -2452,7 +2452,7 @@
         if(shortCode != undefined) {
             
             $.ajax({
-                url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService?cs=" + shortCode,
+                url: "https://fdmsaldev-fdmgroup.cs88.force.com/apply/services/apexrest/ApplicationService?cs=" + shortCode,
                 type: "get",
                 async: false,
                 success: function(data){
