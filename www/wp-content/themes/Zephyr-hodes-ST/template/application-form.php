@@ -604,6 +604,7 @@
 							<option class="js-specific-field" data-pathway="b2b" data-region="UK" value="Leeds Bus">Leeds Bus</option>
 							<option class="js-specific-field" data-pathway="b2b" data-region="UK" value="Leeds Station">Leeds Station</option>
 							<option class="js-specific-field" data-pathway="b2b" data-region="UK" value="LinkedIn">LinkedIn</option>
+							<option class="js-specific-field" data-pathway="b2b" data-region="UK" value="Mothers &amp; Careers">Mothers &amp; Careers</option>
 							<option class="js-specific-field" data-pathway="b2b" data-region="UK" value="Mumsnet">Mumsnet</option>
 							<option class="js-specific-field" data-pathway="b2b" data-region="UK" value="Magazine/Newspaper Article">Magazine / Newspaper Article</option>
 							<option class="js-specific-field" data-pathway="b2b" data-region="UK" value="Other">Other</option>
@@ -2115,14 +2116,34 @@
 					<div class="apply-form__val-msg" id="selection-form__geoflex-commit-err-uk"></div>
 				</div>
                 
-                <!-- b2b Have you taken a career break of one year or more? -->
-                <div class="form-row [ js-specific-field ]" data-pathway="b2b" data-region="UK">
+                <!-- b2b - Do you have 5+ years of professional experience? -->
+				<div class="form-row [ js-specific-field ]" data-pathway="b2b" data-region="Canada">
 					<div>
-						<label class="js-specific-field" data-pathway="b2b" data-region="UK">Have you taken a career break of one year or more?<span class="apply-form__required">*</span></label>
-				    </div>
+						<label>Do you have 5+ years of professional experience?<span class="apply-form__required">*</span></label>
+					</div>
 					<div class="radio-group-horizontal">
 						<label>
-							<input id="selection-form__geoflex-commit" type="radio" value="Yes" name="CareerBreak" data-validation="required" data-validation-error-msg-container="#selection-form__geoflex-commit-err"/>
+							<input id="selection-form__geoflex-commit" type="radio" value="Yes" name="ProfessionalExperience" data-validation="required" data-validation-error-msg-container="#selection-form__professional-experience-err"/>
+							<span>Yes</span>
+						</label>
+						<label>
+							<input id="selection-form__geoflex-commit" type="radio" value="No" name="ProfessionalExperience"/>
+							<span>No</span>
+						</label>
+					</div>
+					<div class="apply-form__val-msg" id="selection-form__professional-experience-err"></div>
+				</div>
+
+				<!-- b2b Have you taken a career break of one year or more? -->
+				<div class="form-row [ js-specific-field ]" data-pathway="b2b" data-region="UK Canada">
+					<div>
+						<label class="js-specific-field" data-pathway="b2b" data-region="UK">Have you taken a career break of one year or more?<span class="apply-form__required">*</span></label>
+						<label class="js-specific-field" data-pathway="b2b" data-region="Canada">Have you been out of the workforce on a career break of a year or more?<span class="apply-form__required">*</span></label>
+						<p class="js-specific-field" data-pathway="b2b" data-region="Canada">If no, please consider applying to our standard program for graduates and early career professionals.</p>
+					</div>
+					<div class="radio-group-horizontal">
+						<label>
+							<input id="selection-form__geoflex-commit" type="radio" value="Yes" name="CareerBreak" data-validation="required" data-validation-error-msg-container="#selection-form__career-break-err"/>
 							<span>Yes</span>
 						</label>
 						<label>
@@ -2130,7 +2151,7 @@
 							<span>No</span>
 						</label>
 					</div>
-					<div class="apply-form__val-msg" id="selection-form__geoflex-commit-err"></div>
+					<div class="apply-form__val-msg" id="selection-form__career-break-err"></div>
 				</div>
 				
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="UK Australia China Ireland SA Singapore HK ">
