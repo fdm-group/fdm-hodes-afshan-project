@@ -760,6 +760,7 @@
 							<option class="js-specific-field" data-pathway="graduate" data-region="Singapore HK" value="Software Development">Software Development</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="HK" value="Testing">Software Testing</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Australia HK" value="Business Analysis">Business Analysis</option>
+							<option class="js-specific-field" data-pathway="graduate" data-region="Australia" value="Data Analyst">Data Analyst</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Australia" value="Software Development">Software Development</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Australia Singapore" value="Mx.3 Support">Mx.3 Support</option>
 							<option class="js-specific-field" data-pathway="graduate" data-region="Singapore" value="Testing">Testing</option>
@@ -2430,7 +2431,7 @@
 				contentType: "application/json; charset=UTF-8",
 				data: JSON.stringify(cv),
 				processData: false,
-				url: "https://fdmsaldev-fdmgroup.cs88.force.com/apply/services/apexrest/CVService",
+				url: "https://applications.fdmgroup.com/services/apexrest/CVService",
                 success: callback
 			}).fail(function(jqXHR, textStatus) {
 				callback
@@ -2452,7 +2453,7 @@
         if(shortCode != undefined) {
             
             $.ajax({
-                url: "https://fdmsaldev-fdmgroup.cs88.force.com/apply/services/apexrest/ApplicationService?cs=" + shortCode,
+                url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService?cs=" + shortCode,
                 type: "get",
                 async: false,
                 success: function(data){
@@ -2715,7 +2716,7 @@
 					'Content-Type': 'application/json' 
 				},
 				data: JSON.stringify(formJson),
-				url: "https://fdmsaldev-fdmgroup.cs88.force.com/apply/services/apexrest/ApplicationService",
+				url: "https://applications.fdmgroup.com/services/apexrest/ApplicationService",
 				success: function(responseData, textStatus, jqXHR) {
 					var value = responseData;
 					uploadCv(value, function(){
