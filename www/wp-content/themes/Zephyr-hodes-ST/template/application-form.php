@@ -2601,6 +2601,7 @@
 			
 			if(region == "Ireland"){
 				location.href= "https://fdmgrouptest.jobtrain.co.uk/Decide.aspx?jobid=21";
+				return;
 			}
             
             if (nextSelection == 1 ) {
