@@ -1980,7 +1980,7 @@
 						<label for="location-form__training-loc">Preferred training location<span class="apply-form__required">*</span></label>
 					</div>
 					<div>
-						<select id="location-form__training-loc" name="PreferredTrainingLocation" data-validation="required" data-validation-error-msg-container="#location-form__training-loc-err">
+						<select id="location-form__training-loc" name="PreferredTrainingLocation" data-validation="required" data-validation-error-msg-container="#location-form__training-loc-usa-err">
 							<option value="" disabled selected hidden>Please select one</option>
 							<option value="New York City">New York City</option>
 							<option value="Metro DC">Metro DC</option>
@@ -1988,7 +1988,7 @@
 							<option value="Flexible">Flexible</option>
 						</select>
 					</div>
-					<div class="apply-form__val-msg" id="location-form__training-loc-err"></div>
+					<div class="apply-form__val-msg" id="location-form__training-loc-usa-err"></div>
 				</div>
 				
 
