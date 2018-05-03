@@ -2598,6 +2598,10 @@
 			region = region == "Hong Kong" ? "HK" : region;
 			region = region == "South Africa" ? "SA" : region;
 			region = region == "Deutschland" ? "DE" : region;
+			
+			if(region == "Ireland"){
+				location.href= "https://fdmgrouptest.jobtrain.co.uk/Decide.aspx?jobid=21";
+			}
             
             if (nextSelection == 1 ) {
                 $('.js-specific-field').toggleDisplay(false);
