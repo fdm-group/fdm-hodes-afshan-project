@@ -1973,6 +1973,24 @@
 					</div>
 					<div class="apply-form__val-msg" id="selection-form__employment-commit-err"></div>
 				</div>
+				
+				<!-- USA preferred training location -->
+				<div class="form-row [ js-specific-field ]" data-pathway="graduate exforces" data-region="USA">
+					<div>
+						<label for="location-form__training-loc">Preferred training location<span class="apply-form__required">*</span></label>
+					</div>
+					<div>
+						<select id="location-form__training-loc" name="PreferredTrainingLocation" data-validation="required" data-validation-error-msg-container="#location-form__training-loc-err">
+							<option value="" disabled selected hidden>Please select one</option>
+							<option value="New York City">New York City</option>
+							<option value="Metro DC">Metro DC</option>
+							<option value="Austin">Austin</option>
+							<option value="Flexible">Flexible</option>
+						</select>
+					</div>
+					<div class="apply-form__val-msg" id="location-form__training-loc-err"></div>
+				</div>
+				
 
 				<div class="form-row [ js-specific-field ]" data-pathway="graduate b2b exforces" data-region="Canada USA">
 					<div>
