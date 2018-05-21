@@ -2603,6 +2603,11 @@
 				location.href= "https://apply.fdmgroup.com/Decide.aspx?jobid=37";
 				return;
 			}
+			
+			if(region == "UK" && pathway == "graduate"){
+				location.href= "https://apply.fdmgroup.com/Decide.aspx?jobid=74";
+				return;
+			}
             
             if (nextSelection == 1 ) {
                 $('.js-specific-field').toggleDisplay(false);
