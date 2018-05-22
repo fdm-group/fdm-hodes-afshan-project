@@ -55,10 +55,6 @@ $us_layout = US_Layout::instance();
 </head>
 <body <?php body_class( 'l-body ' . $us_layout->body_classes() ) ?><?php echo $us_layout->body_styles() ?> itemscope="itemscope" itemtype="https://schema.org/WebPage" <?php do_action('body_attributes'); ?>>
 
-<!-- Start of HubSpot Embed Code -->
-<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/4411419.js"></script>
-<!-- End of HubSpot Embed Code -->
-
 <?php if ( us_get_option( 'preloader' ) != 'disabled' ) {
 	add_action( 'us_before_canvas', 'us_display_preloader', 100 );
 	function us_display_preloader() {
