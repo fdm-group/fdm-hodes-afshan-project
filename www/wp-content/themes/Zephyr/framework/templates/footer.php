@@ -95,5 +95,4 @@ if ( ! isset( $us_iframe ) OR ! $us_iframe ) {
 </script>
 <?php wp_footer(); ?>
 </body>
-<!-- Start of HubSpot Embed Code -->
-
+</html>

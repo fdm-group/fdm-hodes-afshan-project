@@ -180,8 +180,7 @@ add_action( 'wp_head', function() {
 }, 999 );
 
 // Add Analytics
-//removed, code added to cookies notice plugin 
-/*add_action( 'wp_head', function() {
+add_action( 'wp_head', function() {
 	?>
 	<!-- Google Tag Manager -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -192,9 +191,6 @@ add_action( 'wp_head', function() {
 	<!-- End Google Tag Manager -->
 	<?php
 } );
-*/
-
-
 add_action( 'us_before_canvas', function() {
 	?>
 	<!-- Google Tag Manager (noscript) -->
