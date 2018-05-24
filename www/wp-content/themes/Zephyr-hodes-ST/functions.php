@@ -180,6 +180,7 @@ add_action( 'wp_head', function() {
 }, 999 );
 
 // Add Analytics
+//removed, code added to cookies notice plugin 
 add_action( 'wp_head', function() {
 	?>
 	<!-- Google Tag Manager -->
@@ -191,6 +192,57 @@ add_action( 'wp_head', function() {
 	<!-- End Google Tag Manager -->
 	<?php
 } );
+
+
+
+add_action( 'wp_head', function() {
+// pixel and adwords tracking
+// check cookies are not blocked by user
+	if(!isset($_COOKIE['cookie_notice_accepted']) || $_COOKIE['cookie_notice_accepted']=='true') {
+	?>
+<!-- Global site tag (gtag.js) - AdWords: 1070642605 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-1070642605"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1070642605');
+</script>
+<!-- Facebook Pixel Code -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1650835965140444');
+  fbq('track', 'PageView');
+</script>
+
+<!-- End Facebook Pixel Code -->
+<?php
+}
+
+} );
+
+add_action('wp_footer', function() {
+
+	// if acf set for tracking pixel and cookies are not optout by user, trigger tracking event
+	if( get_field('include_facebook_tracking_pixel') ){
+		if(!isset($_COOKIE['cookie_notice_accepted']) || $_COOKIE['cookie_notice_accepted']=='true') {
+			echo "<script> fbq('track', 'ViewContent'); </script>";
+		}
+		
+	}
+
+},200);
+
+
+
 add_action( 'us_before_canvas', function() {
 	?>
 	<!-- Google Tag Manager (noscript) -->
