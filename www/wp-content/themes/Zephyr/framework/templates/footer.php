@@ -95,7 +95,14 @@ if ( ! isset( $us_iframe ) OR ! $us_iframe ) {
 </script>
 <?php wp_footer(); ?>
 </body>
+<?php
+$lang = pll_current_language();
+       if($_COOKIE['cookie_notice_accepted']=='true' || $lang!='de') {
+       	?>
 <script type="text/javascript" async src="//js.hs-scripts.com/4411419.js"></script>
 <!-- End of HubSpot Embed Code -->
+<?php
+}
+?>
 </html>
 

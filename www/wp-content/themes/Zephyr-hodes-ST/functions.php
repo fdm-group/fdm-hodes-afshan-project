@@ -182,6 +182,11 @@ add_action( 'wp_head', function() {
 // Add Analytics
 //removed, code added to cookies notice plugin 
 add_action( 'wp_head', function() {
+
+	 
+      
+       $lang = pll_current_language();
+       if($_COOKIE['cookie_notice_accepted']=='true' || $lang!='de') {
 	?>
 	<!-- Google Tag Manager -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -191,6 +196,7 @@ add_action( 'wp_head', function() {
 	})(window,document,'script','dataLayer','GTM-NR4946Z');</script>
 	<!-- End Google Tag Manager -->
 	<?php
+}
 } );
 
 
@@ -199,6 +205,9 @@ add_action( 'wp_head', function() {
 // pixel and adwords tracking
 // check cookies are not blocked by user
 	if(!isset($_COOKIE['cookie_notice_accepted']) || $_COOKIE['cookie_notice_accepted']=='true') {
+
+		$lang = pll_current_language();
+       if($_COOKIE['cookie_notice_accepted']=='true' || $lang!='de') {
 	?>
 <!-- Global site tag (gtag.js) - AdWords: 1070642605 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1070642605"></script>
@@ -226,11 +235,13 @@ add_action( 'wp_head', function() {
 <!-- End Facebook Pixel Code -->
 <?php
 }
+}
 
 } );
 
 add_action('wp_footer', function() {
-
+$lang = pll_current_language();
+       if($_COOKIE['cookie_notice_accepted']=='true' || $lang!='de') {
 	// if acf set for tracking pixel and cookies are not optout by user, trigger tracking event
 	if( get_field('include_facebook_tracking_pixel') ){
 		if(!isset($_COOKIE['cookie_notice_accepted']) || $_COOKIE['cookie_notice_accepted']=='true') {
@@ -238,17 +249,21 @@ add_action('wp_footer', function() {
 		}
 		
 	}
-
+}
 },200);
 
 
 
 add_action( 'us_before_canvas', function() {
+
+	$lang = pll_current_language();
+       if($_COOKIE['cookie_notice_accepted']=='true' || $lang!='de') {
 	?>
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NR4946Z" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 	<!-- End Google Tag Manager (noscript) -->
 	<?php
+}
 } );
 
 // Set javascript variable to allow the FDM logo to be set to a link to the correct language homepage

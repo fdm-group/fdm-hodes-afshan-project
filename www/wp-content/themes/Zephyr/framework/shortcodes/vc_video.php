@@ -86,6 +86,9 @@ if ( $atts['el_id'] != '' ) {
 
 // check cookie enabled
 if(!isset($_COOKIE['cookie_notice_accepted']) || $_COOKIE['cookie_notice_accepted']=='true') {
+	$lang = pll_current_language();
+       if($_COOKIE['cookie_notice_accepted']=='true' || $lang!='de') {
 $output = '<div class="w-video' . $classes . '"' . $inner_css . $el_id_string . '><div class="w-video-h">' . $embed_html . '</div></div>';
+}
 }
 echo $output;
