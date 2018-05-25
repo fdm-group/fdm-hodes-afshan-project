@@ -96,18 +96,7 @@ if ( ! isset( $us_iframe ) OR ! $us_iframe ) {
 <?php wp_footer(); ?>
 </body>
 <?php
-/*
- if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
-              $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
-       }
-       $lang = pll_current_language();
-       if($_COOKIE['cookie_notice_accepted']=='true' || ($lang!='de' && $location!='DE')) {
-       	?>
-<script type="text/javascript" async src="//js.hs-scripts.com/4411419.js"></script>
-<!-- End of HubSpot Embed Code -->
-<?php
-}
-*/
+
 ?>
 </html>
 
