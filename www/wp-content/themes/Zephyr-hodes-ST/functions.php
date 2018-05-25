@@ -184,9 +184,11 @@ add_action( 'wp_head', function() {
 add_action( 'wp_head', function() {
 
 	 
-      
+      if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
+              $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
+       }
        $lang = pll_current_language();
-       if($_COOKIE['cookie_notice_accepted']=='true' || $lang!='de') {
+       if($_COOKIE['cookie_notice_accepted']=='true' || ($lang!='de' && $location!='DE')) {
 	?>
 	<!-- Google Tag Manager -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -206,8 +208,11 @@ add_action( 'wp_head', function() {
 // check cookies are not blocked by user
 	if(!isset($_COOKIE['cookie_notice_accepted']) || $_COOKIE['cookie_notice_accepted']=='true') {
 
-		$lang = pll_current_language();
-       if($_COOKIE['cookie_notice_accepted']=='true' || $lang!='de') {
+		 if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
+              $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
+       }
+       $lang = pll_current_language();
+       if($_COOKIE['cookie_notice_accepted']=='true' || ($lang!='de' && $location!='DE')) {
 	?>
 <!-- Global site tag (gtag.js) - AdWords: 1070642605 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1070642605"></script>
@@ -240,8 +245,11 @@ add_action( 'wp_head', function() {
 } );
 
 add_action('wp_footer', function() {
-$lang = pll_current_language();
-       if($_COOKIE['cookie_notice_accepted']=='true' || $lang!='de') {
+ if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
+              $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
+       }
+       $lang = pll_current_language();
+       if($_COOKIE['cookie_notice_accepted']=='true' || ($lang!='de' && $location!='DE')) {
 	// if acf set for tracking pixel and cookies are not optout by user, trigger tracking event
 	if( get_field('include_facebook_tracking_pixel') ){
 		if(!isset($_COOKIE['cookie_notice_accepted']) || $_COOKIE['cookie_notice_accepted']=='true') {
@@ -256,8 +264,11 @@ $lang = pll_current_language();
 
 add_action( 'us_before_canvas', function() {
 
-	$lang = pll_current_language();
-       if($_COOKIE['cookie_notice_accepted']=='true' || $lang!='de') {
+	 if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
+              $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
+       }
+       $lang = pll_current_language();
+       if($_COOKIE['cookie_notice_accepted']=='true' || ($lang!='de' && $location!='DE')) {
 	?>
 	<!-- Google Tag Manager (noscript) -->
 	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NR4946Z" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
