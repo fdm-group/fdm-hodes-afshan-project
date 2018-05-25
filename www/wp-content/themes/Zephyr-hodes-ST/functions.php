@@ -202,7 +202,7 @@ add_action( 'wp_head', function() {
 } );
 
 
-
+/*
 add_action( 'wp_head', function() {
 // pixel and adwords tracking
 // check cookies are not blocked by user
@@ -244,6 +244,9 @@ add_action( 'wp_head', function() {
 
 } );
 
+*/
+
+/*
 add_action('wp_footer', function() {
  if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
               $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
@@ -260,8 +263,9 @@ add_action('wp_footer', function() {
 }
 },200);
 
+*/
 
-
+/*
 add_action( 'us_before_canvas', function() {
 
 	 if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
@@ -276,6 +280,7 @@ add_action( 'us_before_canvas', function() {
 	<?php
 }
 } );
+*/
 
 // Set javascript variable to allow the FDM logo to be set to a link to the correct language homepage
 add_action( 'wp_head', function() {

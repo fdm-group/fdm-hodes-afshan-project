@@ -96,6 +96,7 @@ if ( ! isset( $us_iframe ) OR ! $us_iframe ) {
 <?php wp_footer(); ?>
 </body>
 <?php
+/*
  if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
               $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
        }
@@ -106,6 +107,7 @@ if ( ! isset( $us_iframe ) OR ! $us_iframe ) {
 <!-- End of HubSpot Embed Code -->
 <?php
 }
+*/
 ?>
 </html>
 
