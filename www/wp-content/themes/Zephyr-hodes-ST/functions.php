@@ -93,6 +93,9 @@ if ( STAGING ) {
 	});
 }
 
+
+
+
 add_action( 'init', function() {
 	// Implement our redirects
 	include( 'include/redirects.php' );
@@ -179,16 +182,41 @@ add_action( 'wp_head', function() {
 
 }, 999 );
 
+// check cookie form acceptance post
+add_action('init',function(){
+
+	if(isset($_POST['accept_cookies']) && $_POST['accept_cookies']=='Accept'){
+		setcookie('acceptcookies', 1, (time()+(3600)*2), "/");
+		wp_redirect('/');
+		exit;
+	}
+});
+
+//check acceptance cookie
+
+add_action('wp_head', function()
+{
+    if (!is_admin()){
+        //Check to see if our cookie is set if not redirect to your desired page and set the cookie
+        if ( !isset($_COOKIE["acceptcookies"])) {
+            //setcookie
+            //Redirect 
+            if(get_page_template_slug( get_the_ID() )!='page-templates/cookie-notice.php'){
+            
+            	wp_redirect( get_site_url().'/cookie-notice' ); exit;
+        	}
+
+         
+        }
+    }
+});
+
 // Add Analytics
 //removed, code added to cookies notice plugin 
 add_action( 'wp_head', function() {
 
 	 
-      if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
-              $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
-       }
-       $lang = pll_current_language();
-       if($_COOKIE['cookie_notice_accepted']=='true' || ($lang!='de' && $location!='DE')) {
+    if (isset($_COOKIE["acceptcookies"])) {
 	?>
 	<!-- Google Tag Manager -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
