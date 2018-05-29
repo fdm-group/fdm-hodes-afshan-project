@@ -215,7 +215,9 @@ add_action( 'wp_head', function() {
 
        echo "Lang: ".$lang."<br/>";
        echo "Location: ".$location."<br/>";
-       echo "Cookie set: ".$_COOKIE['cookie_notice_accepted']."<br/>";
+       echo "Cookie accepted: ";
+       echo $_COOKIE['cookie_notice_accepted']==TRUE ? "true" : "false";
+       echo "<br/>";
        
 
        if($_COOKIE['cookie_notice_accepted']=='true' || ($lang!='de' && $location!='DE')) {
