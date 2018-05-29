@@ -19,10 +19,13 @@ get_header();
 				<section class="l-section">
 					<div class="l-section-h i-cf">
 						<form method="post" action="">
+
 						<?php
+
 							the_content();
 							?>
 							<input type="submit" name="accept_cookies" value="<?php echo __('Accept');?>">
+							<input type="submit" name="accept_cookies" value="<?php echo __('No Thanks');?>">
 						</form>
 					</div>
 				</section>

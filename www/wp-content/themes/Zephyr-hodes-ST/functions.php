@@ -189,6 +189,11 @@ add_action('init',function(){
 		setcookie('acceptcookies', 1, (time()+(3600)*2), "/");
 		wp_redirect('/');
 		exit;
+	}elseif(isset($_POST['accept_cookies']))
+	{
+		setcookie('acceptcookies', 0, (time()+(3600)*2), "/");
+		wp_redirect('/');
+		exit;
 	}
 });
 
@@ -198,14 +203,12 @@ add_action('wp_head', function()
 {
     if (!is_admin()){
         //Check to see if our cookie is set if not redirect to your desired page and set the cookie
-        if ( !isset($_COOKIE["acceptcookies"])) {
+        if ( !isset($_COOKIE["acceptcookies"]) ) {
             //setcookie
             //Redirect 
-            if(get_page_template_slug( get_the_ID() )!='page-templates/cookie-notice.php'){
-            
+            if(get_page_template_slug( get_the_ID() )!='page-templates/cookie-notice.php' && !is_404()){
             	wp_redirect( get_site_url().'/cookie-notice' ); exit;
         	}
-
          
         }
     }
@@ -216,7 +219,7 @@ add_action('wp_head', function()
 add_action( 'wp_head', function() {
 
 	 
-    if (isset($_COOKIE["acceptcookies"])) {
+    if ($_COOKIE["acceptcookies"]==1 ) {
 	?>
 	<!-- Google Tag Manager -->
 	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
