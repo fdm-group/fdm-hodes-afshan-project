@@ -2604,9 +2604,21 @@
 				return;
 			}
 			
-			if(region == "UK" && pathway == "graduate"){
-				location.href= "https://apply.fdmgroup.com/Decide.aspx?jobid=74";
-				return;
+			if(region == "UK"){
+				if(pathway == "graduate"){
+					location.href= "https://apply.fdmgroup.com/Decide.aspx?jobid=74";
+					return;
+				}
+			
+				if(pathway == "b2b"){
+					location.href= "https://apply.fdmgroup.com/Decide.aspx?jobid=87";
+					return;
+				}
+			
+				if(pathway == "exforces"){
+					location.href= "https://apply.fdmgroup.com/Decide.aspx?jobid=88";
+					return;
+				}
 			}
             
             if (nextSelection == 1 ) {
