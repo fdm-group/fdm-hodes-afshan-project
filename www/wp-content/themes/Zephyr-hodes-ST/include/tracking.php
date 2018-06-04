@@ -37,7 +37,7 @@ function polylang_class($classes) {
 add_action('after_body', function()
 {
 
-    if (!showcookiemessage()) {
+    if (showcookiemessage()) {
     ?>
     <div class='cookies_overlay'>
         
@@ -51,8 +51,8 @@ add_action('after_body', function()
                                 echo __('We use cookies to ensure that we give you the best experience on our website. If you continue to use this site we will assume that you are happy with it.', 'fdm');
                                 ?>
                               <span class="cookie_inputs">
-                                <input type="submit" name="accept_cookies" value="<?php echo __('OK');?>">
-                                <input type="submit" name="accept_cookies" value="<?php echo __('No Thanks');?>">
+                                <input type="submit" name="accept_cookies" value="<?php echo __('OK','fdm');?>">
+                                <input type="submit" name="accept_cookies" value="<?php echo __('No Thanks','fdm');?>">
                             </span>
                             </p>
                             </form>
@@ -72,16 +72,10 @@ function showcookiemessage(){
     }
     $lang = pll_current_language();
 
-    if (isset($_COOKIE["acceptcookies"]) && $_COOKIE["acceptcookies"]==1 ) {
-        return true;
-    }
-    if (isset($_COOKIE["acceptcookies"]) && $_COOKIE["acceptcookies"]==0 ) {
-        return true;
-    }
-    if($lang=='de' || $location=='DE'){
+    if (isset($_COOKIE["acceptcookies"])) {
         return false;
-    }else{
-        return false;
+    }  else{
+        return true;
     }
     
     
