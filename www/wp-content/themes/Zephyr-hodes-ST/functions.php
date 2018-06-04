@@ -2,6 +2,8 @@
 
 namespace Hodes\FDM;
 
+include( __DIR__ . '/include/tracking.php' );
+
 if ( ! defined( 'STAGING' ) ) {
 	wp_die( "Required constant is not set. Please edit the wordpress config wp-config.php and define the constant STAGING, true for staging sites, false for the live environment" );
 }
@@ -93,6 +95,9 @@ if ( STAGING ) {
 	});
 }
 
+
+
+
 add_action( 'init', function() {
 	// Implement our redirects
 	include( 'include/redirects.php' );
@@ -126,7 +131,7 @@ add_action( 'wp_enqueue_scripts', function() {
 // Add our custom js, and the investis responsive frame script
 add_action( 'wp_enqueue_scripts', function() {
 
-	wp_enqueue_script( 'hodes-fdm', asset_url( 'js/hodes-fdm.js' ) , [ 'jquery' ] );
+	wp_enqueue_script( 'hodes-fdm', asset_url( 'js/hodes-fdm.js' ) , [ 'jquery' ], 5);
 	wp_enqueue_script( 'investis-iframe-manager', asset_url( 'js/frame-manager.js' ) , [ 'jquery' ] );
 
 } );
@@ -178,28 +183,6 @@ add_action( 'wp_head', function() {
 	<?php
 
 }, 999 );
-
-// Add Analytics
-//removed, code added to cookies notice plugin 
-add_action( 'wp_head', function() {
-
-	 
-      if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
-              $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
-       }
-       $lang = pll_current_language();
-       if($_COOKIE['cookie_notice_accepted']=='true' || ($lang!='de' && $location!='DE')) {
-	?>
-	<!-- Google Tag Manager -->
-	<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-	new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-	j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-	'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-	})(window,document,'script','dataLayer','GTM-NR4946Z');</script>
-	<!-- End Google Tag Manager -->
-	<?php
-}
-} );
 
 
 // Set javascript variable to allow the FDM logo to be set to a link to the correct language homepage
