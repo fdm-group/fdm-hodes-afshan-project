@@ -3,15 +3,15 @@
 // check cookie form acceptance post
 add_action('init',function(){
 
-	if(isset($_POST['accept_cookies'])) {
+	if(isset($_POST['accept_cookies']) || isset($_POST['deny_cookies'])) {
        // $lang = pll_current_language();
 
-        if($_POST['accept_cookies']=='Accept'){
+        if(isset($_POST['accept_cookies'])){
     		setcookie('acceptcookies', 1, (time()+(3600)*2), "/");
 
     		
         }
-        if( $_POST['accept_cookies']=='No Thanks'){
+        if(isset($_POST['deny_cookies'])){
             setcookie('acceptcookies', 0, (time()+(3600)*2), "/");
            
         }
@@ -52,7 +52,7 @@ add_action('after_body', function()
                                 ?>
                               <span class="cookie_inputs">
                                 <input type="submit" name="accept_cookies" value="<?php echo __('OK','fdm');?>">
-                                <input type="submit" name="accept_cookies" value="<?php echo __('No Thanks','fdm');?>">
+                                <input type="submit" name="deny_cookies" value="<?php echo __('No Thanks','fdm');?>">
                             </span>
                             </p>
                             </form>
