@@ -132,14 +132,14 @@ function setCookie(key, value) {
 
 
 
-$(".en #confirmcookies").click(function(event) {
+$("#confirmcookies").click(function(event) {
        
  	event.preventDefault();
   	setCookie('acceptcookies','1');
   	$('.cookies_overlay').fadeOut();
 });
 
-$(".en #denycookies").click(function(event) {
+$("#denycookies").click(function(event) {
        
  	event.preventDefault();
   	setCookie('acceptcookies','0');
