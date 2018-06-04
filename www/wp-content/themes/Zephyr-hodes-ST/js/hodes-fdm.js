@@ -132,14 +132,14 @@ function setCookie(key, value) {
 
 
 
-$("#cookieform input[name='accept_cookies']").click(function() {
+$(".en #confirmcookies").click(function(event) {
        
  	event.preventDefault();
   	setCookie('acceptcookies','1');
   	$('.cookies_overlay').fadeOut();
 });
 
-$("#cookieform input[name='deny_cookies']").click(function() {
+$(".en #denycookies").click(function(event) {
        
  	event.preventDefault();
   	setCookie('acceptcookies','0');

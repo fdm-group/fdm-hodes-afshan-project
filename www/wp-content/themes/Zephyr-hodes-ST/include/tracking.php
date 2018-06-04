@@ -3,21 +3,23 @@
 // check cookie form acceptance post
 add_action('init',function(){
 
-	if(isset($_POST['accept_cookies']) || isset($_POST['deny_cookies'])) {
+	if(isset($_GET['accept_cookies'])) {
        // $lang = pll_current_language();
 
-        if(isset($_POST['accept_cookies'])){
+        if($_GET['accept_cookies']==1){
     		setcookie('acceptcookies', 1, (time()+(3600)*2), "/");
 
     		
         }
-        if(isset($_POST['deny_cookies'])){
+        if($_GET['accept_cookies']==0){
             setcookie('acceptcookies', 0, (time()+(3600)*2), "/");
            
         }
-        $url =  get_site_url().$_SERVER['REQUEST_URI'];
+     
+        $url =  get_site_url().$_SERVER['REDIRECT_URL'];
         wp_redirect($url);
         exit;
+        
     }
 });
 
@@ -30,6 +32,8 @@ function polylang_class($classes) {
         $lang = pll_current_language();
         if($lang=='de' || $location=='DE'){
             array_push($classes,'de');
+        }else{
+            array_push($classes,'en');
         }
         return $classes;
 }
@@ -44,27 +48,19 @@ add_action('after_body', function()
             <div class="l-main-h i-cf">
 
                 
-                            <form method="post" action="" <?php
-                             if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
-                                $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
-                            }
-                            $lang = pll_current_language();
-
                            
-                            if($lang!='de' && $location!='DE'){ echo ' name="cookieform" id="cookieform" '; }
-                             ?>
-                             >
 
                             <p><?php
 
                                 echo __('We use cookies to ensure that we give you the best experience on our website. If you continue to use this site we will assume that you are happy with it.', 'fdm');
                                 ?>
                               <span class="cookie_inputs">
-                                <input type="submit" name="accept_cookies" value="<?php echo __('OK','fdm');?>">
-                                <input type="submit" name="deny_cookies" value="<?php echo __('No Thanks','fdm');?>">
+                             
+                                <a href="?accept_cookies=1" class="btn_cookie" id="confirmcookies"><?php echo __('OK','fdm');?></a>
+                                <a href="?accept_cookies=0" class="btn_cookie" id="denycookies"><?php echo __('No Thanks','fdm');?></a>
                             </span>
                             </p>
-                            </form>
+                           
 
                       
             </div>
