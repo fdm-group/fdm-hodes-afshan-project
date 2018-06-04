@@ -131,7 +131,7 @@ add_action( 'wp_enqueue_scripts', function() {
 // Add our custom js, and the investis responsive frame script
 add_action( 'wp_enqueue_scripts', function() {
 
-	wp_enqueue_script( 'hodes-fdm', asset_url( 'js/hodes-fdm.js' ) , [ 'jquery' ], 5.1);
+	wp_enqueue_script( 'hodes-fdm', asset_url( 'js/hodes-fdm.js' ) , [ 'jquery' ], 5.2);
 	wp_enqueue_script( 'investis-iframe-manager', asset_url( 'js/frame-manager.js' ) , [ 'jquery' ] );
 
 } );

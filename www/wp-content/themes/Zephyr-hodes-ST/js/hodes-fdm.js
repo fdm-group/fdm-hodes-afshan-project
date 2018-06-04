@@ -127,19 +127,19 @@ jQuery(function($){
 function setCookie(key, value) {
             var expires = new Date();
             expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
-            document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+            document.cookie = key + '=' + value + ';path=/;expires=' + expires.toUTCString();
         }
 
 
 
-$(".en #confirmcookies").click(function(event) {
+$("#confirmcookies").click(function(event) {
        
  	event.preventDefault();
   	setCookie('acceptcookies','1');
   	$('.cookies_overlay').fadeOut();
 });
 
-$(".en #denycookies").click(function(event) {
+$("#denycookies").click(function(event) {
        
  	event.preventDefault();
   	setCookie('acceptcookies','0');
