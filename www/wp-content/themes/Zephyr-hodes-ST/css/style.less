@@ -67,6 +67,35 @@ h2 {  color:@blue !Important; }
 	}
 }
 
+.cookies_overlay{
+	position: fixed; /* Sit on top of the page content */
+    display: block; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: auto; 
+     
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.8); /* Black background with opacity */
+    z-index: 99999999999; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+    color:#fff;
+    text-align:center;
+    padding:10px 0px;
+    font-size:13px;
+
+}
+.cookies_overlay input{ padding:8px; line-height:13px; font-size:13px;} 
+.de .cookies_overlay{
+
+
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0; 
+   
+    padding:20% 30%;
+}
+
+.de .cookies_overlay .cookie_inputs{ clear:both; display:block; margin-top:10px;}
 
 
 @media (min-width: 901px) {
