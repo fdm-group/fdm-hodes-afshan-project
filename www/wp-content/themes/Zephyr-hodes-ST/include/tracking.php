@@ -44,7 +44,16 @@ add_action('after_body', function()
             <div class="l-main-h i-cf">
 
                 
-                            <form method="post" action="">
+                            <form method="post" action="" <?php
+                             if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
+                                $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
+                            }
+                            $lang = pll_current_language();
+
+                           
+                            if($lang!='de' && $location!='DE'){ echo ' name="cookieform" id="cookieform" '; }
+                             ?>
+                             >
 
                             <p><?php
 
@@ -56,6 +65,7 @@ add_action('after_body', function()
                             </span>
                             </p>
                             </form>
+
                       
             </div>
         
@@ -67,11 +77,7 @@ add_action('after_body', function()
 
 function showcookiemessage(){
 
-    if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
-        $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
-    }
-    $lang = pll_current_language();
-
+   
     if (isset($_COOKIE["acceptcookies"])) {
         return false;
     }  else{

@@ -124,6 +124,27 @@ jQuery(function($){
 
 	});
 
+function setCookie(key, value) {
+            var expires = new Date();
+            expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
+            document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+        }
+
+
+
+$("#cookieform input[name='accept_cookies']").click(function() {
+       
+ 	event.preventDefault();
+  	setCookie('acceptcookies','1');
+  	$('.cookies_overlay').fadeOut();
+});
+
+$("#cookieform input[name='deny_cookies']").click(function() {
+       
+ 	event.preventDefault();
+  	setCookie('acceptcookies','0');
+  	$('.cookies_overlay').fadeOut();
+});
 
 	/***** Header Logo *****/
 	$('a.fdm-header-logo').each( function() {
