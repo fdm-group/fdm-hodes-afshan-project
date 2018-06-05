@@ -84,14 +84,10 @@ if ( $atts['el_id'] != '' ) {
 	$el_id_string = ' id="' . esc_attr( $atts['el_id'] ) . '"';
 }
 
-// check cookie enabled
-if(!isset($_COOKIE['cookie_notice_accepted']) || $_COOKIE['cookie_notice_accepted']=='true') {
-	 if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
-              $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
-       }
-       $lang = pll_current_language();
-       if($_COOKIE['cookie_notice_accepted']=='true' || ($lang!='de' && $location!='DE')) {
-$output = '<div class="w-video' . $classes . '"' . $inner_css . $el_id_string . '><div class="w-video-h">' . $embed_html . '</div></div>';
+
+if (checkallowedcookie()) {
+
+	$output = '<div class="w-video' . $classes . '"' . $inner_css . $el_id_string . '><div class="w-video-h">' . $embed_html . '</div></div>';
+	echo $output;
 }
-}
-echo $output;
+
