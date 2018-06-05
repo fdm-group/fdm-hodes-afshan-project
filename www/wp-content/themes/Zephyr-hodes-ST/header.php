@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_URI"] == '/') {
        if ($_SERVER['HTTP_CF_IPCOUNTRY']) {
               $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
        }
-       echo $location;
        switch (strtoupper($location)) {
               case 'US':
                      header('Location: /en-us/home-us/');
