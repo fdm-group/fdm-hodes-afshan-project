@@ -124,13 +124,23 @@ jQuery(function($){
 
 	});
 
+
+
+
 function setCookie(key, value) {
-            var expires = new Date();
-            expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
-            document.cookie = key + '=' + value + ';path=/;expires=' + expires.toUTCString();
-        }
+    var expires = new Date();
+    expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
+    document.cookie = key + '=' + value + ';path=/;expires=' + expires.toUTCString();
+}
 
 
+	$( document ).ready(function() {
+
+		// to get around cloudflare cache, use jquery to show cookie notice
+		if (typeof $.cookie('acceptcookies') === 'undefined'){
+			$('.cookies_overlay').fadeIn();
+		}
+	});
 
 $("#confirmcookies").click(function(event) {
        

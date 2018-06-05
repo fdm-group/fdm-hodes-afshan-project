@@ -41,8 +41,9 @@ function polylang_class($classes) {
 add_action('after_body', function()
 {
 
-    if (showcookiemessage()) {
+   // if (showcookiemessage()) {
     ?>
+
     <div class='cookies_overlay'>
         
             <div class="l-main-h i-cf">
@@ -67,7 +68,7 @@ add_action('after_body', function()
         
     </div>
     <?php
-    }
+   // }
 });
 
 
