@@ -2778,8 +2778,13 @@
 				}
 			});
 			
-			// notify Google Analytics of the application by region
-            getGoogleAnalytics(region);			
+			if ((typeof $.cookie('acceptcookies') === 'undefined' && !$("body").hasClass("de")) || $.cookie('acceptcookies') == '1'){
+				
+					// notify Google Analytics of the application by region
+            		getGoogleAnalytics(region);	
+				
+			}
+					
 		});
 	});
     
@@ -3038,10 +3043,17 @@
 
 });</script>
 
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-236343-7"></script>
 <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments)};
-    gtag('js', new Date());
-    gtag('config', 'UA-236343-7');
+jQuery(function($){
+	if ((typeof $.cookie('acceptcookies') === 'undefined' && !$("body").hasClass("de")) || $.cookie('acceptcookies') == '1'){
+				
+		// notify Google Analytics of the application by region
+        window.dataLayer = window.dataLayer || [];
+	    function gtag(){dataLayer.push(arguments)};
+	    gtag('js', new Date());
+	    gtag('config', 'UA-236343-7');
+	}
+});
 </script>
