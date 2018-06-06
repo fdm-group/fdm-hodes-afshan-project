@@ -133,19 +133,74 @@ function setCookie(key, value) {
     document.cookie = key + '=' + value + ';path=/;expires=' + expires.toUTCString();
 }
 
+function showhubspot(){
+	$('#hubspot').html('<script type="text/javascript" async src="//js.hs-scripts.com/4411419.js"></'+'script>');
+}	
 
-	$( document ).ready(function() {
+function addtagmanager(){
+	 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NR4946Z');
+}
 
+function addpixel(){
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-1070642605');
+
+
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1650835965140444');
+  fbq('track', 'PageView');
+
+
+}
+
+function facebooktrackingpixel(){
+	fbq('track', 'ViewContent');
+}
+
+
+$( document ).ready(function() {
 		// to get around cloudflare cache, use jquery to show cookie notice
-		if (typeof $.cookie('acceptcookies') === 'undefined'){
-			$('.cookies_overlay').fadeIn();
-		}
-	});
+			if (typeof $.cookie('acceptcookies') === 'undefined'){
+				$('.cookies_overlay').fadeIn();
+				if (!$("body").hasClass("de")) {
+					showhubspot();
+					addtagmanager();
+					addpixel();
+					facebooktrackingpixel();
+				}
+			}else if ($.cookie('acceptcookies') == '1'){
+				showhubspot();
+				addtagmanager();
+				addpixel();
+				facebooktrackingpixel();
+			}
+});
 
 $("#confirmcookies").click(function(event) {
        
  	event.preventDefault();
   	setCookie('acceptcookies','1');
+  	if ($("body").hasClass("de")) {
+					showhubspot();
+					addtagmanager();
+					addpixel();
+					facebooktrackingpixel();
+	}
   	$('.cookies_overlay').fadeOut();
 });
 
