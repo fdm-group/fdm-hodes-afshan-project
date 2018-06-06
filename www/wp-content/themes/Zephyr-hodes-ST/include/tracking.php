@@ -90,13 +90,14 @@ function checkallowedcookie(){
         $location = $_SERVER['HTTP_CF_IPCOUNTRY'];
     }
     $lang = pll_current_language();
-
+/*
     if (isset($_COOKIE["acceptcookies"]) && $_COOKIE["acceptcookies"]==1 ) {
         return true;
     }
     if (isset($_COOKIE["acceptcookies"]) && $_COOKIE["acceptcookies"]==0 ) {
         return false;
     }
+    */
     if($lang=='de' || $location=='DE'){
         return false;
     }else{
@@ -107,11 +108,9 @@ function checkallowedcookie(){
 }
 
 
-
 add_action( 'wp_head', function() {
 // pixel and adwords tracking
 // check cookies are not blocked by user
-
     ?>
 <!-- Global site tag (gtag.js) - AdWords: 1070642605 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-1070642605"></script>
@@ -147,13 +146,13 @@ add_action('wp_footer', function() {
 
 add_action( 'us_before_canvas', function() {
 
-     if (checkallowedcookie()) {
+//     if (checkallowedcookie()) {
     ?>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NR4946Z" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
     <?php
-}
+//}
 } );
 
 

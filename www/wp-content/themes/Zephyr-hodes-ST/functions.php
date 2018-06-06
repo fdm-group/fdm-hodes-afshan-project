@@ -132,7 +132,7 @@ add_action( 'wp_enqueue_scripts', function() {
 add_action( 'wp_enqueue_scripts', function() {
 
 	wp_enqueue_script( 'jquery-cookie', asset_url( 'js/jquery.cookie.js' ) , [ 'jquery' ]);
-	wp_enqueue_script( 'hodes-fdm', asset_url( 'js/hodes-fdm.js' ) , [ 'jquery' ], 5.5);
+	wp_enqueue_script( 'hodes-fdm', asset_url( 'js/hodes-fdm.js' ) , [ 'jquery' ], 5.6);
 	wp_enqueue_script( 'investis-iframe-manager', asset_url( 'js/frame-manager.js' ) , [ 'jquery' ] );
 
 } );
