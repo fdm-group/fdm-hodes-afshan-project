@@ -114,7 +114,7 @@ add_action( 'wp_head', function() {
 
     ?>
 <!-- Global site tag (gtag.js) - AdWords: 1070642605 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-1070642605"></script>
+<script async src="https//www.googletagmanager.com/gtag/js?id=AW-1070642605"></script>
 
 <!-- End Facebook Pixel Code -->
 <?php
@@ -158,43 +158,4 @@ add_action( 'us_before_canvas', function() {
 
 
 
-
-
-/*
-add_action( 'wp_head', function() {
-// pixel and adwords tracking
-// check cookies are not blocked by user
-    if (checkallowedcookie()) {
-    ?>
-<!-- Global site tag (gtag.js) - AdWords: 1070642605 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-1070642605"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-1070642605');
-</script>
-<!-- Facebook Pixel Code -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '1650835965140444');
-  fbq('track', 'PageView');
-</script>
-
-<!-- End Facebook Pixel Code -->
-<?php
-
-}
-
-} );
-
-*/
 
