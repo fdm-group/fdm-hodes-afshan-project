@@ -114,7 +114,7 @@ add_action( 'wp_head', function() {
 
     ?>
 <!-- Global site tag (gtag.js) - AdWords: 1070642605 -->
-<script async src="https//www.googletagmanager.com/gtag/js?id=AW-1070642605"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-1070642605"></script>
 
 <!-- End Facebook Pixel Code -->
 <?php
