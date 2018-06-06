@@ -85,9 +85,11 @@ if ( $atts['el_id'] != '' ) {
 }
 
 
-if (checkallowedcookie()) {
+//if (checkallowedcookie()) {
 
-	$output = '<div class="w-video' . $classes . '"' . $inner_css . $el_id_string . '><div class="w-video-h">' . $embed_html . '</div></div>';
+
+
+	$output = '<div class="w-video' . $classes . '"' . $inner_css . $el_id_string . '><div class="w-video-h" >'.str_replace("iframe","js_frame",$embed_html) . '</div></div>';
 	echo $output;
-}
+//}
 

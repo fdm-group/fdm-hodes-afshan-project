@@ -143,6 +143,8 @@ window.addtagmanager = function(){
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-NR4946Z');
+
+
 }
 
 window.addpixel = function(){
@@ -190,6 +192,15 @@ $( document ).ready(function() {
                 addpixel();
                 facebooktrackingpixel();
             }
+
+        // update youtube to show iframe   
+        if ((typeof $.cookie('acceptcookies') === 'undefined' && !$("body").hasClass("de")) || $.cookie('acceptcookies') == '1'){
+            $('.w-video-h').html(function(index,html){
+			    return html.replace('<js_frame','<iframe');
+			});
+			$('.youtube-link').show();
+        }
+
 });
 
 
