@@ -128,8 +128,17 @@ add_action('wp_footer', function() {
 
     // if acf set for tracking pixel and cookies are not optout by user, trigger tracking event
     if( get_field('include_facebook_tracking_pixel') ){
-     
-            echo "<script> fbq('track', 'ViewContent'); </script>";
+     ?>
+     <script> 
+    jQuery(function($){
+        $( document ).ready(function() {
+            if ((typeof $.cookie('acceptcookies') === 'undefined' && !$("body").hasClass("de")) || $.cookie('acceptcookies') == '1'){
+             fbq('track', 'ViewContent');
+             }
+        });
+    });
+    </script>
+     <?php
     }
 
 },200);
@@ -146,6 +155,9 @@ add_action( 'us_before_canvas', function() {
     <?php
 }
 } );
+
+
+
 
 
 /*

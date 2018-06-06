@@ -133,11 +133,11 @@ function setCookie(key, value) {
     document.cookie = key + '=' + value + ';path=/;expires=' + expires.toUTCString();
 }
 
-function showhubspot(){
+window.showhubspot = function(){
 	$('#hubspot').html('<script type="text/javascript" async src="//js.hs-scripts.com/4411419.js"></'+'script>');
 }	
 
-function addtagmanager(){
+window.addtagmanager = function(){
 	 (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -145,7 +145,7 @@ function addtagmanager(){
     })(window,document,'script','dataLayer','GTM-NR4946Z');
 }
 
-function addpixel(){
+window.addpixel = function(){
 
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -168,28 +168,31 @@ function addpixel(){
 
 }
 
-function facebooktrackingpixel(){
+window.facebooktrackingpixel = function(){
 	fbq('track', 'ViewContent');
 }
 
 
+
 $( document ).ready(function() {
-		// to get around cloudflare cache, use jquery to show cookie notice
-			if (typeof $.cookie('acceptcookies') === 'undefined'){
-				$('.cookies_overlay').fadeIn();
-				if (!$("body").hasClass("de")) {
-					showhubspot();
-					addtagmanager();
-					addpixel();
-					facebooktrackingpixel();
-				}
-			}else if ($.cookie('acceptcookies') == '1'){
-				showhubspot();
-				addtagmanager();
-				addpixel();
-				facebooktrackingpixel();
-			}
+        // to get around cloudflare cache, use jquery to show cookie notice
+            if (typeof $.cookie('acceptcookies') === 'undefined'){
+                $('.cookies_overlay').fadeIn();
+                if (!$("body").hasClass("de")) {
+                    showhubspot();
+                    addtagmanager();
+                    addpixel();
+                    facebooktrackingpixel();
+                }
+            }else if ($.cookie('acceptcookies') == '1'){
+                showhubspot();
+                addtagmanager();
+                addpixel();
+                facebooktrackingpixel();
+            }
 });
+
+
 
 $("#confirmcookies").click(function(event) {
        
