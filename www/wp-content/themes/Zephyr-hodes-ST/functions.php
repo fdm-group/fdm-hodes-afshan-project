@@ -95,6 +95,8 @@ if ( STAGING ) {
 	});
 }
 
+remove_action('wp_head', 'print_emoji_detection_script', 7);
+remove_action('wp_print_styles', 'print_emoji_styles');
 
 
 
@@ -132,7 +134,7 @@ add_action( 'wp_enqueue_scripts', function() {
 add_action( 'wp_enqueue_scripts', function() {
 
 	wp_enqueue_script( 'jquery-cookie', asset_url( 'js/jquery.cookie.js' ) , [ 'jquery' ]);
-	wp_enqueue_script( 'hodes-fdm', asset_url( 'js/hodes-fdm.js' ) , [ 'jquery' ], 5.6);
+	wp_enqueue_script( 'hodes-fdm', asset_url( 'js/hodes-fdm.js' ) , [ 'jquery' ], 5.7);
 	wp_enqueue_script( 'investis-iframe-manager', asset_url( 'js/frame-manager.js' ) , [ 'jquery' ] );
 
 } );
@@ -336,10 +338,24 @@ add_shortcode( 'fdm-main-nav', function() {
 
 	if ( $menu_id ) {
 		// If we successfully got a translated menu id, we'll feed it to Ubermenu for the rendering
-		ubermenu( 'main', [ 'menu_id' => 'fdm-main-nav', 'menu' => $menu_id ] );
+		//ubermenu( 'main', [ 'menu_id' => 'fdm-main-nav', 'menu' => $menu_id ] );
+
+
+ wp_nav_menu(array(
+ 				'menu' 				=> $menu_id,
+                'theme_location'    => 'header-top-logged',
+                'container'       => 'div',
+                'container_id'    => '',
+                'container_class' => 'collapse navbar-collapse justify-content-end',
+                'menu_id'         => 'fdm-main-nav',
+                'menu_class'      => 'navbar-nav nav-menu navbar-top ',
+                'depth'           => 3,
+                'fallback_cb'     => 'wp_bootstrap_navwalker::fallback'
+                ));
+ 
 	} else {
 		// Otherwise use default
-		ubermenu( 'main', [ 'menu_id' => 'fdm-main-nav', 'theme_location' => 'us_main_menu' ] );
+		//ubermenu( 'main', [ 'menu_id' => 'fdm-main-nav', 'theme_location' => 'us_main_menu' ] );
 	}
 
 	return ob_get_clean();

@@ -80,7 +80,7 @@ class Map extends VCComponent {
 			<div class="fdm-map-legend">
 				<label><input type="checkbox" checked data-layer="centre" /> <?= __( 'Centres', 'fdm' ) ?></label>
 				<label><input type="checkbox" checked data-layer="academy" /> <?= __( 'Academies', 'fdm' ) ?></label>
-				<label><input type="checkbox" data-layer="placement" /> <?= __( 'Placements', 'fdm' ) ?></label>
+				
 			</div>
 			
 			<div class="fdm-map"></div>

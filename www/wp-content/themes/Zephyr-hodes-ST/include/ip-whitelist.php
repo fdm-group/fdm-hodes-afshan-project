@@ -55,6 +55,7 @@ function ip_matches( $ip, $acl ) {
  * Implement IP whitelist for wp-admin and login page
  */
 add_action('init', function() {
+	
 	if (is_admin() || is_login_page()) {
 		
 		$whitelist = array(
@@ -69,7 +70,8 @@ add_action('init', function() {
 			'122.11.148.52/32',
 			'79.173.145.156/32',
 			'38.122.11.162/32',
-			'51.145.45.250/32',			
+			'51.145.45.250/32',
+			'127.0.0.1/32',			
 		
 		);
 		

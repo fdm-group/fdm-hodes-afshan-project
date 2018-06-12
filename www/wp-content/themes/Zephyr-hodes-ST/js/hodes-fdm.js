@@ -2,7 +2,9 @@
 
 
 // This key was registered by Daniel Howard of Symphony Talent for the free Google Maps service
-var googleMapsApiKey = 'AIzaSyBE1I3PHIxKpqcBldBIDa3wjjVlNv8xKbo';
+//var googleMapsApiKey = 'AIzaSyBE1I3PHIxKpqcBldBIDa3wjjVlNv8xKbo';
+
+var googleMapsApiKey = 'AIzaSyCGyAORAGzeofP-0lyGRl4TxYffe82oINg';
 
 
 
@@ -174,7 +176,29 @@ window.facebooktrackingpixel = function(){
 	fbq('track', 'ViewContent');
 }
 
+if($('.juicer-feed').length > 0){
+$(window).scroll(lazyLoadJuicer);
 
+
+  var feed = $('.juicer-feed');
+
+  var juicerFeedScrollDistance = feed.offset().top;
+  var juicerLoaded = false;
+
+  function lazyLoadJuicer() {
+    var scrollDistance = $(window).scrollTop();
+    var windowHeight = $(window).height();
+
+    if ((scrollDistance >= (juicerFeedScrollDistance - windowHeight - (windowHeight/2))) && !juicerLoaded) {
+      $.getScript('//assets.juicer.io/embed.js');
+      $('head').append('<link rel="stylesheet" type="text/css" href="//assets.juicer.io/embed.css">');
+      juicerLoaded = true;
+    }
+  };
+
+  lazyLoadJuicer();
+
+}
 
 $( document ).ready(function() {
         // to get around cloudflare cache, use jquery to show cookie notice
@@ -512,42 +536,134 @@ $("#denycookies").click(function(event) {
 
 		getGoogleMapsApi().then(function(){
 
-			// define map styles
-			var styles = [
-				{
-					/* start by turning everything off */
-					"stylers": [
-						{ "visibility": "off" }
-					]
-				},{
-					/* show water (land mass will be seen as empty space around water) */
-					"featureType": "water",
-					"elementType": "geometry",
-					"stylers": [
-						{ "visibility": "on" },
-						{ "color": "#ffffff" }
-					]
-				},{
-					/* add administrative boundaries
-					"featureType": "administrative",
-					"elementType": "geometry.stroke",
-					"stylers": [
-						{ "visibility": "on" },
-						{ "weight": 0.4 }
-					]*/
-				}
-			];
+
+
+				//define the basic color of your map, plus a value for saturation and brightness
+	var	$main_color = '#d2eaf9',
+		$saturation= -20,
+		$brightness= 5;
+
+	//we define here the style of the map
+	var styles= [ 
+		{
+			//set saturation for the labels on the map
+			elementType: "labels",
+			stylers: [
+				{saturation: $saturation}
+			]
+		},  
+	    {	//poi stands for point of interest - don't show these lables on the map 
+			featureType: "poi",
+			elementType: "labels",
+			stylers: [
+				{visibility: "off"}
+			]
+		},
+		{
+			//don't show highways lables on the map
+	        featureType: 'road.highway',
+	        elementType: 'labels',
+	        stylers: [
+	            {visibility: "off"}
+	        ]
+	    }, 
+		{ 	
+			//don't show local road lables on the map
+			featureType: "road.local", 
+			elementType: "labels.icon", 
+			stylers: [
+				{visibility: "off"} 
+			] 
+		},
+		{ 
+			//don't show arterial road lables on the map
+			featureType: "road.arterial", 
+			elementType: "labels.icon", 
+			stylers: [
+				{visibility: "off"}
+			] 
+		},
+		{
+			//don't show road lables on the map
+			featureType: "road",
+			elementType: "geometry.stroke",
+			stylers: [
+				{visibility: "off"}
+			]
+		}, 
+		//style different elements on the map
+		{ 
+			featureType: "transit", 
+			elementType: "geometry.fill", 
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		}, 
+		{
+			featureType: "poi",
+			elementType: "geometry.fill",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		},	
+		{
+			featureType: "landscape",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+			
+		},
+		{
+			featureType: "road",
+			elementType: "geometry.fill",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		},
+		{
+			featureType: "road.highway",
+			elementType: "geometry.fill",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		}, 
+		{
+			featureType: "water",
+			elementType: "geometry",
+			stylers: [
+				{ hue: $main_color },
+				{ visibility: "on" }, 
+				{ lightness: $brightness }, 
+				{ saturation: $saturation }
+			]
+		}
+	];
 
 			var options = {
 				scrollwheel: false,
 				mapTypeId: google.maps.MapTypeId.ROADMAP,
 				styles:styles,
-				backgroundColor: "#000000",
+				backgroundColor: "#e7eaf0",
 				streetViewControl: false,
 				mapTypeControl: false,
 				minZoom: 1,
 				maxZoom: 10,
-				draggable: true,
+				draggable: true
 			};
 
 			// create the google map object
@@ -557,8 +673,9 @@ $("#denycookies").click(function(event) {
 				var mapWidth = null;
 				var mapHeight = null;
 				return function() {
-					var newMapWidth = Math.min($container.width(), Math.pow(2, map.zoom) * 256);
-					var newMapHeight = Math.min($(window).height()*0.7, 512, Math.pow(2, map.zoom) * 128);
+					var newMapWidth = Math.min($container.width(), Math.pow(3, map.zoom) * 256);
+					console.log(map.zoom);
+					var newMapHeight = Math.min($(window).height()*0.7, 712, Math.pow(2, map.zoom) * 128);
 					if (mapWidth !== newMapWidth || mapHeight != newMapHeight) {
 						var oldCenter = map.getCenter();
 						$map.css({width:newMapWidth, height:newMapHeight});
@@ -651,8 +768,8 @@ $("#denycookies").click(function(event) {
 			$legend.on('change','[data-layer]', showFilteredMarkers);
 
 			// start just north of center
-			map.setCenter({lat:25, lng:0});
-			map.setZoom( $container.width() > 1000 ? 2 : 1);
+			map.setCenter( $container.width() > 1000 ? {lat:15, lng:0} : {lat:25, lng:0});
+			map.setZoom( $container.width() > 1000 ? 3 : 1);
 
 
 		}).fail(function(){

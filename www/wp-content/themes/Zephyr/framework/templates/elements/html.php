@@ -19,5 +19,6 @@ if ( isset( $id ) AND ! empty( $id ) ) {
 	$classes .= ' ush_' . str_replace( ':', '_', $id );
 }
 echo '<div class="w-html' . $classes . '">';
+
 echo do_shortcode( $content );
 echo '</div>';

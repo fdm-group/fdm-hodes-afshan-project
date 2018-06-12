@@ -431,7 +431,7 @@ function us_output_header_elms( &$layout, &$data, $place ) {
 				}
 			}
 			echo '<div class="w-' . $type . $classes . ' ush_' . str_replace( ':', '_', $elm ) . '">';
-			us_output_header_elms( $layout, $data, $elm );
+			//us_output_header_elms( $layout, $data, $elm );
 			echo '</div>';
 		} else {
 			// Element
@@ -442,6 +442,7 @@ function us_output_header_elms( &$layout, &$data, $place ) {
 			}
 			$values = array_merge( $defaults, array_intersect_key( $data[$elm], $defaults ) );
 			$values['id'] = $elm;
+
 			us_load_template( 'templates/elements/' . $type, $values );
 		}
 	}

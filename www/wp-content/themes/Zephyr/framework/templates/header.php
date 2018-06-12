@@ -58,7 +58,7 @@ do_action( 'us_before_canvas' ) ?>
 
 		<?php do_action( 'us_before_header' ) ?>
 
-		<?php us_load_template( 'templates/l-header' ) ?>
+		<?php us_load_template( 'templates/fdm-header' ) ?>
 
 		<?php do_action( 'us_after_header' ) ?>
 
