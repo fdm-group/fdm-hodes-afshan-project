@@ -32,11 +32,29 @@ class Map extends VCComponent {
 	
 	}
 	
+
+	public function updatemarkerstable($locations){
+
+		// save markers in sql table for nearest search function
+		global $wpdb;
+		$wpdb->query( "TRUNCATE TABLE markers ");
+		
+		$i=0;
+		foreach($locations as $loc){
+			$i++;
+			$sql = $wpdb->prepare("INSERT INTO markers (id, name, address, lat, lng) VALUES ('%d','%s','%s','%s','%s')",$i,$loc['city'],$loc['address'],$loc['latitude'],$loc['longitude']);
+			$wpdb->query($sql);
+		}
+
+		
+	}
+
 	// Collect the information for the map locations and serialize in a single value in the database options table
 	public function update_location_data_cache() {
 		error_log("Updating FDM location data cache");
 		$locations = function_exists( 'get_field' ) ? get_field( 'map_locations', 'fdm_map_markers' ) : [];
 		delete_option( 'fdm_map_locations_cache' );
+		$this->updatemarkerstable($locations);
 		add_option( 'fdm_map_locations_cache', json_encode( $locations ) , '', 'no' );
 		return $locations;
 	}
@@ -82,7 +100,19 @@ class Map extends VCComponent {
 				<label><input type="checkbox" checked data-layer="academy" /> <?= __( 'Academies', 'fdm' ) ?></label>
 				
 			</div>
-			
+			 <div>
+         <label for="raddressInput">Search location:</label>
+         <input type="text" id="addressInput" size="15"/>
+        <label for="radiusSelect">Radius:</label>
+        <select id="radiusSelect" label="Radius">
+          <option value="50" selected>50 kms</option>
+          <option value="30">30 kms</option>
+          <option value="20">20 kms</option>
+          <option value="10">10 kms</option>
+        </select>
+
+        <input type="button" id="searchButton" value="Search"/>
+    </div>
 			<div class="fdm-map"></div>
 			
 			<?php foreach( $locations as $loc ) { ?>

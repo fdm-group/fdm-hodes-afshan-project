@@ -537,7 +537,7 @@ $("#denycookies").click(function(event) {
 		getGoogleMapsApi().then(function(){
 
 
-
+ var markers = [];
 				//define the basic color of your map, plus a value for saturation and brightness
 	var	$main_color = '#d2eaf9',
 		$saturation= -20,
@@ -729,6 +729,76 @@ $("#denycookies").click(function(event) {
 
 			}
 
+/// new search
+			searchButton = document.getElementById("searchButton").onclick = searchLocations;
+
+				function searchLocations() {
+		         var address = document.getElementById("addressInput").value;
+		         var geocoder = new google.maps.Geocoder();
+		         geocoder.geocode({address: address}, function(results, status) {
+		           if (status == google.maps.GeocoderStatus.OK) {
+		           	console.log("found "+results[0].geometry.location);
+		            searchLocationsNear(results[0].geometry.location);
+		           } else {
+		             alert(address + ' not found');
+		           }
+		         });
+		       }
+
+	function clearLocations() {
+		var $location = $(this);
+		  infoWindow.close();
+		 $locations.each(function(){$(this).data('marker').setMap(null);});
+
+		 
+	}
+
+	function parseXml(str) {
+          if (window.ActiveXObject) {
+            var doc = new ActiveXObject('Microsoft.XMLDOM');
+            doc.loadXML(str);
+            return doc;
+          } else if (window.DOMParser) {
+            return (new DOMParser).parseFromString(str, 'text/xml');
+          }
+       }
+ 
+ 	function doNothing() {}
+
+		
+		  function searchLocationsNear(center) {
+          clearLocations();
+
+         var radius = 100;
+         var postdata = "?action=AjaxGetNearest&lat=" + center.lat() + "&lng=" + center.lng() + "&radius=" + radius;
+         var searchUrl = 'http://fdmgroup.local/wp-admin/admin-ajax.php';
+       
+         downloadUrl(searchUrl, postdata, function(data) {
+           var xml = parseXml(data);
+       
+           var markerNodes = xml.documentElement.getElementsByTagName("marker");
+           var bounds = new google.maps.LatLngBounds();
+           for (var i = 0; i < markerNodes.length; i++) {
+             var id = markerNodes[i].getAttribute("id");
+             var name = markerNodes[i].getAttribute("name");
+             var address = markerNodes[i].getAttribute("address");
+             var distance = parseFloat(markerNodes[i].getAttribute("distance"));
+             var latlng = new google.maps.LatLng(
+                  parseFloat(markerNodes[i].getAttribute("lat")),
+                  parseFloat(markerNodes[i].getAttribute("lng")));
+
+             createOption(name, distance, i);
+             createMarker(latlng, name, address);
+             bounds.extend(latlng);
+           }
+           map.fitBounds(bounds);
+        
+         });
+       }
+
+
+//// end new search
+
 			// add the locations
 			var $infoWindowContent = $('<div class="google-map-info-window">');
 			var infoWindow = new google.maps.InfoWindow({content:$infoWindowContent[0]});
@@ -750,6 +820,7 @@ $("#denycookies").click(function(event) {
 					$infoWindowContent.append($location);
 					infoWindow.open(map, data.marker);
 				});
+				markers.push(data.marker);
 			});
 
 			var showFilteredMarkers = function() {

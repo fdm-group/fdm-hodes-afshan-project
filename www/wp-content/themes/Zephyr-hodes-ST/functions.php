@@ -135,7 +135,20 @@ add_action( 'wp_enqueue_scripts', function() {
 
 	wp_enqueue_script( 'jquery-cookie', asset_url( 'js/jquery.cookie.js' ) , [ 'jquery' ]);
 	wp_enqueue_script( 'hodes-fdm', asset_url( 'js/hodes-fdm.js' ) , [ 'jquery' ], 5.7);
+
 	wp_enqueue_script( 'investis-iframe-manager', asset_url( 'js/frame-manager.js' ) , [ 'jquery' ] );
+
+
+
+
+ wp_register_script('afp_script', asset_url('/js/ajax.js'), false, null, false);
+  wp_enqueue_script('afp_script');
+
+  wp_localize_script( 'afp_script', 'afp_vars', array(
+        'afp_nonce' => wp_create_nonce( 'afp_nonce' ), // Create nonce which we later will use to verify AJAX request
+        'afp_ajax_url' => admin_url( 'admin-ajax.php' ),
+      )
+  );
 
 } );
 
@@ -560,3 +573,51 @@ add_filter( 'us_single_post_meta_html', function( $meta_html, $post_id ) {
 }, 10, 2 );
 
 //include('include/dh-content-find-replace.php');
+
+add_action('wp_ajax_filter_posts', 'ajax_filter_get_posts');
+add_action('wp_ajax_nopriv_filter_posts', 'ajax_filter_get_posts');
+
+
+function ajax_filter_get_posts($taxonomy){  
+  
+global $wpdb;
+echo "here";
+	die();		
+	// Get parameters from URL
+	$center_lat = $_POST["lat"];
+	$center_lng = $_POST["lng"];
+	$radius = $_POST["radius"];
+	// Start XML file, create parent node
+	$dom = new DOMDocument("1.0");
+	$node = $dom->createElement("markers");
+	$parnode = $dom->appendChild($node);
+	// Opens a connection to a mySQL server
+	
+	// Search the rows in the markers table
+	$query = sprintf("SELECT id, name, address, lat, lng, ( 3959 * acos( cos( radians('%s') ) * cos( radians( lat ) ) * cos( radians( lng ) - radians('%s') ) + sin( radians('%s') ) * sin( radians( lat ) ) ) ) AS distance FROM markers HAVING distance < '%s' ORDER BY distance LIMIT 0 , 20",
+	  mysql_real_escape_string($center_lat),
+	  mysql_real_escape_string($center_lng),
+	  mysql_real_escape_string($center_lat),
+	  mysql_real_escape_string($radius));
+
+	$wpdb->query($query);
+
+
+	if (!$result) {
+	  die("Invalid query: " . mysql_error());
+	}
+	header("Content-type: text/xml");
+	// Iterate through the rows, adding XML nodes for each
+	while ($row = @mysql_fetch_assoc($result)){
+	  $node = $dom->createElement("marker");
+	  $newnode = $parnode->appendChild($node);
+	  $newnode->setAttribute("id", $row['id']);
+	  $newnode->setAttribute("name", $row['name']);
+	  $newnode->setAttribute("address", $row['address']);
+	  $newnode->setAttribute("lat", $row['lat']);
+	  $newnode->setAttribute("lng", $row['lng']);
+	  $newnode->setAttribute("distance", $row['distance']);
+	}
+	echo $dom->saveXML();
+
+}
