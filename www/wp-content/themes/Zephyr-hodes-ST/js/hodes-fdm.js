@@ -524,6 +524,10 @@ $("#denycookies").click(function(event) {
 	};
 
 
+
+
+
+
 	$('.fdm-map-component').each(function(){
 
 		var $container = $(this);
@@ -737,23 +741,16 @@ $("#denycookies").click(function(event) {
 		         var geocoder = new google.maps.Geocoder();
 		         geocoder.geocode({address: address}, function(results, status) {
 		           if (status == google.maps.GeocoderStatus.OK) {
-		           	console.log("found "+results[0].geometry.location);
-		            searchLocationsNear(results[0].geometry.location);
+		           
+		            searchLocationsNear(results[0].geometry.location, results[0].formatted_address);
 		           } else {
 		             alert(address + ' not found');
 		           }
 		         });
 		       }
 
-	function clearLocations() {
-		var $location = $(this);
-		  infoWindow.close();
-		 $locations.each(function(){$(this).data('marker').setMap(null);});
 
-		 
-	}
-
-	function parseXml(str) {
+ function parseXml(str) {
           if (window.ActiveXObject) {
             var doc = new ActiveXObject('Microsoft.XMLDOM');
             doc.loadXML(str);
@@ -762,37 +759,51 @@ $("#denycookies").click(function(event) {
             return (new DOMParser).parseFromString(str, 'text/xml');
           }
        }
- 
- 	function doNothing() {}
 
-		
-		  function searchLocationsNear(center) {
-          clearLocations();
 
-         var radius = 100;
-         var postdata = "?action=AjaxGetNearest&lat=" + center.lat() + "&lng=" + center.lng() + "&radius=" + radius;
+
+
+function downloadUrl(url, postdata, callback) {
+
+
+ $.ajax({                            
+       url: afp_vars.afp_ajax_url,
+            data: postdata, 
+        type: "post",
+        cache: false,
+        dataType : "json",
+        action: 'filter_posts',
+        success: function(data,textStatus, XMLHttpRequest){ 
+
+            callback(data);
+            
+            },
+        error: function() {
+            console.log("Error");            
+        }
+    });
+
+}
+
+
+		 function searchLocationsNear(center, address) {
+         
+
          var searchUrl = 'http://fdmgroup.local/wp-admin/admin-ajax.php';
-       
-         downloadUrl(searchUrl, postdata, function(data) {
-           var xml = parseXml(data);
-       
-           var markerNodes = xml.documentElement.getElementsByTagName("marker");
-           var bounds = new google.maps.LatLngBounds();
-           for (var i = 0; i < markerNodes.length; i++) {
-             var id = markerNodes[i].getAttribute("id");
-             var name = markerNodes[i].getAttribute("name");
-             var address = markerNodes[i].getAttribute("address");
-             var distance = parseFloat(markerNodes[i].getAttribute("distance"));
-             var latlng = new google.maps.LatLng(
-                  parseFloat(markerNodes[i].getAttribute("lat")),
-                  parseFloat(markerNodes[i].getAttribute("lng")));
+         var postdata = {lat: center.lat(), lng: center.lng(), radius:'100', action:'filter_posts'};
 
-             createOption(name, distance, i);
-             createMarker(latlng, name, address);
-             bounds.extend(latlng);
-           }
-           map.fitBounds(bounds);
+         downloadUrl(searchUrl, postdata, function(data) {
+          
+
+         	//showSearchedMarkers(data);
+         map.setCenter(new google.maps.LatLng(data[0]['lat'],data[0]['lng']) );
+	//		map.setZoom( 5);
+          // map.fitBounds(bounds);
+          $('#maptext').html('Our nearest location to '+address+' is '+data[0]['name']+' ('+parseInt(data[0]['distance'])+' miles)');
+           		//	 map.setCenter(new google.maps.LatLng('53.798216','-1.5358677') );
+			map.setZoom(8);
         
+
          });
        }
 
@@ -835,6 +846,27 @@ $("#denycookies").click(function(event) {
 				} );
 			};
 
+
+			var showSearchedMarkers = function(data) {
+				
+				
+
+				$locations.each(function(){$(this).data('marker').setMap(null);});
+
+           		for (var i = 0; i < data.length; i++) {
+
+						$locations.each(function(){
+							if ( $(this).attr('data-id') == data[i]['id'] ) {
+								$(this).data('marker').setMap(map);
+							}
+						});
+
+           		}
+
+				
+				
+			};
+
 			showFilteredMarkers();
 			$legend.on('change','[data-layer]', showFilteredMarkers);
 
@@ -842,6 +874,8 @@ $("#denycookies").click(function(event) {
 			map.setCenter( $container.width() > 1000 ? {lat:15, lng:0} : {lat:25, lng:0});
 			map.setZoom( $container.width() > 1000 ? 3 : 1);
 
+//			 map.setCenter(new google.maps.LatLng('53.798216','-1.5358677') );
+//map.setZoom( 8);
 
 		}).fail(function(){
 
