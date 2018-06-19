@@ -69,13 +69,15 @@ add_action('init', function() {
 			'122.11.148.52/32',
 			'79.173.145.156/32',
 			'38.122.11.162/32',
-			'51.145.45.250/32',			
+			'51.145.45.250/32',
+			'213.1.11.20/32',			
 		
 		);
 		
 		if ( ! ip_matches( $_SERVER['REMOTE_ADDR'], $whitelist ) ) {
+			echo $_SERVER['REMOTE_ADDR'];
 			error_log( "Disallowed access to management for {$_SERVER['REMOTE_ADDR']}" );
-			header( "HTTP/1.0 403 Forbidden" );
+			//header( "HTTP/1.0 403 Forbidden" );
 			exit;
 		}
 	}
