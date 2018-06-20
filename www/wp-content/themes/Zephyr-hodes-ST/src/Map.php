@@ -32,11 +32,52 @@ class Map extends VCComponent {
 	
 	}
 	
+
+	public function updatemarkerstable($locations){
+
+		// save markers in sql table for nearest search function
+		global $wpdb;
+		$table_name = 'markers';
+		if($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+		     //table not in database. Create new table
+		     $charset_collate = $wpdb->get_charset_collate();
+		 
+				$sql = "CREATE TABLE markers (
+				  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+				  name VARCHAR( 60 ) NOT NULL ,
+				  address VARCHAR( 80 ) NOT NULL ,
+				  lat FLOAT( 10, 6 ) NOT NULL ,
+				  lng FLOAT( 10, 6 ) NOT NULL,
+				  type VARCHAR( 60 ) NOT NULL 
+				) ENGINE = MYISAM ";
+				$wpdb->query($sql); 
+		}
+		else{
+
+			$wpdb->query( "TRUNCATE TABLE markers ");
+		}
+
+			$i=0;
+			foreach($locations as $loc){
+
+				$i++;
+				if($loc['type']!='placement'){
+					$sql = $wpdb->prepare("INSERT INTO markers (id, name, address, lat, lng, type) VALUES ('%d','%s','%s','%s','%s','%s')",$i,$loc['city'],$loc['address'],$loc['latitude'],$loc['longitude'],$loc['type']);
+					$wpdb->query($sql);
+				}
+			}
+
+
+
+		
+	}
+
 	// Collect the information for the map locations and serialize in a single value in the database options table
 	public function update_location_data_cache() {
 		error_log("Updating FDM location data cache");
 		$locations = function_exists( 'get_field' ) ? get_field( 'map_locations', 'fdm_map_markers' ) : [];
 		delete_option( 'fdm_map_locations_cache' );
+		$this->updatemarkerstable($locations);
 		add_option( 'fdm_map_locations_cache', json_encode( $locations ) , '', 'no' );
 		return $locations;
 	}
@@ -80,14 +121,24 @@ class Map extends VCComponent {
 			<div class="fdm-map-legend">
 				<label><input type="checkbox" checked data-layer="centre" /> <?= __( 'Centres', 'fdm' ) ?></label>
 				<label><input type="checkbox" checked data-layer="academy" /> <?= __( 'Academies', 'fdm' ) ?></label>
-				<label><input type="checkbox" data-layer="placement" /> <?= __( 'Placements', 'fdm' ) ?></label>
-			</div>
+				
 			
+			 <div class="fdm-map-search">
+         
+         <input type="text" id="addressInput" size="15" placeholder="Location"/>
+       
+        <input type="button" id="searchButton" value="Search"/>
+        <div id="maptext"></div>
+    </div>
+    </div>
 			<div class="fdm-map"></div>
 			
-			<?php foreach( $locations as $loc ) { ?>
+			<?php 
+$i=0;
+			foreach( $locations as $loc ) {  
+				$i++; ?>
 
-				<div class="fdm-map-location" data-marker-src="<?= asset_url( 'img/'.$loc['type'].'-marker.png' ) ?>" data-layer="<?= $loc['type'] ?>" data-latitude="<?= $loc['latitude'] ?>" data-longitude="<?= $loc['longitude'] ?>">
+				<div class="fdm-map-location" data-marker-src="<?= asset_url( 'img/'.$loc['type'].'-marker.png' ) ?>" data-id="<?=$i ?>" data-layer="<?= $loc['type'] ?>" data-latitude="<?= $loc['latitude'] ?>" data-longitude="<?= $loc['longitude'] ?>">
 					<span name="city"><?= $loc['city'] ?></span>
 					<?php if ( $loc['type'] != 'placement' ) { ?>
 						<span name="description">

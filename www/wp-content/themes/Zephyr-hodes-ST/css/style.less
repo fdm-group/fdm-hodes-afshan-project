@@ -517,19 +517,38 @@ ul li { margin: 0 0 0.2rem; }
 	}
 
 	>li  {
-		line-height:107px;
+		line-height:normal;
+		list-style:none;
+		float:left;
 		border-top: 3px solid transparent;
+
 		&:hover {
 			border-color: @blue;
 			a {
-				font-weight:bold;
+				color:#ccc;
 			}
+			ul.sub-menu{
+				visibility:visible;
+				opacity:1;
+				height:auto;
+				max-height:200px;
+				top:auto;
+				left:0;
+				overflow-y:auto;
+				rgba(255,255,255,0.8);
+				margin-top:0px;
+				margin-left:0px;
+			}
+			
 		}
 		>a {
 			font-family: 'Open Sans';
 			font-weight:300;
 			line-height:107px;
+			font-size:14px;
 			padding: 0 12px;
+			text-transform:uppercase;
+			color:#fff;
 			@media (max-width: 1100px) {
 				font-size: 13px;
 				padding: 0 8px;
@@ -543,7 +562,17 @@ ul li { margin: 0 0 0.2rem; }
 		}
 	}
 
-	ul.ubermenu-submenu {
+	ul.sub-menu {
+    position: absolute;
+    z-index: 500;
+    top: -10000px;
+    height: 0;
+    max-height: 0;
+    visibility: hidden;
+    overflow: hidden;
+    line-height:normal;
+
+
 
 		width:100%;
 		text-align:right;
@@ -556,10 +585,13 @@ ul li { margin: 0 0 0.2rem; }
 			display:inline-block;
 			padding:0px 20px;
 			min-width:50px;
+			line-height:normal;
 			a {
 				padding:16px 0px;
+				font-size:14px;
 				border-bottom: 3px solid transparent;
 				text-transform:uppercase;
+				display:block;
 				&:hover {
 					border-bottom: 3px solid @blue;
 					font-weight:bold;
@@ -573,15 +605,16 @@ ul li { margin: 0 0 0.2rem; }
 			font-weight:300;
 		}
 
-		li.ubermenu-current-menu-item a { border-bottom: 3px solid @blue; font-weight:bold;}
+		li.current-menu-item a { border-bottom: 3px solid @blue; font-weight:bold;}
 	}
 
-	>li.ubermenu-current-menu-item, >li.ubermenu-current-menu-ancestor {
+	>li.current-menu-item, >li.current-menu-ancestor {
 		border-top: 3px solid @blue;
 		>a {
 			font-weight:bold;
 		}
 	}
+
 
 }
 
@@ -935,6 +968,12 @@ ul li { margin: 0 0 0.2rem; }
 .fdm-map-legend label {display: inline-block; padding: 6px;}
 .fdm-map-legend label input {vertical-align: middle;}
 
+#maptext{ clear:both;}
+
+.fdm-map-search{ display:inline-block; padding:6px; }
+.fdm-map-search input{ display:inline-block;  width:auto;}
+.fdm-map-search label{ display:inline-block; }
+#searchButton{ background-color:#0a0a09; color:#fff; font-weight:100; line-height:46px; }
 
 /** mini menu **/
 .mini-menu {
@@ -1286,7 +1325,7 @@ input[type="text"], input[type="email"], input[type="tel"], textarea, select {co
 
 /** Footer **/
 .l-footer {border-bottom:10px solid @blue;}
-.ftr-logo img {max-height:48px; width:auto;}
+.ftr-logo img { width:auto;}
 a.w-btn.color_primary.style_flat.ftr-btn {color: #0a0a09; background-color:#e5e5e9; font-size:12px; line-height: 3.4;}
 .ftr-nav {font-size:12px;}
 .ftr-nav p {margin-top:0px; margin-bottom:8px; line-height:15px;}
