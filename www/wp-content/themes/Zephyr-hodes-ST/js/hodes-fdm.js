@@ -807,5 +807,11 @@ $("#denycookies").click(function(event) {
 	if ( window.fdmCurrentLang != 'de' ) {
 		$('footer .w-socials-item.xing').remove();
 	}
+
+	$('.btn-journey').click(function(event) {
+       
+ 	event.preventDefault();
+  	window.location.href = "/careers/career-journey/";
+});
 	
 });

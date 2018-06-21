@@ -19,6 +19,7 @@ class OurPeople extends VCComponent {
 			[ 'acf_post' => 'fdm_people_china', 'name' => 'China', 'lang_code' => 'cn', 't_name' => __( 'China', 'fdm' ) ],
 			[ 'acf_post' => 'fdm_people_singapore', 'name' => 'Singapore', 'lang_code' => 'en-sg', 't_name' => __( 'Singapore', 'fdm' ) ],
 			[ 'acf_post' => 'fdm_people_hk', 'name' => 'Hong Kong', 'lang_code' => 'en-hk', 't_name' => __( 'Hong Kong', 'fdm' ) ],
+
 		];
 		
 		$this->pathways = [
@@ -130,7 +131,7 @@ class OurPeople extends VCComponent {
 
 		$countries = array_filter( $this->countries, function( $country ) {
 			/* Hide China for now - some debate about how it's going to work for them */
-			return $country['lang_code'] != 'cn';
+			return $country['lang_code'];
 		} );
 		
 		$people = array_filter( $this->get_people_data(), function( $person ) {
