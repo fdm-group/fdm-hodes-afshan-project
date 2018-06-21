@@ -136,7 +136,7 @@ class OurPeople extends VCComponent {
 		
 		$people = array_filter( $this->get_people_data(), function( $person ) {
 			/* Hide China for now - some debate about how it's going to work for them */
-			return $person['lang_code'] != 'cn';
+			return $person['lang_code'];
 		} ); ;
 
 		// Sort the people so that the current country is first, and alphabetical by name after that
