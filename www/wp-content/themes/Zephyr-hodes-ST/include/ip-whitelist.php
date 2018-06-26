@@ -55,6 +55,9 @@ function ip_matches( $ip, $acl ) {
  * Implement IP whitelist for wp-admin and login page
  */
 add_action('init', function() {
+
+   if(strpos($_SERVER['DOCUMENT_ROOT'], '/MAMP/') === false) { 
+
 	if (is_admin() || is_login_page()) {
 		
 		$whitelist = array(
@@ -71,7 +74,8 @@ add_action('init', function() {
 			'38.122.11.162/32',
 			'51.145.45.250/32',
 			'213.1.11.20/32',	
-			'127.0.0.1/32',          	
+			'127.0.0.1/32',
+			'86.170.83.10/32',          	
 		);
 		
 		if ( ! ip_matches( $_SERVER['REMOTE_ADDR'], $whitelist ) ) {
@@ -80,6 +84,7 @@ add_action('init', function() {
 			//header( "HTTP/1.0 403 Forbidden" );
 			exit;
 		}
+	}
 	}
 });
 
