@@ -165,6 +165,7 @@ $back_inline_css = array(
 	'border-color' => $border_color,
 	'border-radius' => $border_radius,
 	'border-width' => $border_size,
+	'display' => 'none',
 );
 if ( ! empty( $back_bgimage ) AND ( $back_bgimage_src = wp_get_attachment_image_src( $back_bgimage, $back_bgimage_size ) ) ) {
 	$back_inline_css['background-image'] = $back_bgimage_src[0];

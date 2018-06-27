@@ -12,6 +12,20 @@
 		this.$backH = this.$container.find('.cl-flipbox-back-h');
 		this.$btn = this.$container.find('.cl-btn');
 
+		// Simplified animation for IE11
+		if (!!window.MSInputMethodContext && !!document.documentMode){
+			this.$container.clMod('animation', 'cardflip').find('.cl-flipbox-h').css({
+				'transition-duration': '0s',
+				'-webkit-transition-duration': '0s'
+			});
+		}
+
+		// In chrome cube flip animation makes button not clickable. Replacing it with cube tilt
+		var isWebkit = 'WebkitAppearance' in document.documentElement.style;
+		if (isWebkit && this.$container.clMod('animation') === 'cubeflip' && this.$btn.length){
+			this.$container.clMod('animation', 'cubetilt');
+		}
+
 		// For diagonal cube animations height should equal width (heometrical restriction)
 		var animation = this.$container.clMod('animation'),
 			direction = this.$container.clMod('direction');
@@ -36,6 +50,12 @@
 		}
 
 		this.makeHoverable('.cl-btn');
+
+		// Fixing css3 animations rendering glitch on page load
+		setTimeout(function(){
+			this.$back.css('display', '');
+			this.resize();
+		}.bind(this), 250);
 	};
 	CLFlipbox.prototype = {
 		resize: function(){

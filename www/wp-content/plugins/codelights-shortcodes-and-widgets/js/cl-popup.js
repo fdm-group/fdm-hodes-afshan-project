@@ -26,9 +26,12 @@
 
 		this.$trigger = this.$container.find('.cl-popup-trigger');
 		this.triggerType = this.$trigger.clMod('type');
-		if (this.triggerType == 'load') {
+		if (this.triggerType == 'load'){
 			var delay = this.$trigger.data('delay') || 2;
 			setTimeout(this.show.bind(this), delay * 1000);
+		} else if (this.triggerType == 'selector') {
+			var selector = this.$trigger.data('selector');
+			if (selector) $cl.$body.on('click', selector, this._events.show);
 		} else {
 			this.$trigger.on('click', this._events.show);
 		}
@@ -116,6 +119,8 @@
 			if (this.isFixed) {
 				$cl.$html.removeClass('cloverlay_fixed');
 				if (this.windowHasScrollbar) $cl.$html.css('margin-right', '');
+				// To properly resize 3-rd party elements
+				$cl.$window.trigger('resize');
 			}
 		},
 		resize: function(){
