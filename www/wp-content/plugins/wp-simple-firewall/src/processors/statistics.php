@@ -4,7 +4,7 @@ if ( class_exists( 'ICWP_WPSF_Processor_Statistics', false ) ) {
 	return;
 }
 
-require_once( dirname( __FILE__ ) . DIRECTORY_SEPARATOR . 'basedb.php' );
+require_once( dirname( __FILE__ ).DIRECTORY_SEPARATOR.'basedb.php' );
 
 class ICWP_WPSF_Processor_Statistics extends ICWP_WPSF_BaseDbProcessor {
 
@@ -14,18 +14,29 @@ class ICWP_WPSF_Processor_Statistics extends ICWP_WPSF_BaseDbProcessor {
 	private $oReportingProcessor;
 
 	/**
-	 * @param ICWP_WPSF_FeatureHandler_Statistics $oFeatureOptions
+	 * @param ICWP_WPSF_FeatureHandler_Statistics $oModCon
 	 */
-	public function __construct( ICWP_WPSF_FeatureHandler_Statistics $oFeatureOptions ) {
-		parent::__construct( $oFeatureOptions, $oFeatureOptions->getStatisticsTableName() );
+	public function __construct( ICWP_WPSF_FeatureHandler_Statistics $oModCon ) {
+		parent::__construct( $oModCon, $oModCon->getStatisticsTableName() );
 	}
 
 	public function run() {
-		if ( $this->readyToRun() ) {
-			add_filter( $this->getFeature()
-							 ->prefix( 'dashboard_widget_content' ), array( $this, 'gatherStatsSummaryWidgetContent' ), 10 );
+		/** @var ICWP_WPSF_FeatureHandler_Statistics $oFO */
+		$oFO = $this->getFeature();
+		if ( $this->isReadyToRun() ) {
+			add_filter( $oFO->prefix( 'dashboard_widget_content' ), array( $this, 'gatherStatsSummaryWidgetContent' ), 10 );
 		}
-		$this->getReportingProcessor()->run();
+
+		// Reporting stats run or destroy
+		if ( $this->loadDP()->getPhpVersionIsAtLeast( '5.3.0' ) ) {
+			$this->getReportingProcessor()
+				 ->run();
+		}
+		else { // delete the table for any site that had it running previously
+			// TODO: Delete this block after a while.
+			$oDb = $this->loadDbProcessor();
+			$oDb->doDropTable( $oFO->getFullReportingTableName() );
+		}
 	}
 
 	/**
@@ -45,6 +56,88 @@ class ICWP_WPSF_Processor_Statistics extends ICWP_WPSF_BaseDbProcessor {
 		}
 		$aData[ $this->getFeature()->getFeatureSlug() ][ 'stats' ] = $aTallyTracking;
 		return $aData;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getInsightsStats() {
+		$aAllStats = $this->getAllTallys();
+
+		$aSpamCommentKeys = array(
+			'spam.gasp.checkbox',
+			'spam.gasp.token',
+			'spam.gasp.honeypot',
+			'spam.recaptcha.empty',
+			'spam.recaptcha.failed',
+			'spam.human.comment_content',
+			'spam.human.url',
+			'spam.human.author_name',
+			'spam.human.author_email',
+			'spam.human.ip_address',
+			'spam.human.user_agent'
+		);
+		$aLoginFailKeys = array(
+			'login.cooldown.fail',
+			'login.recaptcha.fail',
+			'login.gasp.checkbox.fail',
+			'login.gasp.honeypot.fail',
+			'login.googleauthenticator.fail',
+			'login.rename.fail',
+		);
+		$aLoginVerifiedKeys = array(
+			'login.googleauthenticator.verified',
+			'login.recaptcha.verified',
+			'login.twofactor.verified'
+		);
+
+		$aAllStats[ 'ip.transgression.incremented' ] = 0;
+		$aAllStats[ 'ip.connection.killed' ] = 0;
+		$aAllStats[ 'comments.blocked.all' ] = 0;
+		$aAllStats[ 'firewall.blocked.all' ] = 0;
+		$aAllStats[ 'login.blocked.all' ] = 0;
+		$aAllStats[ 'login.verified.all' ] = 0;
+		$aAllStats[ 'login.verified.all' ] = 0;
+
+		foreach ( $aAllStats as $aStat ) {
+			$sStatKey = $aStat[ 'stat_key' ];
+			$nTally = $aStat[ 'tally' ];
+			if ( in_array( $sStatKey, $aSpamCommentKeys ) ) {
+				$aAllStats[ 'comments.blocked.all' ] += $nTally;
+			}
+			else if ( strpos( $sStatKey, 'firewall.blocked.' ) !== false ) {
+				$aAllStats[ 'firewall.blocked.all' ] += $nTally;
+			}
+			else if ( in_array( $sStatKey, $aLoginFailKeys ) ) {
+				$aAllStats[ 'login.blocked.all' ] += $nTally;
+			}
+			else if ( $sStatKey == 'ip.connection.killed' ) {
+				$aAllStats[ 'ip.connection.killed' ] += $nTally;
+			}
+			else if ( $sStatKey == 'ip.transgression.incremented' ) {
+				$aAllStats[ 'ip.transgression.incremented' ] += $nTally;
+			}
+			else if ( $sStatKey == 'user.session.start' ) {
+				$nTotalUserSessionsStarted = $nTally;
+			}
+			else if ( $sStatKey == 'file.corechecksum.replaced' ) {
+			}
+			else if ( in_array( $sStatKey, $aLoginVerifiedKeys ) ) {
+				$aAllStats[ 'login.verified.all' ] += $nTally;
+			}
+		}
+
+		return array_merge(
+			array(
+				'ip.transgression.incremented' => 0,
+				'ip.connection.killed'         => 0,
+				'firewall.blocked.all'         => 0,
+				'comments.blocked.all'         => 0,
+				'login.blocked.all'            => 0,
+				'login.verified.all'           => 0,
+			),
+			$aAllStats
+		);
 	}
 
 	public function gatherStatsSummaryWidgetContent( $aContent ) {
@@ -122,13 +215,12 @@ class ICWP_WPSF_Processor_Statistics extends ICWP_WPSF_BaseDbProcessor {
 			'login_fail'        => array( _wpsf__( 'Login Blocks' ), $nTotalLoginBlocked ),
 			'login_verified'    => array( _wpsf__( 'Login Verified' ), $nTotalLoginVerified ),
 			'session_start'     => array( _wpsf__( 'User Sessions' ), $nTotalUserSessionsStarted ),
-			//				'file_replaced' => array( _wpsf__( 'Files Replaced' ), $nTotalFilesReplaced ),
 			'ip_killed'         => array( _wpsf__( 'IP Auto Black-Listed' ), $nTotalConnectionKilled ),
 			'ip_transgressions' => array( _wpsf__( 'Total Transgressions' ), $nTotalTransgressions ),
 		);
 
 		$aDisplayData = array(
-			'sHeading'  => _wpsf__( 'Shield Statistics' ),
+			'sHeading'  => sprintf( _wpsf__( '%s Statistics' ), $this->getController()->getHumanName() ),
 			'aAllStats' => $aAllStats,
 			'aKeyStats' => $aKeyStats,
 		);
@@ -233,8 +325,8 @@ class ICWP_WPSF_Processor_Statistics extends ICWP_WPSF_BaseDbProcessor {
 		return $this->query_selectAll( array( 'stat_key', 'tally' ) );
 	}
 
-	public function action_doFeatureProcessorShutdown() {
-		parent::action_doFeatureProcessorShutdown();
+	public function onModuleShutdown() {
+		parent::onModuleShutdown();
 		if ( !$this->getFeature()->isPluginDeleting() ) {
 			$this->commit();
 		}
@@ -244,7 +336,7 @@ class ICWP_WPSF_Processor_Statistics extends ICWP_WPSF_BaseDbProcessor {
 	 * @return array
 	 */
 	protected function getTableColumnsByDefinition() {
-		$aDef = $this->getFeature()->getDefinition( 'statistics_table_columns' );
+		$aDef = $this->getFeature()->getDef( 'statistics_table_columns' );
 		return ( is_array( $aDef ) ? $aDef : array() );
 	}
 
@@ -310,7 +402,7 @@ class ICWP_WPSF_Processor_Statistics extends ICWP_WPSF_BaseDbProcessor {
 	 */
 	protected function getReportingProcessor() {
 		if ( !isset( $this->oReportingProcessor ) ) {
-			require_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'statistics_reporting.php' );
+			require_once( dirname(__FILE__ ).'/statistics_reporting.php' );
 			$this->oReportingProcessor = new ICWP_WPSF_Processor_Statistics_Reporting( $this->getFeature() );
 		}
 		return $this->oReportingProcessor;

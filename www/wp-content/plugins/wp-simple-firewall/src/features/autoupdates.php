@@ -4,9 +4,16 @@ if ( class_exists( 'ICWP_WPSF_FeatureHandler_Autoupdates' ) ) {
 	return;
 }
 
-require_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'base_wpsf.php' );
+require_once( dirname( __FILE__ ).'/base_wpsf.php' );
 
 class ICWP_WPSF_FeatureHandler_Autoupdates extends ICWP_WPSF_FeatureHandler_BaseWpsf {
+
+	protected function doPostConstruction() {
+		// Force run automatic updates
+		if ( $this->loadDP()->query( 'force_run_auto_updates' ) == 'now' ) {
+			add_filter( $this->prefix( 'force_autoupdate' ), '__return_true' );
+		}
+	}
 
 	/**
 	 * @return string[]
@@ -20,6 +27,42 @@ class ICWP_WPSF_FeatureHandler_Autoupdates extends ICWP_WPSF_FeatureHandler_Base
 			}
 		}
 		return $aSelected;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getDelayTracking() {
+		$aTracking = $this->getOpt( 'delay_tracking', array() );
+		if ( !is_array( $aTracking ) ) {
+			$aTracking = array();
+		}
+		$aTracking = $this->loadDP()->mergeArraysRecursive(
+			array(
+				'core'    => array(),
+				'plugins' => array(),
+				'themes'  => array(),
+			),
+			$aTracking
+		);
+		$this->setOpt( 'delay_tracking', $aTracking );
+
+		return $aTracking;
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getDelayUpdatesPeriod() {
+		return $this->isPremium() ? $this->getOpt( 'update_delay', 0 )*DAY_IN_SECONDS : 0;
+	}
+
+	/**
+	 * @param array $aTrackingInfo
+	 * @return $this
+	 */
+	public function setDelayTracking( $aTrackingInfo ) {
+		return $this->setOpt( 'delay_tracking', $aTrackingInfo );
 	}
 
 	/**
@@ -38,6 +81,13 @@ class ICWP_WPSF_FeatureHandler_Autoupdates extends ICWP_WPSF_FeatureHandler_Base
 	}
 
 	/**
+	 * @return bool
+	 */
+	public function isDelayUpdates() {
+		return $this->getDelayUpdatesPeriod() > 0;
+	}
+
+	/**
 	 * @param $sPluginFile
 	 * @return bool
 	 */
@@ -45,37 +95,56 @@ class ICWP_WPSF_FeatureHandler_Autoupdates extends ICWP_WPSF_FeatureHandler_Base
 		return in_array( $sPluginFile, $this->getAutoupdatePlugins() );
 	}
 
-	protected function adminAjaxHandlers() {
-		parent::adminAjaxHandlers();
-		if ( $this->isAutoupdateIndividualPlugins() && $this->getController()->getIsValidAdminArea() ) {
-			add_action( 'wp_ajax_icwp_wpsf_TogglePluginAutoupdate', array( $this, 'ajaxTogglePluginAutoupdate' ) );
+	/**
+	 * @param array $aAjaxResponse
+	 * @return array
+	 */
+	public function handleAuthAjax( $aAjaxResponse ) {
+
+		if ( empty( $aAjaxResponse ) ) {
+			switch ( $this->loadDP()->request( 'exec' ) ) {
+
+				case 'toggle_plugin_autoupdate':
+					if ( $this->isAutoupdateIndividualPlugins() && $this->getConn()->getIsValidAdminArea() ) {
+						$aAjaxResponse = $this->ajaxExec_TogglePluginAutoupdate();
+					}
+					break;
+
+				default:
+					break;
+			}
 		}
+		return parent::handleAuthAjax( $aAjaxResponse );
 	}
 
-	public function ajaxTogglePluginAutoupdate() {
+	/**
+	 * @return array
+	 */
+	public function ajaxExec_TogglePluginAutoupdate() {
 
 		$bSuccess = false;
-		if ( $this->checkAjaxNonce() ) {
-			$oWp = $this->loadWpFunctions();
-			$sFile = $this->loadDataProcessor()->FetchPost( 'pluginfile' );
-			if ( $oWp->getIsPluginInstalledByFile( $sFile ) ) {
-				$this->setPluginToAutoUpdate( $sFile );
 
-				$oPlugin = $oWp->getPluginDataAsObject( $sFile );
-				$sMessage = sprintf( _wpsf__( 'Plugin "%s" will %s.' ),
-					$oPlugin->Name,
-					$oWp->getIsPluginAutomaticallyUpdated( $sFile ) ? _wpsf__( 'update automatically' ) : _wpsf__( 'not update automatically' )
-				);
-				$bSuccess = true;
-			}
-			else {
-				$sMessage = _wpsf__( 'Failed to change the update status of the plugin.' );
-			}
+		$oWpPlugins = $this->loadWpPlugins();
+		$sFile = $this->loadDP()->post( 'pluginfile' );
+		if ( $oWpPlugins->isInstalled( $sFile ) ) {
+			$this->setPluginToAutoUpdate( $sFile );
+
+			$aPlugin = $oWpPlugins->getPlugin( $sFile );
+			$sMessage = sprintf( _wpsf__( 'Plugin "%s" will %s.' ),
+				$aPlugin[ 'Name' ],
+				$this->loadWp()
+					 ->getIsPluginAutomaticallyUpdated( $sFile ) ? _wpsf__( 'update automatically' ) : _wpsf__( 'not update automatically' )
+			);
+			$bSuccess = true;
 		}
 		else {
-			$sMessage = _wpsf__( 'Nonce security checking failed. Please reload.' );
+			$sMessage = _wpsf__( 'Failed to change the update status of the plugin.' );
 		}
-		$this->sendAjaxResponse( $bSuccess, array( 'message' => $sMessage ) );
+
+		return array(
+			'success' => $bSuccess,
+			'message' => $sMessage,
+		);
 	}
 
 	/**
@@ -96,13 +165,6 @@ class ICWP_WPSF_FeatureHandler_Autoupdates extends ICWP_WPSF_FeatureHandler_Base
 		return $this->setOpt( 'selected_plugins', $aPlugins );
 	}
 
-	protected function doPostConstruction() {
-		// Force run automatic updates
-		if ( $this->loadDataProcessor()->FetchGet( 'force_run_auto_updates' ) == 'now' ) {
-			add_filter( $this->prefix( 'force_autoupdate' ), '__return_true' );
-		}
-	}
-
 	/**
 	 * @param array $aOptionsParams
 	 * @return array
@@ -110,16 +172,16 @@ class ICWP_WPSF_FeatureHandler_Autoupdates extends ICWP_WPSF_FeatureHandler_Base
 	 */
 	protected function loadStrings_SectionTitles( $aOptionsParams ) {
 
-		$sSectionSlug = $aOptionsParams['slug'];
-		switch( $sSectionSlug ) {
+		$sSectionSlug = $aOptionsParams[ 'slug' ];
+		switch ( $sSectionSlug ) {
 
 			case 'section_enable_plugin_feature_automatic_updates_control' :
-				$sTitle = sprintf( _wpsf__( 'Enable Plugin Feature: %s' ), $this->getMainFeatureName() );
+				$sTitle = sprintf( _wpsf__( 'Enable Module: %s' ), $this->getMainFeatureName() );
 				$aSummary = array(
 					sprintf( _wpsf__( 'Purpose - %s' ), _wpsf__( 'Automatic Updates lets you manage the WordPress automatic updates engine so you choose what exactly gets updated automatically.' ) ),
 					sprintf( _wpsf__( 'Recommendation - %s' ), sprintf( _wpsf__( 'Keep the %s feature turned on.' ), _wpsf__( 'Automatic Updates' ) ) )
 				);
-				$sTitleShort = sprintf( '%s / %s', _wpsf__( 'Enable' ), _wpsf__( 'Disable' ) );
+				$sTitleShort = sprintf( _wpsf__( '%s/%s Module' ), _wpsf__( 'Enable' ), _wpsf__( 'Disable' ) );
 				break;
 
 			case 'section_disable_all_wordpress_automatic_updates' :
@@ -134,7 +196,8 @@ class ICWP_WPSF_FeatureHandler_Autoupdates extends ICWP_WPSF_FeatureHandler_Base
 			case 'section_automatic_plugin_self_update' :
 				$sTitle = _wpsf__( 'Automatic Plugin Self-Update' );
 				$aSummary = array(
-					sprintf( _wpsf__( 'Purpose - %s' ), sprintf( _wpsf__( 'Allows the %s plugin to automatically update itself when an update is available.' ), self::getController()->getHumanName() ) ),
+					sprintf( _wpsf__( 'Purpose - %s' ), sprintf( _wpsf__( 'Allows the %s plugin to automatically update itself when an update is available.' ), self::getConn()
+																																									->getHumanName() ) ),
 					sprintf( _wpsf__( 'Recommendation - %s' ), _wpsf__( 'Keep this option turned on.' ) )
 				);
 				$sTitleShort = _wpsf__( 'Self-Update' );
@@ -149,20 +212,20 @@ class ICWP_WPSF_FeatureHandler_Autoupdates extends ICWP_WPSF_FeatureHandler_Base
 				$sTitleShort = _wpsf__( 'WordPress Components' );
 				break;
 
-			case 'section_automatic_update_email_notifications' :
-				$sTitle = _wpsf__( 'Automatic Update Email Notifications' );
+			case 'section_options' :
+				$sTitle = _wpsf__( 'Auto-Update Options' );
+				$sTitleShort = _wpsf__( 'Auto-Update Options' );
 				$aSummary = array(
-					sprintf( _wpsf__( 'Purpose - %s' ), _wpsf__( 'Control how you are notified of automatic updates that have occurred.' ) ),
+					sprintf( _wpsf__( 'Purpose - %s' ), _wpsf__( 'Make adjustments to how automatic updates are handled on your site.' ) ),
 				);
-				$sTitleShort = _wpsf__( 'Notifications' );
 				break;
 
 			default:
 				throw new Exception( sprintf( 'A section slug was defined but with no associated strings. Slug: "%s".', $sSectionSlug ) );
 		}
-		$aOptionsParams['title'] = $sTitle;
-		$aOptionsParams['summary'] = ( isset( $aSummary ) && is_array( $aSummary ) ) ? $aSummary : array();
-		$aOptionsParams['title_short'] = $sTitleShort;
+		$aOptionsParams[ 'title' ] = $sTitle;
+		$aOptionsParams[ 'summary' ] = ( isset( $aSummary ) && is_array( $aSummary ) ) ? $aSummary : array();
+		$aOptionsParams[ 'title_short' ] = $sTitleShort;
 		return $aOptionsParams;
 	}
 
@@ -173,13 +236,14 @@ class ICWP_WPSF_FeatureHandler_Autoupdates extends ICWP_WPSF_FeatureHandler_Base
 	 */
 	protected function loadStrings_Options( $aOptionsParams ) {
 
-		$sKey = $aOptionsParams['key'];
-		switch( $sKey ) {
+		$sKey = $aOptionsParams[ 'key' ];
+		$sPlugName = $this->getConn()->getHumanName();
+		switch ( $sKey ) {
 
 			case 'enable_autoupdates' :
-				$sName = sprintf( _wpsf__( 'Enable %s' ), $this->getMainFeatureName() );
-				$sSummary = sprintf( _wpsf__( 'Enable (or Disable) The %s Feature' ), $this->getMainFeatureName() );
-				$sDescription = sprintf( _wpsf__( 'Checking/Un-Checking this option will completely turn on/off the whole %s feature.' ), $this->getMainFeatureName() );
+				$sName = sprintf( _wpsf__( 'Enable %s Module' ), $this->getMainFeatureName() );
+				$sSummary = sprintf( _wpsf__( 'Enable (or Disable) The %s Module' ), $this->getMainFeatureName() );
+				$sDescription = sprintf( _wpsf__( 'Un-Checking this option will completely disable the %s module.' ), $this->getMainFeatureName() );
 				break;
 
 			case 'enable_autoupdate_disable_all' :
@@ -191,7 +255,8 @@ class ICWP_WPSF_FeatureHandler_Autoupdates extends ICWP_WPSF_FeatureHandler_Base
 			case 'autoupdate_plugin_self' :
 				$sName = _wpsf__( 'Auto Update Plugin' );
 				$sSummary = _wpsf__( 'Always Automatically Update This Plugin' );
-				$sDescription = sprintf( _wpsf__( 'Regardless of any component settings below, automatically update the "%s" plugin.' ), self::getController()->getHumanName() );
+				$sDescription = sprintf( _wpsf__( 'Regardless of any component settings below, automatically update the "%s" plugin.' ), self::getConn()
+																																			 ->getHumanName() );
 				break;
 
 			case 'autoupdate_core' :
@@ -242,13 +307,20 @@ class ICWP_WPSF_FeatureHandler_Autoupdates extends ICWP_WPSF_FeatureHandler_Base
 				$sDescription = _wpsf__( 'If this is empty, it will default to the Site Admin email address' );
 				break;
 
+			case 'update_delay' :
+				$sName = _wpsf__( 'Update Delay' );
+				$sSummary = _wpsf__( 'Delay Automatic Updates For Period Of Stability' );
+				$sDescription = sprintf( _wpsf__( '%s will delay upgrades until the new update has been available for the set number of days.' ), $sPlugName )
+								.'<br />'._wpsf__( "This helps ensure updates are more stable before they're automatically applied to your site." );
+				break;
+
 			default:
 				throw new Exception( sprintf( 'An option has been defined but without strings assigned to it. Option key: "%s".', $sKey ) );
 		}
 
-		$aOptionsParams['name'] = $sName;
-		$aOptionsParams['summary'] = $sSummary;
-		$aOptionsParams['description'] = $sDescription;
+		$aOptionsParams[ 'name' ] = $sName;
+		$aOptionsParams[ 'summary' ] = $sSummary;
+		$aOptionsParams[ 'description' ] = $sDescription;
 		return $aOptionsParams;
 	}
 }

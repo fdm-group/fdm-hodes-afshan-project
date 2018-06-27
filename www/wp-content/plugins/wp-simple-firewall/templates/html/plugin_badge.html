@@ -35,9 +35,10 @@
 	#icwpWpsfSiteBadge .badge-text {
         font-family: sans-serif;
 		font-size: 12px;
+		font-weight: normal;
 		line-height: 17px;
 		padding-left: 43px;
-
+		letter-spacing: 0;
         -webkit-transition: opacity 1s; /* Safari */
         transition: opacity 1s;
 	}
@@ -69,6 +70,7 @@
         }
         #icwpWpsfSiteBadge .badge-text {
             font-size: 8px;
+			font-weight: normal;
             line-height: 10px;
             padding-left: 20px;
         }
@@ -80,7 +82,7 @@
 </style>
 <div id="icwpWpsfSiteBadge">
 	<a id="icwpWpsfCloseButton" onclick="getElementById('icwpWpsfSiteBadge').remove();">x</a>
-	<a href="http://icwp.io/wpsecurityfirewall" target="_blank" title="This site is protected by the Shield Security plugin.">
+	<a href="https://icwp.io/wpsecurityfirewall" target="_blank" title="This site is protected by the Shield Security plugin.">
 		<img src="%s" alt="%s Logo" />
         <div class="badge-text">%s</div>
 	</a>

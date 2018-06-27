@@ -4,9 +4,26 @@ if ( class_exists( 'ICWP_WPSF_FeatureHandler_Ips', false ) ) {
 	return;
 }
 
-require_once( dirname( __FILE__ ).DIRECTORY_SEPARATOR.'base_wpsf.php' );
+require_once( dirname( __FILE__ ).'/base_wpsf.php' );
 
 class ICWP_WPSF_FeatureHandler_Ips extends ICWP_WPSF_FeatureHandler_BaseWpsf {
+
+	const LIST_MANUAL_WHITE = 'MW';
+	const LIST_MANUAL_BLACK = 'MB';
+	const LIST_AUTO_BLACK = 'AB';
+
+	/**
+	 * @return array
+	 */
+	protected function getDisplayStrings() {
+		return $this->loadDP()->mergeArraysRecursive(
+			parent::getDisplayStrings(),
+			array(
+				'btn_actions'         => _wpsf__( 'Manage IP Lists' ),
+				'btn_actions_summary' => _wpsf__( 'Add/Remove IPs' )
+			)
+		);
+	}
 
 	/**
 	 * @return string
@@ -37,49 +54,27 @@ class ICWP_WPSF_FeatureHandler_Ips extends ICWP_WPSF_FeatureHandler_BaseWpsf {
 	}
 
 	/**
-	 * @return string
+	 * @param array $aData
 	 */
-	public function getWhatIsMyServerIp() {
-
-		$sThisServerIp = $this->getOpt( 'this_server_ip', '' );
-		if ( $this->getIfLastCheckServerIpAtHasExpired() ) {
-			$this->loadFS(); // to ensure the necessary Class exist - we can clean this up later
-			$sThisServerIp = $this->loadIpProcessor()->WhatIsMyIp();
-			if ( is_string( $sThisServerIp ) ) {
-				$this->setOpt( 'this_server_ip', $sThisServerIp );
-			}
-			// we always update so we don't forever check on every single page load
-			$this->setOpt( 'this_server_ip_last_check_at', $this->loadDataProcessor()->time() );
-		}
-		return $sThisServerIp;
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getLastCheckServerIpAt() {
-		return $this->getOpt( 'this_server_ip_last_check_at', 0 );
-	}
-
-	/**
-	 * @return bool
-	 */
-	public function getIfLastCheckServerIpAtHasExpired() {
-		return ( ( $this->loadDataProcessor()->time() - $this->getLastCheckServerIpAt() ) > DAY_IN_SECONDS );
-	}
-
-	/**
-	 */
-	public function displayFeatureConfigPage() {
+	protected function displayModulePage( $aData = array() ) {
 		add_thickbox();
-		$this->display( $this->getIpTableDisplayData(), 'feature-ips' );
+		parent::displayModulePage( $this->getIpTableDisplayData() );
 	}
 
 	/**
 	 * @return array
 	 */
-	protected function getIpTableDisplayData() {
-		return array( 'sAjaxNonce' => wp_create_nonce( 'fable_ip_list_action' ) );
+	protected function getContentCustomActionsData() {
+		return $this->getIpTableDisplayData();
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getIpTableDisplayData() { // Use new standard AJAX
+		return array(
+			'ajax' => $this->getAjaxDataSets(),
+		);
 	}
 
 	/**
@@ -105,13 +100,13 @@ class ICWP_WPSF_FeatureHandler_Ips extends ICWP_WPSF_FeatureHandler_BaseWpsf {
 	 * @return array
 	 */
 	protected function formatIpListData( $aListData ) {
-		$oWp = $this->loadWpFunctions();
+		$oWp = $this->loadWp();
 
 		foreach ( $aListData as &$aListItem ) {
 			$aListItem[ 'ip_link' ] =
 				sprintf( '<a href="%s" target="_blank">%s</a>',
 					(
-					( $this->loadDataProcessor()->getIpAddressVersion( $aListItem[ 'ip' ] ) == 4 ) ?
+					( $this->loadIpService()->getIpVersion( $aListItem[ 'ip' ] ) == 4 ) ?
 						'http://whois.domaintools.com/'.$aListItem[ 'ip' ]
 						: sprintf( 'http://whois.arin.net/rest/nets;q=%s?showDetails=true', $aListItem[ 'ip' ] )
 					),
@@ -127,7 +122,7 @@ class ICWP_WPSF_FeatureHandler_Ips extends ICWP_WPSF_FeatureHandler_BaseWpsf {
 	 * @return string
 	 */
 	public function getIpListsTableName() {
-		return $this->prefix( $this->getDefinition( 'ip_lists_table_name' ), '_' );
+		return $this->prefix( $this->getDef( 'ip_lists_table_name' ), '_' );
 	}
 
 	/**
@@ -138,106 +133,102 @@ class ICWP_WPSF_FeatureHandler_Ips extends ICWP_WPSF_FeatureHandler_BaseWpsf {
 		return !$this->getOptIs( 'track_404', 'disabled' );
 	}
 
-	protected function adminAjaxHandlers() {
-		parent::adminAjaxHandlers();
-		add_action( 'wp_ajax_icwp_wpsf_GetIpList', array( $this, 'ajaxGetIpList' ) );
-		add_action( 'wp_ajax_icwp_wpsf_RemoveIpFromList', array( $this, 'ajaxRemoveIpFromList' ) );
-		add_action( 'wp_ajax_icwp_wpsf_AddIpToWhiteList', array( $this, 'ajaxAddIpToWhiteList' ) );
-	}
+	/**
+	 * @param array $aAjaxResponse
+	 * @return array
+	 */
+	public function handleAuthAjax( $aAjaxResponse ) {
 
-	public function ajaxGetIpList() {
-		$bNonce = $this->checkAjaxNonce();
-		if ( $bNonce ) {
-			$sResponseData = array();
-			$sResponseData[ 'html' ] = $this->renderListTable( $this->loadDataProcessor()->FetchPost( 'list', '' ) );
-			$this->sendAjaxResponse( $bNonce, $sResponseData );
-		}
-	}
+		if ( empty( $aAjaxResponse ) ) {
+			switch ( $this->loadDP()->request( 'exec' ) ) {
 
-	public function ajaxRemoveIpFromList() {
+				case 'get_ip_list':
+					$aAjaxResponse = $this->ajaxExec_GetIpList();
+					break;
 
-		$bSuccess = $this->checkAjaxNonce();
-		if ( $bSuccess ) {
-			/** @var ICWP_WPSF_Processor_Ips $oProcessor */
-			$oProcessor = $this->getProcessor();
-			$sResponseData = array();
+				case 'add_ip_white':
+					$aAjaxResponse = $this->ajaxExec_AddIpToWhitelist();
+					break;
 
-			$oDp = $this->loadDataProcessor();
-			$oProcessor->removeIpFromList( $oDp->FetchPost( 'ip' ), $oDp->FetchPost( 'list' ) );
+				case 'remove_ip':
+					$aAjaxResponse = $this->ajaxExec_RemoveIpFromList();
+					break;
 
-			$sResponseData[ 'html' ] = $this->renderListTable( $this->loadDataProcessor()->FetchPost( 'list', '' ) );
-			$this->sendAjaxResponse( $bSuccess, $sResponseData );
-		}
-	}
-
-	public function ajaxAddIpToWhiteList() {
-
-		$bSuccess = $this->checkAjaxNonce();
-		if ( $bSuccess ) {
-			/** @var ICWP_WPSF_Processor_Ips $oProcessor */
-			$oProcessor = $this->getProcessor();
-			$sResponseData = array();
-
-			$oDp = $this->loadDataProcessor();
-
-			$sIp = $oDp->FetchPost( 'ip', '' );
-			$sLabel = $oDp->FetchPost( 'label', '' );
-			if ( !empty( $sIp ) ) {
-				$mResult = $oProcessor->addIpToWhiteList( $sIp, $sLabel );
+				default:
+					break;
 			}
-
-			$sResponseData[ 'html' ] = $this->renderListTable( $this->loadDataProcessor()->FetchPost( 'list', '' ) );
-
-//				if ( $mResult === false || $mResult < 1 ) {
-//					$bSuccess = false;
-//				}
-			$this->sendAjaxResponse( $bSuccess, $sResponseData );
 		}
+		return parent::handleAuthAjax( $aAjaxResponse );
 	}
 
 	/**
-	 * Will send ajax error response immediately upon failure
-	 * @return bool
+	 * @return array
 	 */
-	protected function checkAjaxNonce() {
+	protected function ajaxExec_GetIpList() {
+		return array(
+			'success' => true,
+			'html'    => $this->renderListTable( $this->loadDP()->post( 'list', '' ) )
+		);
+	}
 
-		$sNonce = $this->loadDataProcessor()->FetchRequest( '_ajax_nonce', '' );
-		if ( !self::getController()->getHasPermissionToManage() ) {
-			$sMessage = _wpsf__( 'You need to authenticate with the plugin Admin Access Protection system.' );
-		}
-		else if ( empty( $sNonce ) ) {
-			$sMessage = _wpsf__( 'Nonce security checking failed - the nonce value was empty.' );
-		}
-		else if ( wp_verify_nonce( $sNonce, 'fable_ip_list_action' ) === false ) {
-			$sMessage = sprintf( _wpsf__( 'Nonce security checking failed - the nonce supplied was "%s".' ), $sNonce );
-		}
-		else {
-			return true; // At this stage we passed the nonce check
+	public function ajaxExec_RemoveIpFromList() {
+		/** @var ICWP_WPSF_Processor_Ips $oProcessor */
+		$oProcessor = $this->getProcessor();
+		$oDp = $this->loadDP();
+
+		$oProcessor->removeIpFromList( $oDp->post( 'ip' ), $oDp->post( 'list' ) );
+
+		return array(
+			'success' => true,
+			'html'    => $this->renderListTable( $oDp->post( 'list', '' ) ),
+		);
+	}
+
+	protected function ajaxExec_AddIpToWhitelist() {
+		/** @var ICWP_WPSF_Processor_Ips $oProcessor */
+		$oProcessor = $this->getProcessor();
+		$oDp = $this->loadDP();
+
+		$sIp = $oDp->post( 'ip', '' );
+		$sLabel = $oDp->post( 'label', '' );
+		if ( !empty( $sIp ) ) {
+			$oProcessor->addIpToWhiteList( $sIp, $sLabel );
 		}
 
-		// At this stage we haven't returned after success so we failed the nonce check
-		$this->sendAjaxResponse( false, array( 'message' => $sMessage ) );
-		return false; //unreachable
+		return array(
+			'success' => true,
+			'html'    => $this->renderListTable( $oDp->post( 'list', '' ) ),
+		);
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getAjaxDataSets() {
+		return array(
+			'glist' => $this->getAjaxActionData( 'get_ip_list', true ),
+			'alist' => $this->getAjaxActionData( 'add_ip_white', true ),
+			'rlist' => $this->getAjaxActionData( 'remove_ip', true ),
+		);
 	}
 
 	protected function renderListTable( $sListToRender ) {
-		$oWp = $this->loadWpFunctions();
 		$aRenderData = array(
+			'ajax'         => $this->getAjaxDataSets(),
 			'list_id'      => $sListToRender,
-			'bIsWhiteList' => $sListToRender == ICWP_WPSF_Processor_Ips::LIST_MANUAL_WHITE,
-			'time_now'     => sprintf( _wpsf__( 'now: %s' ), $oWp->getTimeStringForDisplay() ),
-			'sAjaxNonce'   => wp_create_nonce( 'fable_ip_list_action' ),
+			'bIsWhiteList' => $sListToRender == self::LIST_MANUAL_WHITE,
+			'time_now'     => sprintf( _wpsf__( 'now: %s' ), $this->loadWp()->getTimeStringForDisplay() ),
 			'sTableId'     => 'IpTable'.substr( md5( mt_rand() ), 0, 5 )
 		);
 
 		switch ( $sListToRender ) {
 
 			// this is a hard-coded class... need to change this.  It was $oProcessor:: but 5.2 doesn't supprt.
-			case ICWP_WPSF_Processor_Ips::LIST_MANUAL_WHITE :
+			case self::LIST_MANUAL_WHITE :
 				$aRenderData[ 'list_data' ] = $this->getFormatedData_WhiteList();
 				break;
 
-			case ICWP_WPSF_Processor_Ips::LIST_AUTO_BLACK :
+			case self::LIST_AUTO_BLACK :
 				$aRenderData[ 'list_data' ] = $this->getFormatedData_AutoBlackList();
 				break;
 
@@ -300,13 +291,13 @@ class ICWP_WPSF_FeatureHandler_Ips extends ICWP_WPSF_FeatureHandler_BaseWpsf {
 		switch ( $aOptionsParams[ 'slug' ] ) {
 
 			case 'section_enable_plugin_feature_ips' :
-				$sTitle = sprintf( _wpsf__( 'Enable Plugin Feature: %s' ), $this->getMainFeatureName() );
+				$sTitle = sprintf( _wpsf__( 'Enable Module: %s' ), $this->getMainFeatureName() );
 				$aSummary = array(
 					sprintf( _wpsf__( 'Purpose - %s' ), _wpsf__( 'The IP Manager allows you to whitelist, blacklist and configure auto-blacklist rules.' ) ),
 					sprintf( _wpsf__( 'Recommendation - %s' ), sprintf( _wpsf__( 'Keep the %s feature turned on.' ), _wpsf__( 'IP Manager' ) ) )
 					.'<br />'._wpsf__( 'You should also carefully review the automatic black list settings.' )
 				);
-				$sTitleShort = sprintf( '%s / %s', _wpsf__( 'Enable' ), _wpsf__( 'Disable' ) );
+				$sTitleShort = sprintf( _wpsf__( '%s/%s Module' ), _wpsf__( 'Enable' ), _wpsf__( 'Disable' ) );
 				break;
 
 			case 'section_auto_black_list' :
@@ -345,15 +336,15 @@ class ICWP_WPSF_FeatureHandler_Ips extends ICWP_WPSF_FeatureHandler_BaseWpsf {
 		switch ( $aOptionsParams[ 'key' ] ) {
 
 			case 'enable_ips' :
-				$sName = sprintf( _wpsf__( 'Enable %s' ), $this->getMainFeatureName() );
-				$sSummary = sprintf( _wpsf__( 'Enable (or Disable) The %s Feature' ), $this->getMainFeatureName() );
-				$sDescription = sprintf( _wpsf__( 'Checking/Un-Checking this option will completely turn on/off the whole %s feature.' ), $this->getMainFeatureName() );
+				$sName = sprintf( _wpsf__( 'Enable %s Module' ), $this->getMainFeatureName() );
+				$sSummary = sprintf( _wpsf__( 'Enable (or Disable) The %s Module' ), $this->getMainFeatureName() );
+				$sDescription = sprintf( _wpsf__( 'Un-Checking this option will completely disable the %s module.' ), $this->getMainFeatureName() );
 				break;
 
 			case 'transgression_limit' :
 				$sName = _wpsf__( 'Transgression Limit' );
 				$sSummary = _wpsf__( 'Visitor IP address will be Black Listed after X bad actions on your site' );
-				$sDescription = sprintf( _wpsf__( 'A black mark is set against an IP address each time a visitor trips the defenses of the %s plugin.' ), self::getController()
+				$sDescription = sprintf( _wpsf__( 'A black mark is set against an IP address each time a visitor trips the defenses of the %s plugin.' ), self::getConn()
 																																							  ->getHumanName() )
 								.'<br />'._wpsf__( 'When the number of these transgressions exceeds specified limit, they are automatically blocked from accessing the site.' )
 								.'<br />'.sprintf( _wpsf__( 'Set this to "0" to turn off the %s feature.' ), _wpsf__( 'Automatic IP Black List' ) );
@@ -419,7 +410,7 @@ class ICWP_WPSF_FeatureHandler_Ips extends ICWP_WPSF_FeatureHandler_BaseWpsf {
 
 	protected function ensureFeatureEnabled() {
 		// we prevent disabling of this feature if the white list isn't empty
-		if ( !$this->getIsMainFeatureEnabled() ) {
+		if ( !$this->isModuleEnabled() ) {
 			/** @var ICWP_WPSF_Processor_Ips $oProcessor */
 			$oProcessor = $this->getProcessor();
 			if ( count( $oProcessor->getWhitelistData() ) > 0 ) {

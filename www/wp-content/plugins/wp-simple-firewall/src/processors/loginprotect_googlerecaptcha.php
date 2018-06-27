@@ -1,104 +1,93 @@
 <?php
 
-if ( class_exists( 'ICWP_WPSF_Processor_LoginProtect_GoogleRecaptcha', false ) ):
+if ( class_exists( 'ICWP_WPSF_Processor_LoginProtect_GoogleRecaptcha', false ) ) {
 	return;
-endif;
+}
 
-require_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'loginprotect_base.php' );
+require_once( dirname( __FILE__ ).'/loginprotect_base.php' );
 
 class ICWP_WPSF_Processor_LoginProtect_GoogleRecaptcha extends ICWP_WPSF_Processor_LoginProtect_Base {
 
 	/**
+	 * We no longer check if recaptcha is ready, we just use run(). So check beforehand.
 	 */
 	public function run() {
-		/** @var ICWP_WPSF_FeatureHandler_LoginProtect $oFO */
-		$oFO = $this->getFeature();
+		parent::run();
+		add_action( 'wp_enqueue_scripts', array( $this, 'registerGoogleRecaptchaJs' ), 99 );
+		add_action( 'login_enqueue_scripts', array( $this, 'registerGoogleRecaptchaJs' ), 99 );
+	}
 
-		if ( !$this->loadWpFunctions()->getIsLoginUrl() || !$oFO->getIsGoogleRecaptchaReady() ) {
-			return;
+	/**
+	 * @throws Exception
+	 */
+	protected function performCheckWithException() {
+
+		if ( !$this->isFactorTested() ) {
+
+			$this->setFactorTested( true );
+			try {
+				$this->checkRequestRecaptcha();
+				$this->doStatIncrement( 'login.recaptcha.verified' );
+			}
+			catch ( Exception $oE ) {
+				$this->setLoginAsFailed( 'login.recaptcha.fail' );
+				throw $oE;
+			}
 		}
-
-		add_action( 'login_enqueue_scripts',	array( $this, 'registerGoogleRecaptchaJs' ), 99 );
-
-		add_action( 'login_form',				array( $this, 'printGoogleRecaptchaCheck' ) );
-		add_action( 'woocommerce_login_form',	array( $this, 'printGoogleRecaptchaCheck' ) );
-		add_filter( 'login_form_middle',		array( $this, 'printGoogleRecaptchaCheck_Filter' ) );
-
-		// before username/password check (20)
-		add_filter( 'authenticate',				array( $this, 'checkLoginForGoogleRecaptcha_Filter' ), 15, 3 );
 	}
 
 	/**
 	 * @return string
 	 */
-	public function printGoogleRecaptchaCheck_Filter() {
+	public function provideLoginFormItems() {
+		$this->setRecaptchaToEnqueue();
+		return parent::provideLoginFormItems();
+	}
+
+	/**
+	 * @return void
+	 */
+	public function printLoginFormItems() {
+		$this->setRecaptchaToEnqueue();
+		parent::printLoginFormItems();
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function buildLoginFormItems() {
 		return $this->getGoogleRecaptchaHtml();
 	}
 
 	/**
+	 * We add the hidden input because the WooCommerce login processing doesn't fire unless
+	 * $_POST['login'] is set. But this is put on the form button and so doesn't get submitted using JQuery
+	 * @return void
 	 */
-	public function printGoogleRecaptchaCheck() {
-		echo $this->getGoogleRecaptchaHtml();
+	public function printLoginFormItems_Woo() {
+		parent::printLoginFormItems_Woo();
+		if ( $this->isRecaptchaInvisible() ) {
+			echo '<input type="hidden" name="login" value="Log in" />';
+		}
+	}
+
+	/**
+	 * We add the hidden input because the WooCommerce register processing doesn't fire unless
+	 * $_POST['register'] is set. But this is put on the form button and so doesn't get submitted using JQuery
+	 * @return void
+	 */
+	public function printRegisterFormItems_Woo() {
+		parent::printRegisterFormItems_Woo();
+		if ( $this->isRecaptchaInvisible() ) {
+			echo '<input type="hidden" name="register" value="Register" />';
+		}
 	}
 
 	/**
 	 * @return string
 	 */
-	protected function getGoogleRecaptchaHtml() {
-		/** @var ICWP_WPSF_FeatureHandler_LoginProtect $oFO */
-		$oFO = $this->getFeature();
-		$sSiteKey = $oFO->getGoogleRecaptchaSiteKey();
-		return sprintf(
-			'%s<div class="g-recaptcha" data-sitekey="%s"></div>',
-			'<style>@media screen {
-#rc-imageselect, .g-recaptcha iframe {transform:scale(0.90);-webkit-transform:scale(0.90);transform-origin:0 0;-webkit-transform-origin:0 0;}</style>',
-			$sSiteKey
-		);
-	}
-
-	/**
-	 * This jumps in before user password is tested. If we fail the ReCaptcha check, we'll
-	 * block testing of username and password
-	 *
-	 * @param WP_User|WP_Error $oUser
-	 * @return WP_Error
-	 */
-	public function checkLoginForGoogleRecaptcha_Filter( $oUser ) {
-		if ( !$this->loadWpFunctions()->getIsLoginRequest() ) {
-			return $oUser;
-		}
-
-		/** @var ICWP_WPSF_FeatureHandler_LoginProtect $oFO */
-		$oFO = $this->getFeature();
-
-		// we haven't already failed before now
-		if ( !is_wp_error( $oUser ) ) {
-
-			$oError = new WP_Error();
-			$sCaptchaResponse = $this->loadDataProcessor()->FetchPost( 'g-recaptcha-response' );
-
-			if ( empty( $sCaptchaResponse ) ) {
-				$oError->add( 'shield_google_recaptcha_empty', _wpsf__( 'Whoops.' )
-					.' '. _wpsf__( 'Google reCAPTCHA was not submitted.' ) );
-				$oUser = $oError;
-			}
-			else {
-				$oRecaptcha = $this->loadGoogleRecaptcha()->getGoogleRecaptchaLib( $oFO->getGoogleRecaptchaSecretKey() );
-				$oResponse = $oRecaptcha->verify( $sCaptchaResponse, $this->human_ip() );
-				if ( empty( $oResponse ) || !$oResponse->isSuccess() ) {
-					$oError->add( 'shield_google_recaptcha_failed', _wpsf__( 'Whoops.' )
-						.' '. _wpsf__( 'Google reCAPTCHA verification failed.' ) );
-					$oUser = $oError;
-				}
-			}
-
-			if ( is_wp_error( $oUser ) ) {
-				$this->setLoginAsFailed( 'login.recaptcha.fail' );
-			}
-			else {
-				$this->doStatIncrement( 'login.recaptcha.verified' );
-			}
-		}
-		return $oUser;
+	private function getGoogleRecaptchaHtml() {
+		$sNonInvisStyle = '<style>@media screen {#rc-imageselect, .icwpg-recaptcha iframe {transform:scale(0.90);-webkit-transform:scale(0.90);transform-origin:0 0;-webkit-transform-origin:0 0;}</style>';
+		return sprintf( '%s<div class="icwpg-recaptcha"></div>', $this->isRecaptchaInvisible() ? '' : $sNonInvisStyle );
 	}
 }

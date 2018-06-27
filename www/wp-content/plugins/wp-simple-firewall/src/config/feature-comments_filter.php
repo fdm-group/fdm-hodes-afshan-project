@@ -3,7 +3,7 @@
   "properties": {
     "slug": "comments_filter",
     "name": "Comments SPAM",
-    "show_feature_menu_item": true,
+    "show_module_menu_item": true,
     "storage_key": "commentsfilter",
     "tagline": "Block comment SPAM and retain your privacy",
     "use_sessions": true,
@@ -22,18 +22,8 @@
   },
   "sections": [
     {
-      "slug": "section_enable_plugin_feature_spam_comments_protection_filter",
-      "primary": true,
-      "title": "Enable Plugin Feature: SPAM Comments Protection Filter",
-      "title_short": "Enable / Disable",
-      "summary":
-      [
-        "Purpose - The Comments Filter can block 100% of automated spam bots and also offer the option to analyse human-generated spam.",
-        "Recommendation - Keep the Comments Filter feature turned on."
-      ]
-    },
-    {
       "slug": "section_bot_comment_spam_protection_filter",
+      "primary": true,
       "title": "Automatic Bot Comment SPAM Protection Filter",
       "title_short": "Bot SPAM",
       "summary":
@@ -41,7 +31,16 @@
         "Purpose - Blocks 100% of all automated bot-generated comment SPAM.",
         "Recommendation - Use of this feature is highly recommend."
       ]
-
+    },
+    {
+      "slug": "section_recaptcha",
+      "title": "Google reCAPTCHA",
+      "title_short": "reCAPTCHA",
+      "summary": [
+        "Purpose - Adds Google reCAPTCHA to the Comment Forms.",
+        "Recommendation - Keep this turned on.",
+        "Note - You will need to register for Google reCAPTCHA keys and store them in the Shield 'Dashboard' settings."
+      ]
     },
     {
       "slug": "section_human_spam_filter",
@@ -65,6 +64,16 @@
       ]
     },
     {
+      "slug": "section_enable_plugin_feature_spam_comments_protection_filter",
+      "title": "Enable Module: Comments SPAM Protection",
+      "title_short": "Disable Module",
+      "summary":
+      [
+        "Purpose - The Comments Filter can block 100% of automated spam bots and also offer the option to analyse human-generated spam.",
+        "Recommendation - Keep the Comments Filter feature turned on."
+      ]
+    },
+    {
       "slug": "section_non_ui",
       "hidden": true
     }
@@ -73,23 +82,74 @@
     {
       "key": "enable_comments_filter",
       "section": "section_enable_plugin_feature_spam_comments_protection_filter",
+      "default": "Y",
+      "type": "checkbox",
+      "link_info": "https://icwp.io/3z",
+      "link_blog": "https://icwp.io/wpsf04",
+      "name": "Enable SPAM Protection",
+      "summary": "Enable (or Disable) The Comments SPAM Protection module",
+      "description": "Un-Checking this option will completely disable the Comments SPAM Protection module"
+    },
+    {
+      "key": "enable_comments_gasp_protection",
+      "section": "section_bot_comment_spam_protection_filter",
       "default": "N",
       "type": "checkbox",
-      "link_info": "http://icwp.io/3z",
-      "link_blog": "http://icwp.io/wpsf04",
-      "name": "Enable SPAM Protection",
-      "summary": "Enable (or Disable) The SPAM Comments Protection Filter Feature",
-      "description": "Checking/Un-Checking this option will completely turn on/off the whole SPAM Comments Protection Filter feature"
+      "link_info": "https://icwp.io/3n",
+      "link_blog": "https://icwp.io/2n",
+      "name": "GASP Protection",
+      "summary": "Block Bot Comment SPAM",
+      "description": "Taking the lead from the original GASP plugin for WordPress, we have extended it to include advanced spam-bot protection."
+    },
+    {
+      "key": "comments_cooldown_interval",
+      "section": "section_bot_comment_spam_protection_filter",
+      "default": 10,
+      "type": "integer",
+      "link_info": "https://icwp.io/3o",
+      "link_blog": "",
+      "name": "Comments Cooldown",
+      "summary": "Limit posting comments to X seconds after the page has loaded",
+      "description": "By forcing a comments cooldown period, you restrict a Spambot's ability to post multiple times to your posts."
+    },
+    {
+      "key": "comments_default_action_spam_bot",
+      "section": "section_bot_comment_spam_protection_filter",
+      "default": "trash",
+      "type": "select",
+      "value_options": [
+        {
+          "value_key": 0,
+          "text": "Mark As Pending Moderation"
+        },
+        {
+          "value_key": "spam",
+          "text": "Mark As SPAM"
+        },
+        {
+          "value_key": "trash",
+          "text": "Move To Trash"
+        },
+        {
+          "value_key": "reject",
+          "text": "Reject And Redirect"
+        }
+      ],
+      "link_info": "https://icwp.io/6j",
+      "link_blog": "",
+      "name": "Default SPAM Action",
+      "summary": "How To Categorise Comments When Identified To Be SPAM",
+      "description": "When a comment is detected as being SPAM from an automatic bot, the comment will be categorised based on this setting."
     },
     {
       "key": "enable_comments_human_spam_filter",
       "section": "section_human_spam_filter",
       "default": "N",
       "type": "checkbox",
-      "link_info": "http://icwp.io/57",
-      "link_blog": "http://icwp.io/9w",
+      "link_info": "https://icwp.io/57",
+      "link_blog": "https://icwp.io/9w",
       "name": "Human SPAM Filter",
-      "summary": "Enable (or Disable) The Human SPAM Filter Feature",
+      "summary": "Enable (or Disable) The Human SPAM Filter module",
       "description": "Scans the content of WordPress comments for keywords that are indicative of SPAM and marks the comment according to your preferred setting below."
     },
     {
@@ -130,7 +190,7 @@
           "text": "Browser User Agent"
         }
       ],
-      "link_info": "http://icwp.io/58",
+      "link_info": "https://icwp.io/58",
       "link_blog": "",
       "name": "Comment Filter Items",
       "summary": "Select The Items To Scan For SPAM",
@@ -164,74 +224,57 @@
       "description": "When a comment is detected as being SPAM from a human commenter, the comment will be categorised based on this setting."
     },
     {
-      "key": "enable_comments_gasp_protection",
-      "section": "section_bot_comment_spam_protection_filter",
-      "default": "Y",
-      "type": "checkbox",
-      "link_info": "http://icwp.io/3n",
-      "link_blog": "http://icwp.io/2n",
-      "name": "GASP Protection",
-      "summary": "Add Growmap Anti Spambot Protection to your comments",
-      "description": "Taking the lead from the original GASP plugin for WordPress, we have extended it to include advanced spam-bot protection."
-    },
-    {
-      "key": "enable_google_recaptcha",
-      "section": "section_bot_comment_spam_protection_filter",
+      "key": "enable_google_recaptcha_comments",
+      "section": "section_recaptcha",
       "default": "N",
       "type": "checkbox",
-      "link_info": "http://icwp.io/shld5",
+      "link_info": "https://icwp.io/shld5",
       "link_blog": "",
       "name": "Google reCAPTCHA",
       "summary": "Enable Google reCAPTCHA For Comments",
       "description": "Use Google reCAPTCHA on the comments form to prevent bot-spam comments."
     },
     {
-      "key": "comments_default_action_spam_bot",
-      "section": "section_bot_comment_spam_protection_filter",
-      "default": "trash",
+      "key": "google_recaptcha_style_comments",
+      "section": "section_recaptcha",
+      "premium": true,
+      "default": "default",
       "type": "select",
       "value_options": [
         {
-          "value_key": 0,
-          "text": "Mark As Pending Moderation"
+          "value_key": "default",
+          "text": "Default"
         },
         {
-          "value_key": "spam",
-          "text": "Mark As SPAM"
+          "value_key": "light",
+          "text": "Light Theme"
         },
         {
-          "value_key": "trash",
-          "text": "Move To Trash"
+          "value_key": "light",
+          "text": "Light Theme"
         },
         {
-          "value_key": "reject",
-          "text": "Reject And Redirect"
+          "value_key": "dark",
+          "text": "Dark Theme"
+        },
+        {
+          "value_key": "invisible",
+          "text": "Invisible reCAPTCHA"
         }
       ],
-      "link_info": "http://icwp.io/6j",
+      "link_info": "",
       "link_blog": "",
-      "name": "Default SPAM Action",
-      "summary": "How To Categorise Comments When Identified To Be SPAM",
-      "description": "When a comment is detected as being SPAM from an automatic bot, the comment will be categorised based on this setting."
-    },
-    {
-      "key": "comments_cooldown_interval",
-      "section": "section_bot_comment_spam_protection_filter",
-      "default": 30,
-      "type": "integer",
-      "link_info": "http://icwp.io/3o",
-      "link_blog": "",
-      "name": "Comments Cooldown",
-      "summary": "Limit posting comments to X seconds after the page has loaded",
-      "description": "By forcing a comments cooldown period, you restrict a Spambot's ability to post multiple times to your posts."
+      "name": "reCAPTCHA Style",
+      "summary": "How Google reCAPTCHA Will Be Displayed",
+      "description": "You can choose the reCAPTCHA display format that best suits your site, including the new Invisible Recaptcha."
     },
     {
       "key": "comments_token_expire_interval",
       "section": "section_bot_comment_spam_protection_filter",
       "default": 600,
       "type": "integer",
-      "link_info": "http://icwp.io/3o",
-      "link_blog": "http://icwp.io/9v",
+      "link_info": "https://icwp.io/3o",
+      "link_blog": "https://icwp.io/9v",
       "name": "Comment Token Expire",
       "summary": "A visitor has X seconds within which to post a comment",
       "description": "Default: 600 seconds (10 minutes). Each visitor is given a unique 'Token' so they can comment. This restricts spambots, but we need to force these tokens to expire and at the same time not bother the visitors."
@@ -242,7 +285,7 @@
       "sensitive": true,
       "default": "default",
       "type": "text",
-      "link_info": "http://icwp.io/3p",
+      "link_info": "https://icwp.io/3p",
       "link_blog": "",
       "name": "Custom Checkbox Message",
       "summary": "If you want a custom checkbox message, please provide this here",
@@ -254,7 +297,7 @@
       "sensitive": true,
       "default": "default",
       "type": "text",
-      "link_info": "http://icwp.io/3p",
+      "link_info": "https://icwp.io/3p",
       "link_blog": "",
       "name": "Custom Alert Message",
       "summary": "If you want a custom alert message, please provide this here",
@@ -266,7 +309,7 @@
       "sensitive": true,
       "default": "default",
       "type": "text",
-      "link_info": "http://icwp.io/3p",
+      "link_info": "https://icwp.io/3p",
       "link_blog": "",
       "name": "Custom Wait Message",
       "summary": "If you want a custom submit-button wait message, please provide this here.",
@@ -278,11 +321,17 @@
       "sensitive": true,
       "default": "default",
       "type": "text",
-      "link_info": "http://icwp.io/3p",
+      "link_info": "https://icwp.io/3p",
       "link_blog": "",
       "name": "Custom Reload Message",
       "summary": "If you want a custom message when the comment token has expired, please provide this here.",
       "description": "This message is displayed on the submit-button when the comment token is expired."
+    },
+    {
+      "key":          "insights_last_comment_block_at",
+      "transferable": false,
+      "section":      "section_non_ui",
+      "default":      0
     }
   ],
   "definitions": {

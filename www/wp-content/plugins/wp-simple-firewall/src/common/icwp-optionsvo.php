@@ -9,56 +9,68 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 	 * @var array
 	 */
 	protected $aOptionsValues;
+
+	/**
+	 * @var array
+	 */
+	protected $aOld;
+
 	/**
 	 * @var array
 	 */
 	protected $aRawOptionsConfigData;
+
 	/**
 	 * @var boolean
 	 */
 	protected $bNeedSave;
+
 	/**
 	 * @var boolean
 	 */
 	protected $bIsPremium;
+
 	/**
 	 * @var boolean
 	 */
 	protected $bRebuildFromFile = false;
+
 	/**
 	 * @var string
 	 */
 	protected $aOptionsKeys;
+
 	/**
 	 * @var string
 	 */
 	protected $sOptionsStorageKey;
+
 	/**
 	 *  by default we load from saved
 	 * @var string
 	 */
 	protected $bLoadFromSaved = true;
+
 	/**
 	 * @var string
 	 */
 	protected $sOptionsEncoding;
+
 	/**
 	 * @var string
 	 */
-	protected $sOptionsName;
+	protected $sPathToConfig;
 
 	/**
-	 * @param string $sOptionsName
 	 */
-	public function __construct( $sOptionsName ) {
-		$this->sOptionsName = $sOptionsName;
+	public function __construct() {
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function cleanTransientStorage() {
-		return $this->loadWpFunctions()->deleteTransient( $this->getSpecTransientStorageKey() );
+		return $this->loadWp()->deleteTransient( $this->getSpecTransientStorageKey() );
 	}
 
 	/**
@@ -70,21 +82,21 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 			return true;
 		}
 		$this->cleanOptions();
-		if ( !$this->isPremium() ) {
+		if ( !$this->isPremiumLicensed() ) {
 			$this->resetPremiumOptsToDefault();
 		}
 		$this->setNeedSave( false );
 		if ( $bDeleteFirst ) {
-			$this->loadWpFunctions()->deleteOption( $this->getOptionsStorageKey() );
+			$this->loadWp()->deleteOption( $this->getOptionsStorageKey() );
 		}
-		return $this->loadWpFunctions()->updateOption( $this->getOptionsStorageKey(), $this->getAllOptionsValues() );
+		return $this->loadWp()->updateOption( $this->getOptionsStorageKey(), $this->getAllOptionsValues() );
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function doOptionsDelete() {
-		$oWp = $this->loadWpFunctions();
+		$oWp = $this->loadWp();
 		$oWp->deleteTransient( $this->getSpecTransientStorageKey() );
 		return $oWp->deleteOption( $this->getOptionsStorageKey() );
 	}
@@ -97,17 +109,22 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 	}
 
 	/**
+	 * @return string
+	 */
+	public function getSlug() {
+		return $this->getFeatureProperty( 'slug' );
+	}
+
+	/**
 	 * Returns an array of all the transferable options and their values
 	 * @return array
 	 */
 	public function getTransferableOptions() {
-
-		$aOptions = $this->getAllOptionsValues();
-		$aRawOptions = $this->getRawData_AllOptions();
 		$aTransferable = array();
-		foreach ( $aRawOptions as $nKey => $aOptionData ) {
+
+		foreach ( $this->getRawData_AllOptions() as $nKey => $aOptionData ) {
 			if ( !isset( $aOptionData[ 'transferable' ] ) || $aOptionData[ 'transferable' ] === true ) {
-				$aTransferable[ $aOptionData[ 'key' ] ] = $aOptions[ $aOptionData[ 'key' ] ];
+				$aTransferable[ $aOptionData[ 'key' ] ] = $this->getOpt( $aOptionData[ 'key' ] );
 			}
 		}
 		return $aTransferable;
@@ -216,6 +233,69 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 	}
 
 	/**
+	 * @param string $sSlug
+	 * @return array|null
+	 */
+	public function getSection( $sSlug ) {
+		$aSections = $this->getSections();
+		return isset( $aSections[ $sSlug ] ) ? $aSections[ $sSlug ] : null;
+	}
+
+	/**
+	 * @param bool $bIncludeHidden
+	 * @return array[]
+	 */
+	public function getSections( $bIncludeHidden = false ) {
+		$aSections = array();
+		foreach ( $this->getRawData_OptionsSections() as $aRawSection ) {
+			if ( $bIncludeHidden || !isset( $aRawSection[ 'hidden' ] ) || !$aRawSection[ 'hidden' ] ) {
+				$aSections[ $aRawSection[ 'slug' ] ] = $aRawSection;
+			}
+		}
+		return $aSections;
+	}
+
+	/**
+	 * @param string $sSlug
+	 * @return array
+	 */
+	public function getSection_Requirements( $sSlug ) {
+		$aSection = $this->getSection( $sSlug );
+		$aReqs = ( is_array( $aSection ) && isset( $aSection[ 'reqs' ] ) ) ? $aSection[ 'reqs' ] : array();
+		return array_merge(
+			array( 'php_min' => '5.2.4' ),
+			$aReqs
+		);
+	}
+
+	/**
+	 * @param string $sSlug
+	 * @return array|null
+	 */
+	public function getSectionHelpVideo( $sSlug ) {
+		$aSection = $this->getSection( $sSlug );
+		return ( is_array( $aSection ) && isset( $aSection[ 'help_video' ] ) ) ? $aSection[ 'help_video' ] : null;
+	}
+
+	/**
+	 * @param string $sSectionSlug
+	 * @return bool
+	 */
+	public function isSectionReqsMet( $sSectionSlug ) {
+		$aReqs = $this->getSection_Requirements( $sSectionSlug );
+		$bMet = $this->loadDP()->getPhpVersionIsAtLeast( $aReqs[ 'php_min' ] );
+		return $bMet;
+	}
+
+	/**
+	 * @param string $sOptKey
+	 * @return bool
+	 */
+	public function isOptReqsMet( $sOptKey ) {
+		return $this->isSectionReqsMet( $this->getOptProperty( $sOptKey, 'section' ) );
+	}
+
+	/**
 	 * @return array
 	 */
 	public function getOptionsForPluginUse() {
@@ -301,16 +381,24 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 	}
 
 	/**
+	 * @param string $sKey
+	 * @return mixed|null
+	 */
+	public function getOldValue( $sKey ) {
+		return $this->isOptChanged( $sKey ) ? $this->aOld[ $sKey ] : null;
+	}
+
+	/**
 	 * @param string $sOptionKey
 	 * @param mixed  $mDefault
 	 * @return mixed
 	 */
 	public function getOpt( $sOptionKey, $mDefault = false ) {
 		$aOptionsValues = $this->getAllOptionsValues();
-		if ( !isset( $aOptionsValues[ $sOptionKey ] ) ) {
+		if ( !isset( $aOptionsValues[ $sOptionKey ] ) && $this->getIsValidOptionKey( $sOptionKey ) ) {
 			$this->setOpt( $sOptionKey, $this->getOptDefault( $sOptionKey, $mDefault ) );
 		}
-		return $this->aOptionsValues[ $sOptionKey ];
+		return isset( $this->aOptionsValues[ $sOptionKey ] ) ? $this->aOptionsValues[ $sOptionKey ] : $mDefault;
 	}
 
 	/**
@@ -379,8 +467,15 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 	/**
 	 * @return string
 	 */
-	public function getOptionsName() {
-		return $this->sOptionsName;
+	public function getPathToConfig() {
+		return $this->sPathToConfig;
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function getConfigModTime() {
+		return $this->loadFS()->getModifiedTime( $this->getPathToConfig() );
 	}
 
 	/**
@@ -414,7 +509,6 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 
 	/**
 	 * @return array
-	 * @throws Exception
 	 */
 	public function getRawData_FullFeatureConfig() {
 		if ( empty( $this->aRawOptionsConfigData ) ) {
@@ -496,6 +590,14 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 	}
 
 	/**
+	 * @param string $sKey
+	 * @return bool
+	 */
+	public function isOptChanged( $sKey ) {
+		return is_array( $this->aOld ) && isset( $this->aOld[ $sKey ] );
+	}
+
+	/**
 	 * @param string $sOptionKey
 	 * @return bool true if premium is set and true, false otherwise.
 	 */
@@ -506,7 +608,7 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 	/**
 	 * @return bool
 	 */
-	public function isPremium() {
+	public function isPremiumLicensed() {
 		return (bool)$this->bIsPremium;
 	}
 
@@ -533,7 +635,7 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 	 * @param $bIsPremium
 	 * @return $this
 	 */
-	public function setIsPremium( $bIsPremium ) {
+	public function setIsPremiumLicensed( $bIsPremium ) {
 		$this->bIsPremium = $bIsPremium;
 		return $this;
 	}
@@ -593,29 +695,94 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 	}
 
 	/**
-	 * @param string $sOptionKey
+	 * @param string $sOptKey
 	 * @param mixed  $mValue
 	 * @return mixed
 	 */
-	public function setOpt( $sOptionKey, $mValue ) {
+	public function setOpt( $sOptKey, $mValue ) {
 
 		// We can't use getOpt() to find the current value since we'll create an infinite loop
 		$aOptionsValues = $this->getAllOptionsValues();
-		$mCurrent = isset( $aOptionsValues[ $sOptionKey ] ) ? $aOptionsValues[ $sOptionKey ] : null;
+		$mCurrent = isset( $aOptionsValues[ $sOptKey ] ) ? $aOptionsValues[ $sOptKey ] : null;
 
-		if ( serialize( $mCurrent ) !== serialize( $mValue ) ) {
+		$mValue = $this->ensureOptValueState( $sOptKey, $mValue );
+		if ( serialize( $mCurrent ) !== serialize( $mValue ) && $this->verifyCanSet( $sOptKey, $mValue ) ) {
 			$this->setNeedSave( true );
 
 			//Load the config and do some pre-set verification where possible. This will slowly grow.
-			$aOption = $this->getRawData_SingleOption( $sOptionKey );
+			$aOption = $this->getRawData_SingleOption( $sOptKey );
 			if ( !empty( $aOption[ 'type' ] ) ) {
 				if ( $aOption[ 'type' ] == 'boolean' && !is_bool( $mValue ) ) {
-					return $this->resetOptToDefault( $sOptionKey );
+					return $this->resetOptToDefault( $sOptKey );
 				}
 			}
-			$this->aOptionsValues[ $sOptionKey ] = $mValue;
+			$this->setOldOptValue( $sOptKey, $mCurrent );
+			$this->aOptionsValues[ $sOptKey ] = $mValue;
 		}
 		return true;
+	}
+
+	/**
+	 * Ensures that set options values are of the correct type
+	 * @param string $sOptKey
+	 * @param mixed  $mValue
+	 * @return mixed
+	 */
+	private function ensureOptValueState( $sOptKey, $mValue ) {
+		switch ( $this->getOptionType( $sOptKey ) ) {
+			case 'integer':
+				$mValue = (int)$mValue;
+				break;
+
+			case 'text':
+			case 'email':
+				$mValue = (string)$mValue;
+				break;
+		}
+		return $mValue;
+	}
+
+	/**
+	 * @param string $sOptKey
+	 * @param mixed  $mPotentialValue
+	 * @return bool
+	 */
+	private function verifyCanSet( $sOptKey, $mPotentialValue ) {
+		$bValid = true;
+
+		switch ( $this->getOptionType( $sOptKey ) ) {
+
+			case 'integer':
+				$nMin = $this->getOptProperty( $sOptKey, 'min' );
+				if ( !is_null( $nMin ) ) {
+					$bValid = $mPotentialValue >= $nMin;
+				}
+				$nMax = $this->getOptProperty( $sOptKey, 'max' );
+				if ( !is_null( $nMax ) ) {
+					$bValid = $mPotentialValue <= $nMax;
+				}
+				break;
+
+			case 'email':
+				$bValid = empty( $mPotentialValue) || $this->loadDP()->validEmail( $mPotentialValue );
+				break;
+		}
+		return $bValid;
+	}
+
+	/**
+	 * @param string $sOptionKey
+	 * @param mixed  $mValue
+	 * @return $this
+	 */
+	private function setOldOptValue( $sOptionKey, $mValue ) {
+		if ( !is_array( $this->aOld ) ) {
+			$this->aOld = array();
+		}
+		if ( !isset( $this->aOld[ $sOptionKey ] ) ) {
+			$this->aOld[ $sOptionKey ] = $mValue;
+		}
+		return $this;
 	}
 
 	/**
@@ -664,7 +831,7 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 				if ( empty( $sStorageKey ) ) {
 					throw new Exception( 'Options Storage Key Is Empty' );
 				}
-				$this->aOptionsValues = $this->loadWpFunctions()->getOption( $sStorageKey, array() );
+				$this->aOptionsValues = $this->loadWp()->getOption( $sStorageKey, array() );
 			}
 		}
 		if ( !is_array( $this->aOptionsValues ) ) {
@@ -676,23 +843,34 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 
 	/**
 	 * @return array
-	 * @throws Exception
 	 */
 	private function readConfiguration() {
-		$oWp = $this->loadWpFunctions();
+		$oWp = $this->loadWp();
 
 		$sTransientKey = $this->getSpecTransientStorageKey();
 		$aConfig = $oWp->getTransient( $sTransientKey );
 
-		if ( $this->getRebuildFromFile() || empty( $aConfig ) ) {
+		$bRebuild = $this->getRebuildFromFile() || empty( $aConfig );
+		if ( !$bRebuild && !empty( $aConfig ) && is_array( $aConfig ) ) {
+
+			if ( !isset( $aConfig[ 'meta_modts' ] ) ) {
+				$aConfig[ 'meta_modts' ] = 0;
+			}
+			$bRebuild = $this->getConfigModTime() != $aConfig[ 'meta_modts' ];
+		}
+
+		if ( $bRebuild ) {
 
 			try {
 				$aConfig = $this->readConfigurationJson();
 			}
 			catch ( Exception $oE ) {
-				trigger_error( $oE->getMessage() );
+				if ( WP_DEBUG ) {
+					trigger_error( $oE->getMessage() );
+				}
 				$aConfig = array();
 			}
+			$aConfig[ 'meta_modts' ] = $this->getConfigModTime();
 			$oWp->setTransient( $sTransientKey, $aConfig, DAY_IN_SECONDS );
 		}
 		return $aConfig;
@@ -705,7 +883,7 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 	private function readConfigurationJson() {
 		$aConfig = json_decode( $this->readConfigurationFileContents(), true );
 		if ( empty( $aConfig ) ) {
-			throw new Exception( 'Reading JSON configuration from file failed.' );
+			throw new Exception( sprintf( 'Reading JSON configuration from file "%s" failed.', $this->getSlug() ) );
 		}
 		return $aConfig;
 	}
@@ -716,32 +894,32 @@ class ICWP_WPSF_OptionsVO extends ICWP_WPSF_Foundation {
 	 */
 	private function readConfigurationFileContents() {
 		if ( !$this->getConfigFileExists() ) {
-			throw new Exception( sprintf( 'Configuration file "%s" does not exist.', $this->getConfigFilePath() ) );
+			throw new Exception( sprintf( 'Configuration file "%s" does not exist.', $this->getPathToConfig() ) );
 		}
-		return $this->loadDataProcessor()->readFileContentsUsingInclude( $this->getConfigFilePath() );
+		return $this->loadDP()->readFileContentsUsingInclude( $this->getPathToConfig() );
 	}
 
 	/**
 	 * @return string
 	 */
 	private function getSpecTransientStorageKey() {
-		return 'icwp_'.md5( $this->getConfigFilePath() );
+		return 'icwp_'.md5( $this->getPathToConfig() );
 	}
 
 	/**
 	 * @return bool
 	 */
 	private function getConfigFileExists() {
-		$sPath = $this->getConfigFilePath();
+		$sPath = $this->getPathToConfig();
 		return !empty( $sPath ) && $this->loadFS()->isFile( $sPath );
 	}
 
 	/**
-	 * @return string
+	 * @param string $sPathToConfig
+	 * @return $this
 	 */
-	private function getConfigFilePath() {
-		return realpath( dirname( __FILE__ ).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR
-						 .sprintf( 'config'.DIRECTORY_SEPARATOR.'feature-%s.%s', $this->getOptionsName(), 'php' )
-		);
+	public function setPathToConfig( $sPathToConfig ) {
+		$this->sPathToConfig = $sPathToConfig;
+		return $this;
 	}
 }

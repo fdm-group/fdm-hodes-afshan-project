@@ -25,12 +25,12 @@ abstract class ICWP_WPSF_BaseDbProcessor extends ICWP_WPSF_Processor_BaseWpsf {
 	protected $nAutoExpirePeriod = null;
 
 	/**
-	 * @param ICWP_WPSF_FeatureHandler_Base $oFeatureOptions
+	 * @param ICWP_WPSF_FeatureHandler_Base $oModCon
 	 * @param string                        $sTableName
 	 * @throws Exception
 	 */
-	public function __construct( $oFeatureOptions, $sTableName = null ) {
-		parent::__construct( $oFeatureOptions );
+	public function __construct( $oModCon, $sTableName = null ) {
+		parent::__construct( $oModCon );
 		$this->setTableName( $sTableName );
 		$this->createCleanupCron();
 		$this->initializeTable();
@@ -40,8 +40,8 @@ abstract class ICWP_WPSF_BaseDbProcessor extends ICWP_WPSF_Processor_BaseWpsf {
 	/**
 	 * @return bool
 	 */
-	protected function readyToRun() {
-		return ( parent::readyToRun() && $this->getTableExists() );
+	public function isReadyToRun() {
+		return ( parent::isReadyToRun() && $this->getTableExists() );
 	}
 
 	/**
@@ -247,7 +247,7 @@ abstract class ICWP_WPSF_BaseDbProcessor extends ICWP_WPSF_Processor_BaseWpsf {
 	 * @return string
 	 */
 	protected function getDbCleanupHookName() {
-		return $this->getController()->doPluginPrefix( $this->getFeature()->getFeatureSlug() . '_db_cleanup' );
+		return $this->getController()->prefix( $this->getFeature()->getFeatureSlug().'_db_cleanup' );
 	}
 
 	/**
@@ -280,8 +280,8 @@ abstract class ICWP_WPSF_BaseDbProcessor extends ICWP_WPSF_Processor_BaseWpsf {
 	 * 1 in 10 page loads will clean the databases. This ensures that even if the crons don't run
 	 * correctly, we'll keep it trim.
 	 */
-	public function action_doFeatureProcessorShutdown() {
-		parent::action_doFeatureProcessorShutdown();
+	public function onModuleShutdown() {
+		parent::onModuleShutdown();
 		if ( rand( 1, 10 ) === 1 ) {
 			$this->cleanupDatabase();
 		}
@@ -291,15 +291,13 @@ abstract class ICWP_WPSF_BaseDbProcessor extends ICWP_WPSF_Processor_BaseWpsf {
 	 * @return int
 	 */
 	protected function getAutoExpirePeriod() {
-		return $this->nAutoExpirePeriod;
+		return null;
 	}
 
 	/**
-	 * @param int $nTimePeriod
-	 * @return $this
+	 * @return string
 	 */
-	protected function setAutoExpirePeriod( $nTimePeriod ) {
-		$this->nAutoExpirePeriod = $nTimePeriod;
-		return $this;
+	protected function getQueryDir() {
+		return dirname( dirname( __FILE__ ) ).'/query/';
 	}
 }

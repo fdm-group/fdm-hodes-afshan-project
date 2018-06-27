@@ -1,11 +1,24 @@
-<?php $sBaseDirName = dirname(__FILE__).DIRECTORY_SEPARATOR; ?>
+<?php $sBaseDirName = dirname( __FILE__ ).DIRECTORY_SEPARATOR; ?>
 
-<div id="<?php echo $unique_render_id;?>" class="<?php echo $notice_classes; ?> icwp-admin-notice notice is-dismissible notice-<?php echo $icwp_admin_notice_template; ?>">
-	<?php require_once( $sBaseDirName.$icwp_admin_notice_template.'.php' ); ?>
-	<div style="clear:both;"></div>
-	<?php if ( !empty( $strings['dismiss'] ) ) : ?>
-		<p class="dismiss-p"><a class="icwp-notice-dismiss" href="#"><?php echo $strings['dismiss']; ?></a></p>
+<div id="<?php echo $unique_render_id; ?>"
+	 class="<?php echo $notice_classes; ?> icwp-admin-notice notice is-dismissible notice-<?php echo $icwp_admin_notice_template; ?>">
+
+	<div class="notice-icon">
+		<span class="dashicons dashicons-shield"></span>&nbsp;
+	</div>
+
+	<div class="notice-content">
+		<h3 class="notice-title"><?php echo $strings[ 'title' ]; ?></h3>
+		<?php require_once( $sBaseDirName.$icwp_admin_notice_template.'.php' ); ?>
+	</div>
+
+	<?php if ( !empty( $strings[ 'dismiss' ] ) ) : ?>
+		<div class="dismiss-p">
+			<a class="icwp-notice-dismiss" href="#"><?php echo $strings[ 'dismiss' ]; ?></a>
+		</div>
 	<?php endif; ?>
+
+	<div style="clear:both;"></div>
 </div>
 
 <script type="text/javascript">
@@ -17,13 +30,10 @@
 
 	function icwp_dismiss_notice() {
 		var $oContainer = jQuery( '#<?php echo $unique_render_id; ?>' );
-		var requestData = {
-			'action': 'icwp_DismissAdminNotice',
-			'_ajax_nonce': '<?php echo $icwp_ajax_nonce; ?>',
-			'hide': '1',
-			'notice_id': '<?php echo $notice_attributes['notice_id']; ?>'
-		};
-		jQuery.get( ajaxurl, requestData );
-		$oContainer.fadeOut( 500, function() { $oContainer.remove(); } );
+		var aData = <?php echo $ajax[ 'dismiss_admin_notice' ]; ?>;
+		jQuery.get( ajaxurl, aData );
+		$oContainer.fadeOut( 500, function () {
+			$oContainer.remove();
+		} );
 	}
 </script>

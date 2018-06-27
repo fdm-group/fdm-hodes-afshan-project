@@ -1,8 +1,10 @@
 <?php
 
-if ( !class_exists( 'ICWP_WPSF_Processor_CommentsFilter_GoogleRecaptcha', false ) ):
+if ( class_exists( 'ICWP_WPSF_Processor_CommentsFilter_GoogleRecaptcha', false ) ) {
+	return;
+}
 
-require_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'base_commentsfilter.php' );
+require_once( dirname( __FILE__ ).'/base_commentsfilter.php' );
 
 class ICWP_WPSF_Processor_CommentsFilter_GoogleRecaptcha extends ICWP_WPSF_Processor_CommentsFilter_Base {
 
@@ -14,23 +16,33 @@ class ICWP_WPSF_Processor_CommentsFilter_GoogleRecaptcha extends ICWP_WPSF_Proce
 		if ( !$oFO->getIsGoogleRecaptchaReady() ) {
 			return;
 		}
-
 		parent::run();
 
-		add_action( 'wp_enqueue_scripts',		array( $this, 'registerGoogleRecaptchaJs' ), 99 );
-		add_action( 'comment_form',				array( $this, 'printGoogleRecaptchaCheck' ) );
+		add_action( 'wp', array( $this, 'setup' ) );
+	}
+
+	/**
+	 * The WP Query is alive and well at this stage so we can assume certain data is available.
+	 */
+	public function setup() {
+		if ( $this->loadWpComments()->isCommentsOpen() ) {
+			add_action( 'wp_enqueue_scripts', array( $this, 'registerGoogleRecaptchaJs' ), 99 );
+			add_action( 'comment_form_after_fields', array( $this, 'printGoogleRecaptchaCheck' ) );
+		}
 	}
 
 	/**
 	 * @return string
 	 */
 	public function printGoogleRecaptchaCheck_Filter() {
+		$this->setRecaptchaToEnqueue();
 		return $this->getGoogleRecaptchaHtml();
 	}
 
 	/**
 	 */
 	public function printGoogleRecaptchaCheck() {
+		$this->setRecaptchaToEnqueue();
 		echo $this->getGoogleRecaptchaHtml();
 	}
 
@@ -38,13 +50,7 @@ class ICWP_WPSF_Processor_CommentsFilter_GoogleRecaptcha extends ICWP_WPSF_Proce
 	 * @return string
 	 */
 	protected function getGoogleRecaptchaHtml() {
-		/** @var ICWP_WPSF_FeatureHandler_CommentsFilter $oFO */
-		$oFO = $this->getFeature();
-		$sSiteKey = $oFO->getGoogleRecaptchaSiteKey();
-		return sprintf(
-			'<div class="g-recaptcha" data-sitekey="%s" style="margin: 10px 0;"></div>',
-			$sSiteKey
-		);
+		return '<div class="icwpg-recaptcha" style="margin: 10px 0; clear:both;"></div>';
 	}
 
 	/**
@@ -60,24 +66,16 @@ class ICWP_WPSF_Processor_CommentsFilter_GoogleRecaptcha extends ICWP_WPSF_Proce
 			return $aCommentData;
 		}
 
-		$sCaptchaResponse = $this->loadDataProcessor()->FetchPost( 'g-recaptcha-response' );
-
 		$bIsSpam = false;
 		$sStatKey = '';
 		$sExplanation = '';
-		if ( empty( $sCaptchaResponse ) ) {
-			$bIsSpam = true;
-			$sStatKey = 'empty';
-			$sExplanation = _wpsf__( 'Google reCAPTCHA was not submitted.' );
+		try {
+			$this->checkRequestRecaptcha();
 		}
-		else {
-			$oRecaptcha = $this->loadGoogleRecaptcha()->getGoogleRecaptchaLib( $oFO->getGoogleRecaptchaSecretKey() );
-			$oResponse = $oRecaptcha->verify( $sCaptchaResponse, $this->human_ip() );
-			if ( empty( $oResponse ) || !$oResponse->isSuccess() ) {
-				$bIsSpam = true;
-				$sStatKey = 'failed';
-				$sExplanation = _wpsf__( 'Google reCAPTCHA verification failed.' );
-			}
+		catch ( Exception $oE ) {
+			$sStatKey = ( $oE->getCode() == 1 ) ? 'empty' : 'failed';
+			$sExplanation = $oE->getMessage();
+			$bIsSpam = true;
 		}
 
 		// Now we check whether comment status is to completely reject and then we simply redirect to "home"
@@ -87,15 +85,15 @@ class ICWP_WPSF_Processor_CommentsFilter_GoogleRecaptcha extends ICWP_WPSF_Proce
 			self::$sCommentStatus = $this->getOption( 'comments_default_action_spam_bot' );
 			$this->setCommentStatusExplanation( $sExplanation );
 
-			// We now black mark this IP
-			add_filter( $oFO->prefix( 'ip_black_mark' ), '__return_true' );
+			$oFO->setOptInsightsAt( 'last_comment_block_at' );
+			$this->setIpTransgressed(); // black mark this IP
+
 
 			if ( self::$sCommentStatus == 'reject' ) {
-				$oWp = $this->loadWpFunctions();
+				$oWp = $this->loadWp();
 				$oWp->doRedirect( $oWp->getHomeUrl(), array(), true, false );
 			}
 		}
 		return $aCommentData;
 	}
 }
-endif;

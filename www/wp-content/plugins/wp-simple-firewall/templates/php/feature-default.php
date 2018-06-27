@@ -1,21 +1,34 @@
-<div class="row">
-	<div class="<?php echo $fShowAds? 'span10' : 'span12'; ?>">
+<div id="IcwpCarouselOptions" class="icwp-carousel carousel slide carousel-fade">
+	<div class="carousel-inner">
 
-<!--		<div>--><?php //include_once( $sBaseDirName.'snippets'.DIRECTORY_SEPARATOR.'options_form.php' ); ?><!--</div>-->
-		<?php echo $options_form; ?>
-
-		<?php if ( $fShowAds ) : ?>
-			<div class="row-fluid">
-				<div class="span12">
-					<?php echo getWidgetIframeHtml( 'dashboard-widget-worpit-wtb' ); ?>
-				</div>
+		<div class="carousel-item active">
+			<div class="d-block w-100 content-options">
+			<?php echo $flags[ 'show_standard_options' ] ? $content[ 'options_form' ] : ''; ?>
+			<?php echo $flags[ 'show_alt_content' ] ? $content[ 'alt' ] : ''; ?>
 			</div>
-		<?php endif; ?>
-	</div><!-- / span9 -->
-
-	<?php if ( $fShowAds ) : ?>
-		<div class="span3" id="side_widgets">
-			<?php echo getWidgetIframeHtml('side-widgets-wtb'); ?>
 		</div>
-	<?php endif; ?>
+
+		<div class="carousel-item carousel-wizards">
+			<div class="d-block w-100"><?php echo $content[ 'wizard_landing' ]; ?></div>
+		</div>
+
+		<div class="carousel-item carousel-help">
+			<div class="d-block w-100"><?php echo $content[ 'help' ]; ?></div>
+		</div>
+
+		<div class="carousel-item carousel-actions">
+			<div class="d-block w-100"><?php echo $content[ 'actions' ]; ?></div>
+		</div>
+
+  </div>
 </div>
+
+<script>
+	jQuery( document ).ready( function () {
+			jQuery( '.icwp-carousel' ).carousel( {
+				interval: false,
+				keyboard: false
+			} );
+		}
+	);
+</script>

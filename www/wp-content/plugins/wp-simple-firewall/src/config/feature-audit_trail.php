@@ -3,28 +3,19 @@
   "properties": {
     "slug": "audit_trail",
     "name": "Audit Trail",
-    "show_feature_menu_item": true,
+    "show_module_menu_item": true,
     "storage_key": "audit_trail",
     "tagline": "Get a view on what happens on your site, when it happens",
     "show_central": true,
     "access_restricted": true,
     "premium": false,
+    "has_custom_actions": true,
     "order": 110
   },
   "sections": [
     {
-
-      "slug": "section_enable_plugin_feature_audit_trail",
-      "primary": true,
-      "title": "Enable Plugin Feature: Audit Trail",
-      "title_short": "Enable / Disable",
-      "summary": [
-        "Purpose - The Audit Trail is designed so you can look back on events and analyse what happened and what may have gone wrong.",
-        "Recommendation - Keep the Audit Trail feature turned on."
-      ]
-    },
-    {
       "slug": "section_audit_trail_options",
+      "primary": true,
       "title": "Audit Trail Options",
       "title_short": "Options",
       "summary": [
@@ -43,6 +34,15 @@
       ]
     },
     {
+      "slug": "section_enable_plugin_feature_audit_trail",
+      "title": "Enable Module: Audit Trail",
+      "title_short": "Disable Module",
+      "summary": [
+        "Purpose - The Audit Trail is designed so you can look back on events and analyse what happened and what may have gone wrong.",
+        "Recommendation - Keep the Audit Trail feature turned on."
+      ]
+    },
+    {
       "slug": "section_non_ui",
       "hidden": true
     }
@@ -51,13 +51,13 @@
     {
       "key": "enable_audit_trail",
       "section": "section_enable_plugin_feature_audit_trail",
-      "default": "N",
+      "default": "Y",
       "type": "checkbox",
-      "link_info": "http://icwp.io/5p",
-      "link_blog": "http://icwp.io/a1",
+      "link_info": "https://icwp.io/5p",
+      "link_blog": "https://icwp.io/a1",
       "name": "Enable Audit Trail",
-      "summary": "Enable (or Disable) The Audit Trail Feature",
-      "description": "Checking/Un-Checking this option will completely turn on/off the whole Audit Trail feature"
+      "summary": "Enable (or Disable) The Audit Trail module",
+      "description": "Un-Checking this option will completely disable the Audit Trail module"
 
     },
     {
@@ -65,19 +65,31 @@
       "section": "section_audit_trail_options",
       "default": 14,
       "type": "integer",
-      "link_info": "http://icwp.io/a2",
-      "link_blog": "http://icwp.io/a1",
+      "link_info": "https://icwp.io/a2",
+      "link_blog": "https://icwp.io/a1",
       "name": "Auto Clean",
       "summary": "Enable Audit Auto Cleaning",
       "description": "Events older than the number of days specified will be automatically cleaned from the database"
+    },
+    {
+      "key": "audit_trail_max_entries",
+      "section": "section_audit_trail_options",
+      "premium": true,
+      "default": 1000,
+      "type": "integer",
+      "link_info": "",
+      "link_blog": "",
+      "name": "Max Trail Length",
+      "summary": "Maximum Audit Trail Length To Keep",
+      "description": "Automatically remove any audit trail entries when this limit is exceeded."
     },
     {
       "key": "enable_audit_context_users",
       "section": "section_enable_audit_contexts",
       "default": "Y",
       "type": "checkbox",
-      "link_info": "http://icwp.io/a3",
-      "link_blog": "http://icwp.io/a1",
+      "link_info": "https://icwp.io/a3",
+      "link_blog": "https://icwp.io/a1",
       "name": "Users And Logins",
       "summary": "Enable Audit Context - Users And Logins",
       "description": "When this context is enabled, the audit trail will track activity relating to: Users And Logins"
@@ -87,8 +99,8 @@
       "section": "section_enable_audit_contexts",
       "default": "Y",
       "type": "checkbox",
-      "link_info": "http://icwp.io/a3",
-      "link_blog": "http://icwp.io/a1",
+      "link_info": "https://icwp.io/a3",
+      "link_blog": "https://icwp.io/a1",
       "name": "Plugins",
       "summary": "Enable Audit Context - Plugins",
       "description": "When this context is enabled, the audit trail will track activity relating to: WordPress Plugins"
@@ -98,8 +110,8 @@
       "section": "section_enable_audit_contexts",
       "default": "Y",
       "type": "checkbox",
-      "link_info": "http://icwp.io/a3",
-      "link_blog": "http://icwp.io/a1",
+      "link_info": "https://icwp.io/a3",
+      "link_blog": "https://icwp.io/a1",
       "name": "Themes",
       "summary": "Enable Audit Context - Themes",
       "description": "When this context is enabled, the audit trail will track activity relating to: WordPress Themes"
@@ -109,8 +121,8 @@
       "section": "section_enable_audit_contexts",
       "default": "Y",
       "type": "checkbox",
-      "link_info": "http://icwp.io/a3",
-      "link_blog": "http://icwp.io/a1",
+      "link_info": "https://icwp.io/a3",
+      "link_blog": "https://icwp.io/a1",
       "name": "Posts And Pages",
       "summary": "Enable Audit Context - Posts And Pages",
       "description": "When this context is enabled, the audit trail will track activity relating to: Editing and publishing of posts and pages"
@@ -120,8 +132,8 @@
       "section": "section_enable_audit_contexts",
       "default": "Y",
       "type": "checkbox",
-      "link_info": "http://icwp.io/a3",
-      "link_blog": "http://icwp.io/a1",
+      "link_info": "https://icwp.io/a3",
+      "link_blog": "https://icwp.io/a1",
       "name": "WordPress And Settings",
       "summary": "Enable Audit Context - WordPress And Settings",
       "description": "When this context is enabled, the audit trail will track activity relating to: WordPress upgrades and changes to particular WordPress settings"
@@ -131,8 +143,8 @@
       "section": "section_enable_audit_contexts",
       "default": "Y",
       "type": "checkbox",
-      "link_info": "http://icwp.io/a3",
-      "link_blog": "http://icwp.io/a1",
+      "link_info": "https://icwp.io/a3",
+      "link_blog": "https://icwp.io/a1",
       "name": "Emails",
       "summary": "Enable Audit Context - Emails",
       "description": "When this context is enabled, the audit trail will track activity relating to: Email Sending"
@@ -142,14 +154,16 @@
       "section": "section_enable_audit_contexts",
       "default": "Y",
       "type": "checkbox",
-      "link_info": "http://icwp.io/a4",
-      "link_blog": "http://icwp.io/a1",
+      "link_info": "https://icwp.io/a4",
+      "link_blog": "https://icwp.io/a1",
       "name": "Shield",
       "summary": "Enable Audit Context - Shield",
       "description": "When this context is enabled, the audit trail will track activity relating to: Shield"
     }
   ],
   "definitions": {
+    "audit_trail_default_per_page": 25,
+    "audit_trail_default_max_entries": 50,
     "audit_trail_table_name": "audit_trail",
     "audit_trail_table_columns": [
       "id",
@@ -163,12 +177,5 @@
       "created_at",
       "deleted_at"
     ]
-  },
-  "menu_items": [
-    {
-      "slug": "audit_trail_viewer",
-      "title": "Audit Trail Viewer",
-      "callback": "displayAuditTrailViewer"
-    }
-  ]
+  }
 }

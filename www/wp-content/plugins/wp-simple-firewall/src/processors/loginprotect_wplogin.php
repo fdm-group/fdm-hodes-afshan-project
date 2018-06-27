@@ -1,8 +1,10 @@
 <?php
 
-if ( !class_exists( 'ICWP_WPSF_Processor_LoginProtect_WpLogin', false ) ):
+if ( class_exists( 'ICWP_WPSF_Processor_LoginProtect_WpLogin', false ) ) {
+	return;
+}
 
-require_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'base_wpsf.php' );
+require_once( dirname(__FILE__ ).'/base_wpsf.php' );
 
 class ICWP_WPSF_Processor_LoginProtect_WpLogin extends ICWP_WPSF_Processor_BaseWpsf {
 
@@ -32,7 +34,7 @@ class ICWP_WPSF_Processor_LoginProtect_WpLogin extends ICWP_WPSF_Processor_BaseW
 		add_filter( 'wp_redirect', array( $this, 'fProtectUnauthorizedLoginRedirect' ), 50, 2 );
 		add_filter( 'register_url', array( $this, 'blockRegisterUrlRedirect' ), 20, 1 );
 
-		add_filter( 'et_anticipate_exceptions', array( $this, 'fAddToEtMaintenanceExceptions' ) ) ;
+		add_filter( 'et_anticipate_exceptions', array( $this, 'fAddToEtMaintenanceExceptions' ) );
 	}
 
 	/**
@@ -45,7 +47,7 @@ class ICWP_WPSF_Processor_LoginProtect_WpLogin extends ICWP_WPSF_Processor_BaseW
 
 		$sCustomLoginPath = $this->getLoginPath();
 
-		$oWp = $this->loadWpFunctions();
+		$oWp = $this->loadWp();
 		if ( $oWp->isMultisite() ) {
 			$sMessage = _wpsf__( 'Your login URL is unchanged because the Rename WP Login feature is not currently supported on WPMS.' );
 			$bConflicted = true;
@@ -58,11 +60,11 @@ class ICWP_WPSF_Processor_LoginProtect_WpLogin extends ICWP_WPSF_Processor_BaseW
 			$sMessage = sprintf( _wpsf__( 'Can not use the Rename WP Login feature because you have the "%s" plugin installed and it is active.' ), 'Theme My Login' );
 			$bConflicted = true;
 		}
-		else if ( !$oWp->getIsPermalinksEnabled() ) {
+		else if ( !$oWp->isPermalinksEnabled() ) {
 			$sMessage = sprintf( _wpsf__( 'Can not use the Rename WP Login feature because you have not enabled %s.' ), __( 'Permalinks' ) );
 			$bConflicted = true;
 		}
-		else if ( $oWp->getIsPermalinksEnabled() && ( $oWp->getDoesWpSlugExist( $sCustomLoginPath ) || in_array( $sCustomLoginPath, $oWp->getAutoRedirectLocations() ) ) ) {
+		else if ( $oWp->isPermalinksEnabled() && ( $oWp->getDoesWpSlugExist( $sCustomLoginPath ) || in_array( $sCustomLoginPath, $oWp->getAutoRedirectLocations() ) ) ) {
 			$sMessage = sprintf( _wpsf__( 'Can not use the Rename WP Login feature because you have chosen a path ("%s") that is reserved on your WordPress site.' ), $sCustomLoginPath );
 			$bConflicted = true;
 		}
@@ -82,7 +84,7 @@ class ICWP_WPSF_Processor_LoginProtect_WpLogin extends ICWP_WPSF_Processor_BaseW
 	 * @return bool
 	 */
 	protected function checkForUnsupportedConfiguration() {
-		$oDp = $this->loadDataProcessor();
+		$oDp = $this->loadDP();
 		$aRequestParts =  $oDp->getRequestUriParts();
 		if ( $aRequestParts === false || empty( $aRequestParts['path'] ) )  {
 
@@ -102,11 +104,11 @@ class ICWP_WPSF_Processor_LoginProtect_WpLogin extends ICWP_WPSF_Processor_BaseW
 	public function doBlockPossibleWpLoginLoad() {
 
 		// To begin, we block if it's an access to the admin area and the user isn't logged in (and it's not ajax)
-		$bDoBlock = ( is_admin() && !is_user_logged_in() && !defined( 'DOING_AJAX' ) );
+		$bDoBlock = ( is_admin() && !$this->loadWp()->isAjax() && !$this->loadWpUsers()->isUserLoggedIn() );
 
 		// Next block option is where it's a direct attempt to access the old login URL
 		if ( !$bDoBlock ) {
-			$sPath = trim( $this->loadDataProcessor()->getRequestPath(), '/' );
+			$sPath = trim( $this->loadDP()->getRequestPath(), '/' );
 			$aPossiblePaths = array(
 				trim( home_url( 'wp-login.php', 'relative' ), '/' ),
 				trim( home_url( 'wp-signup.php', 'relative' ), '/' ),
@@ -164,16 +166,12 @@ class ICWP_WPSF_Processor_LoginProtect_WpLogin extends ICWP_WPSF_Processor_BaseW
 	 */
 	public function fProtectUnauthorizedLoginRedirect( $sLocation, $mStatus ) {
 
-		$sRedirectPath = trim( parse_url( $sLocation, PHP_URL_PATH ), '/' );
-		$bRedirectIsHiddenUrl = $sRedirectPath == $this->getLoginPath();
-		try {
-			$bLoggedIn = $this->loadWpUsers()->isUserLoggedIn();
-		}
-		catch ( Exception $oE ) {
-			$bLoggedIn = false;
-		}
-		if ( $bRedirectIsHiddenUrl && !$bLoggedIn ) {
-			$this->doWpLoginFailedRedirect404();
+		if ( !$this->loadWp()->isRequestLoginUrl() ) {
+			$sRedirectPath = trim( parse_url( $sLocation, PHP_URL_PATH ), '/' );
+			$bRedirectIsHiddenUrl = ( $sRedirectPath == $this->getLoginPath() );
+			if ( $bRedirectIsHiddenUrl && !$this->loadWpUsers()->isUserLoggedIn() ) {
+				$this->doWpLoginFailedRedirect404();
+			}
 		}
 		return $sLocation;
 	}
@@ -183,7 +181,7 @@ class ICWP_WPSF_Processor_LoginProtect_WpLogin extends ICWP_WPSF_Processor_BaseW
 	 * @return string
 	 */
 	public function blockRegisterUrlRedirect( $sUrl ) {
-		$aParts = $this->loadDataProcessor()->getRequestUriParts();
+		$aParts = $this->loadDP()->getRequestUriParts();
 		if ( is_array( $aParts ) && !empty( $aParts[ 'path' ] ) && strpos( $aParts[ 'path' ], 'wp-register.php' ) ) {
 			$this->doWpLoginFailedRedirect404();
 			die();
@@ -195,14 +193,14 @@ class ICWP_WPSF_Processor_LoginProtect_WpLogin extends ICWP_WPSF_Processor_BaseW
 	 * @return string|void
 	 */
 	public function aLoadWpLogin() {
-		if ( $this->loadWpFunctions()->getIsLoginUrl() ) {
+		if ( $this->loadWp()->isRequestLoginUrl() ) {
 			@require_once( ABSPATH . 'wp-login.php' );
 			die();
 		}
 	}
 
 	public function aLoginFormAction() {
-		if ( !$this->loadWpFunctions()->getIsLoginUrl() ) {
+		if ( !$this->loadWp()->isRequestLoginUrl() ) {
 			// We now black mark this IP
 //			add_filter( $this->getFeature()->prefix( 'ip_black_mark' ), '__return_true' );
 			$this->doWpLoginFailedRedirect404();
@@ -232,17 +230,11 @@ class ICWP_WPSF_Processor_LoginProtect_WpLogin extends ICWP_WPSF_Processor_BaseW
 		if ( !empty( $sRedirectUrl ) ) {
 			$sRedirectUrl = esc_url( $sRedirectUrl );
 			if ( @parse_url( $sRedirectUrl ) !== false ) {
-				$this->loadWpFunctions()->doRedirect( $sRedirectUrl, array(), false );
+				$this->loadWp()->doRedirect( $sRedirectUrl, array(), false );
 			}
 		}
 
-		$oDp = $this->loadDataProcessor();
-		$sRequestUrl = $oDp->FetchServer( 'REQUEST_URI' );
-		$oDp->doSendApache404(
-			$sRequestUrl,
-			$this->loadWpFunctions()->getHomeUrl()
-		);
+		$this->loadDP()
+			 ->doSendApache404( '', $this->loadWp()->getHomeUrl() );
 	}
-
 }
-endif;

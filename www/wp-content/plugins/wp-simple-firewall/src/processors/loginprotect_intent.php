@@ -1,10 +1,10 @@
 <?php
 
-if ( class_exists( 'ICWP_WPSF_Processor_LoginProtect_Intent', false ) ):
+if ( class_exists( 'ICWP_WPSF_Processor_LoginProtect_Intent', false ) ) {
 	return;
-endif;
+}
 
-require_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'base_wpsf.php' );
+require_once( dirname( __FILE__ ).'/base_wpsf.php' );
 
 class ICWP_WPSF_Processor_LoginProtect_Intent extends ICWP_WPSF_Processor_BaseWpsf {
 
@@ -14,14 +14,52 @@ class ICWP_WPSF_Processor_LoginProtect_Intent extends ICWP_WPSF_Processor_BaseWp
 	private $oLoginTrack;
 
 	/**
+	 * @var bool
+	 */
+	private $bLoginIntentProcessed;
+
+	/**
 	 */
 	public function run() {
 		/** @var ICWP_WPSF_FeatureHandler_LoginProtect $oFO */
 		$oFO = $this->getFeature();
+		add_action( 'init', array( $this, 'onWpInit' ), 0 );
+		add_action( 'wp_logout', array( $this, 'onWpLogout' ) );
+
+		// 100 priority is important as this takes priority
+		add_filter( $oFO->prefix( 'user_subject_to_login_intent' ), array( $this, 'applyUserCanMfaSkip' ), 100, 2 );
+
+		if ( $oFO->getIfSupport3rdParty() ) {
+			add_action( 'wc_social_login_before_user_login', array( $this, 'onWcSocialLogin' ) );
+		}
+	}
+
+	/**
+	 * @param int $nUserId
+	 */
+	public function onWcSocialLogin( $nUserId ) {
+		/** @var ICWP_WPSF_FeatureHandler_LoginProtect $oFO */
+		$oFO = $this->getFeature();
+
+		$oUser = new WP_User( $nUserId );
+		if ( $oUser->ID != 0 ) { // i.e. said user id exists.
+			$oMeta = $oFO->getUserMeta( $oUser );
+			$oMeta->wc_social_login_valid = true;
+		}
+	}
+
+	public function onWpInit() {
+		$this->setupLoginIntent();
+	}
+
+	protected function setupLoginIntent() {
+		/** @var ICWP_WPSF_FeatureHandler_LoginProtect $oFO */
+		$oFO = $this->getFeature();
+		$oWpUsers = $this->loadWpUsers();
 
 		$oLoginTracker = $this->getLoginTrack();
 
-		if ( $this->getIsOption( 'enable_google_authenticator', 'Y' ) ) {
+		if ( $oFO->getIsEnabledGoogleAuthenticator() ) {
 			$oLoginTracker->addFactorToTrack( ICWP_WPSF_Processor_LoginProtect_Track::Factor_Google_Authenticator );
 			$this->getProcessorGoogleAuthenticator()->run();
 		}
@@ -38,26 +76,20 @@ class ICWP_WPSF_Processor_LoginProtect_Intent extends ICWP_WPSF_Processor_BaseWp
 		}
 
 		if ( $oLoginTracker->hasFactorsRemainingToTrack() ) {
-			if ( $this->loadWpFunctions()->getIsLoginRequest() ) {
-				add_filter( 'authenticate', array( $this, 'setUserLoginIntent' ), 100, 1 );
+			if ( $this->loadWp()->isRequestUserLogin() || $oFO->getIfSupport3rdParty() ) {
+				add_filter( 'authenticate', array( $this, 'initLoginIntent' ), 100, 1 );
 			}
-			add_action( 'init', array( $this, 'onWpInit' ), 0 );
-		}
 
-		add_action( 'wp_logout', array( $this, 'onWpLogout' ) );
-		return true;
-	}
-
-	public function onWpInit() {
-		if ( $this->loadWpUsers()->isUserLoggedIn() ) {
-
-			if ( $this->isCurrentUserSubjectToLoginIntent() ) {
-				$this->processUserLoginIntent();
-			}
-			else if ( $this->getUserLoginIntent() !== false ) {
-				// This handles the case where an admin changes a setting while a user is logged-in
-				// So to prevent this, we remove any intent for a user that isn't subject to it right now
-				$this->removeLoginIntent();
+			// process the current login intent
+			if ( $oWpUsers->isUserLoggedIn() ) {
+				if ( $this->isUserSubjectToLoginIntent() ) {
+					$this->processLoginIntent();
+				}
+				else if ( $this->hasLoginIntent() ) {
+					// This handles the case where an admin changes a setting while a user is logged-in
+					// So to prevent this, we remove any intent for a user that isn't subject to it right now
+					$this->removeLoginIntent();
+				}
 			}
 		}
 	}
@@ -65,97 +97,69 @@ class ICWP_WPSF_Processor_LoginProtect_Intent extends ICWP_WPSF_Processor_BaseWp
 	/**
 	 * hooked to 'init' and only run if a user is logged in
 	 */
-	public function processUserLoginIntent() {
+	private function processLoginIntent() {
+		$oWpUsers = $this->loadWpUsers();
+
 		/** @var ICWP_WPSF_FeatureHandler_LoginProtect $oFO */
 		$oFO = $this->getFeature();
 
-		if ( $this->userHasPendingLoginIntent() ) {
-			$oDp = $this->loadDataProcessor();
+		if ( $this->hasValidLoginIntent() ) { // ie. valid login intent present
+			$oDp = $this->loadDP();
 
-			$bIsLoginIntentSubmission = $oDp->FetchRequest( $oFO->getLoginIntentRequestFlag() ) == 1;
+			$bIsLoginIntentSubmission = $oDp->request( $oFO->getLoginIntentRequestFlag() ) == 1;
 			if ( $bIsLoginIntentSubmission ) {
 
-				if ( $oDp->FetchPost( 'cancel' ) == 1 ) {
-					$this->loadWpUsers()->logoutUser(); // clears the login and login intent
-					$this->loadWpFunctions()->redirectToLogin();
+				if ( $oDp->post( 'cancel' ) == 1 ) {
+					$oWpUsers->logoutUser(); // clears the login and login intent
+					$this->loadWp()->redirectToLogin();
 					return;
 				}
 
-				$oLoginTracker = $this->getLoginTrack();
-				do_action( $oFO->prefix( 'login-intent-validation' ) );
-				if ( $oFO->isChainedAuth() ) {
-					$bLoginIntentValidated = !$oLoginTracker->hasUnSuccessfulFactorAuth();
-				}
-				else {
-					$bLoginIntentValidated = $oLoginTracker->hasSuccessfulFactorAuth();
-				}
+				if ( $this->getIsLoginIntentValid() ) {
 
-				if ( $bLoginIntentValidated ) {
+					if ( $oDp->post( 'skip_mfa' ) === 'Y' ) { // store the browser hash
+						$oFO->addMfaLoginHash( $oWpUsers->getCurrentWpUser() );
+					}
+
 					$this->removeLoginIntent();
-					$sRedirect = $oDp->FetchRequest( 'redirect_to' );
 					$this->loadAdminNoticesProcessor()->addFlashMessage(
 						_wpsf__( 'Success' ).'! '._wpsf__( 'Thank you for authenticating your login.' ) );
-					if ( !empty( $sRedirect ) ) {
-						$this->loadWpFunctions()->doRedirect( esc_url( rawurldecode( $sRedirect ) ) );
-					}
+
+					$oFO->setOptInsightsAt( 'last_2fa_login_at' );
 				}
 				else {
 					$this->loadAdminNoticesProcessor()->addFlashMessage(
 						_wpsf__( 'One or more of your authentication codes failed or was missing' ) );
 				}
-				$this->loadWpFunctions()->redirectHere();
+				$this->loadWp()->redirectHere();
 			}
 			if ( $this->printLoginIntentForm() ) {
 				die();
 			}
 		}
+		else if ( $this->hasLoginIntent() ) { // there was an old login intent
+			$oWpUsers->logoutUser(); // clears the login and login intent
+			$this->loadWp()->redirectHere();
+		}
 		else {
-			$nIntent = $this->getUserLoginIntent();
-			if ( $nIntent === false ) {
-				// the login has already been fully validated and the login intent was deleted.
-				// false also means new installation don't get booted out
-			}
-			else if ( $nIntent > 0 ) { // there was an old login intent
-				$this->loadWpUsers()->logoutUser(); // clears the login and login intent
-				$this->loadWpFunctions()->redirectHere();
-			}
+			// no login intent present -
+			// the login has already been fully validated and the login intent was deleted.
+			// also means new installation don't get booted out
 		}
 	}
 
 	/**
 	 */
 	public function onWpLogout() {
-		$this->resetUserLoginIntent();
-	}
+		/** @var ICWP_WPSF_FeatureHandler_LoginProtect $oFO */
+		$oFO = $this->getFeature();
 
-	/**
-	 * Use this ONLY when the login intent has been successfully verified.
-	 */
-	protected function removeLoginIntent() {
-		$this->loadWpUsers()->deleteUserMeta( $this->getOptionKey() );
-	}
+		$this->removeLoginIntent();
 
-	/**
-	 * Reset will put the counter to zero - this should be used when the user HAS NOT
-	 * verified the login intent.  To indicate that they have successfully verified, use removeLoginIntent()
-	 */
-	public function resetUserLoginIntent() {
-		$this->setLoginIntentExpiration( 0 );
-	}
-
-	/**
-	 * @param int $nExpirationTime
-	 * @param null $oUser
-	 */
-	protected function setLoginIntentExpiration( $nExpirationTime, $oUser = null ) {
-		$this->loadWpUsers()->updateUserMeta( $this->getOptionKey(), max( 0, (int)$nExpirationTime ), $oUser );
-	}
-
-	/**
-	 * @return string
-	 */
-	protected function getOptionKey() {
-		return $this->getFeature()->prefixOptionKey( 'login_intent' );
+		// support for WooCommerce Social Login
+		if ( $oFO->getIfSupport3rdParty() ) {
+			$oFO->getCurrentUserMeta()->wc_social_login_valid = false;
+		}
 	}
 
 	/**
@@ -163,37 +167,85 @@ class ICWP_WPSF_Processor_LoginProtect_Intent extends ICWP_WPSF_Processor_BaseWp
 	 * @param WP_User|WP_Error $oUser
 	 * @return WP_User
 	 */
-	public function setUserLoginIntent( $oUser ) {
-		if ( !empty( $oUser ) && ( $oUser instanceof WP_User ) ) {
+	public function initLoginIntent( $oUser ) {
+		if ( $oUser instanceof WP_User ) {
+
+			/** @var ICWP_WPSF_FeatureHandler_LoginProtect $oF */
 			$oF = $this->getFeature();
-			$nTimeout = (int)apply_filters(
-				$oF->prefix( 'login_intent_timeout' ),
-				$oF->getDefinition( 'login_intent_timeout' )
-			);
-			$this->setLoginIntentExpiration($this->time() + MINUTE_IN_SECONDS*$nTimeout, $oUser );
+			if ( !$oF->canUserMfaSkip( $oUser ) ) {
+				$nTimeout = (int)apply_filters(
+					$oF->prefix( 'login_intent_timeout' ),
+					$oF->getDef( 'login_intent_timeout' )
+				);
+				$this->setLoginIntentExpiresAt( $this->time() + MINUTE_IN_SECONDS*$nTimeout, $oUser );
+			}
 		}
 		return $oUser;
 	}
 
 	/**
+	 * Use this ONLY when the login intent has been successfully verified.
+	 * @return $this
+	 */
+	protected function removeLoginIntent() {
+		unset( $this->getCurrentUserMeta()->login_intent_expires_at );
+		return $this;
+	}
+
+	/**
+	 * Reset will put the counter to zero - this should be used when the user HAS NOT
+	 * verified the login intent.  To indicate that they have successfully verified, use removeLoginIntent()
+	 * @return $this
+	 */
+	public function resetLoginIntent() {
+		$this->setLoginIntentExpiresAt( 0, $this->loadWpUsers()->getCurrentWpUser() );
+		return $this;
+	}
+
+	/**
+	 * @param int     $nExpirationTime
+	 * @param WP_User $oUser
+	 * @return $this
+	 */
+	protected function setLoginIntentExpiresAt( $nExpirationTime, $oUser ) {
+		if ( $oUser instanceof WP_User ) {
+			$oMeta = $this->loadWpUsers()->metaVoForUser( $this->prefix(), $oUser->ID );
+			$oMeta->login_intent_expires_at = max( 0, (int)$nExpirationTime );
+		}
+		return $this;
+	}
+
+	/**
+	 * Must be set with a higher priority than other filters as it will override them
+	 * @param bool    $bIsSubjectTo
+	 * @param WP_User $oUser
 	 * @return bool
 	 */
-	protected function userHasPendingLoginIntent() {
-		return ( $this->getUserLoginIntent() > $this->time() );
+	public function applyUserCanMfaSkip( $bIsSubjectTo, $oUser ) {
+		/** @var ICWP_WPSF_FeatureHandler_LoginProtect $oFO */
+		$oFO = $this->getFeature();
+		return $bIsSubjectTo && !$oFO->canUserMfaSkip( $oUser );
+	}
+
+	/**
+	 * @return int
+	 */
+	protected function getLoginIntentExpiresAt() {
+		return (int)$this->getCurrentUserMeta()->login_intent_expires_at;
 	}
 
 	/**
 	 * @return bool
 	 */
-	protected function isCurrentUserSubjectToLoginIntent() {
-		return apply_filters( $this->getFeature()->prefixOptionKey( 'user_subject_to_login_intent' ), false );
+	protected function hasLoginIntent() {
+		return isset( $this->getCurrentUserMeta()->login_intent_expires_at );
 	}
 
 	/**
-	 * @return int|false
+	 * @return bool
 	 */
-	protected function getUserLoginIntent() {
-		return $this->loadWpUsers()->getUserMeta( $this->getOptionKey() );
+	protected function hasValidLoginIntent() {
+		return $this->hasLoginIntent() && ( $this->getLoginIntentExpiresAt() > $this->time() );
 	}
 
 	/**
@@ -226,38 +278,40 @@ class ICWP_WPSF_Processor_LoginProtect_Intent extends ICWP_WPSF_Processor_BaseWp
 			$sMessageType = 'warning';
 		}
 
-		$sRedirectTo = $this->loadDataProcessor()->FetchGet( 'redirect_to' );
-		if ( empty( $sRedirectTo ) ) {
-			$sRedirectTo = rawurlencode( esc_url( $this->loadDataProcessor()->getRequestUri() ) );
-		}
+		$sRedirectTo = rawurlencode( $this->loadDP()->getRequestUri() ); // not actually used
 
 		$aDisplayData = array(
 			'strings' => array(
 				'cancel'          => _wpsf__( 'Cancel Login' ),
 				'time_remaining'  => _wpsf__( 'Time Remaining' ),
-				'calculating'     => _wpsf__( 'Calculating' ) . ' ...',
+				'calculating'     => _wpsf__( 'Calculating' ).' ...',
 				'seconds'         => strtolower( _wpsf__( 'Seconds' ) ),
 				'login_expired'   => _wpsf__( 'Login Expired' ),
 				'verify_my_login' => _wpsf__( 'Verify My Login' ),
 				'more_info'       => _wpsf__( 'More Info' ),
 				'what_is_this'    => _wpsf__( 'What is this?' ),
 				'message'         => $sMessage,
-				'page_title'      => sprintf( _wpsf__( '%s Login Verification' ), $oCon->getHumanName() )
+				'page_title'      => sprintf( _wpsf__( '%s Login Verification' ), $oCon->getHumanName() ),
+				'skip_mfa'        => sprintf( _wpsf__( "Don't ask again on this browser for %s day(s)" ), $oFO->getMfaSkip() )
 			),
 			'data'    => array(
 				'login_fields'      => $aLoginIntentFields,
-				'time_remaining'    => $this->getUserLoginIntent() - $this->time(),
+				'time_remaining'    => $this->getLoginIntentExpiresAt() - $this->time(),
 				'message_type'      => $sMessageType,
 				'login_intent_flag' => $oFO->getLoginIntentRequestFlag()
 			),
 			'hrefs'   => array(
-				'form_action'   => $this->loadDataProcessor()->getRequestUri(),
-				'css_bootstrap' => $oCon->getPluginUrl_Css( 'bootstrap3.min.css' ),
-				'js_bootstrap'  => $oCon->getPluginUrl_Js( 'bootstrap3.min.js' ),
+				'form_action'   => $this->loadDP()->getRequestUri(),
+				'css_bootstrap' => $oCon->getPluginUrl_Css( 'bootstrap4.min.css' ),
+				'js_bootstrap'  => $oCon->getPluginUrl_Js( 'bootstrap4.min.js' ),
 				'shield_logo'   => 'https://ps.w.org/wp-simple-firewall/assets/banner-772x250.png',
 				'redirect_to'   => $sRedirectTo,
 				'what_is_this'  => 'https://icontrolwp.freshdesk.com/support/solutions/articles/3000064840',
 				'favicon'       => $oCon->getPluginUrl_Image( 'pluginlogo_24x24.png' ),
+			),
+			'flags'   => array(
+				'can_skip_mfa'      => $oFO->getMfaSkipEnabled(),
+				'show_what_is_this' => !$oFO->isPremium(), // white label mitigation
 			)
 		);
 
@@ -273,7 +327,7 @@ class ICWP_WPSF_Processor_LoginProtect_Intent extends ICWP_WPSF_Processor_BaseWp
 	 * @return ICWP_WPSF_Processor_LoginProtect_TwoFactorAuth
 	 */
 	protected function getProcessorTwoFactor() {
-		require_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'loginprotect_twofactorauth.php' );
+		require_once( dirname( __FILE__ ).'/loginprotect_twofactorauth.php' );
 		/** @var ICWP_WPSF_FeatureHandler_LoginProtect $oFO */
 		$oFO = $this->getFeature();
 		$oProc = new ICWP_WPSF_Processor_LoginProtect_TwoFactorAuth( $oFO );
@@ -284,7 +338,7 @@ class ICWP_WPSF_Processor_LoginProtect_Intent extends ICWP_WPSF_Processor_BaseWp
 	 * @return ICWP_WPSF_Processor_LoginProtect_Yubikey
 	 */
 	protected function getProcessorYubikey() {
-		require_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'loginprotect_yubikey.php' );
+		require_once( dirname( __FILE__ ).'/loginprotect_yubikey.php' );
 		$oProc = new ICWP_WPSF_Processor_LoginProtect_Yubikey( $this->getFeature() );
 		return $oProc->setLoginTrack( $this->getLoginTrack() );
 	}
@@ -292,8 +346,8 @@ class ICWP_WPSF_Processor_LoginProtect_Intent extends ICWP_WPSF_Processor_BaseWp
 	/**
 	 * @return ICWP_WPSF_Processor_LoginProtect_GoogleAuthenticator
 	 */
-	protected function getProcessorGoogleAuthenticator() {
-		require_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'loginprotect_googleauthenticator.php' );
+	public function getProcessorGoogleAuthenticator() {
+		require_once( dirname( __FILE__ ).'/loginprotect_googleauthenticator.php' );
 		$oProc = new ICWP_WPSF_Processor_LoginProtect_GoogleAuthenticator( $this->getFeature() );
 		return $oProc->setLoginTrack( $this->getLoginTrack() );
 	}
@@ -303,10 +357,41 @@ class ICWP_WPSF_Processor_LoginProtect_Intent extends ICWP_WPSF_Processor_BaseWp
 	 */
 	public function getLoginTrack() {
 		if ( !isset( $this->oLoginTrack ) ) {
-			require_once( dirname(__FILE__).DIRECTORY_SEPARATOR.'loginprotect_track.php' );
+			require_once( dirname( __FILE__ ).'/loginprotect_track.php' );
 			$this->oLoginTrack = new ICWP_WPSF_Processor_LoginProtect_Track();
 		}
 		return $this->oLoginTrack;
+	}
+
+	/**
+	 * assume that a user is logged in.
+	 * @return bool
+	 */
+	private function getIsLoginIntentValid() {
+		/** @var ICWP_WPSF_FeatureHandler_LoginProtect $oFO */
+		$oFO = $this->getFeature();
+		if ( !$this->isLoginIntentProcessed() ) {
+			// This action sets up the necessary login tracker info
+			do_action( $oFO->prefix( 'login-intent-validation' ), $this->loadWpUsers()->getCurrentWpUser() );
+			$this->setLoginIntentProcessed();
+		}
+		$oTrk = $this->getLoginTrack();
+		return $oFO->isChainedAuth() ? !$oTrk->hasUnSuccessfulFactor() : $oTrk->hasSuccessfulFactor();
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isLoginIntentProcessed() {
+		return (bool)$this->bLoginIntentProcessed;
+	}
+
+	/**
+	 * @return $this
+	 */
+	public function setLoginIntentProcessed() {
+		$this->bLoginIntentProcessed = true;
+		return $this;
 	}
 
 	/**
