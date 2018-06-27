@@ -12,3 +12,4 @@ database*.sql
 Icon?
 ehthumbs.db
 Thumbs.db
+/www/wp-content/plugins/*
