@@ -1,20 +1,16 @@
 <?php
 
-class Agent_Match extends Red_Match {
-	public $agent;
-	public $regex;
+class Role_Match extends Red_Match {
+	public $role;
 	public $url_from;
 	public $url_notfrom;
 
 	function name() {
-		return __( 'URL and user agent', 'redirection' );
+		return __( 'URL and role/capability role', 'redirection' );
 	}
 
 	public function save( array $details, $no_target_url = false ) {
-		$data = array(
-			'regex' => isset( $details['regex'] ) && $details['regex'] ? true : false,
-			'agent' => isset( $details['agent'] ) ? $this->sanitize_agent( $details['agent'] ) : '',
-		);
+		$data = array( 'role' => isset( $details['role'] ) ? $details['role'] : '' );
 
 		if ( $no_target_url === false ) {
 			$data['url_from'] = isset( $details['url_from'] ) ? $this->sanitize_url( $details['url_from'] ) : '';
@@ -24,26 +20,15 @@ class Agent_Match extends Red_Match {
 		return $data;
 	}
 
-	private function sanitize_agent( $agent ) {
-		return $this->sanitize_url( $agent );
-	}
-
 	function get_target( $url, $matched_url, $regex ) {
 		// Check if referrer matches
-		$matched = $this->agent === Redirection_Request::get_user_agent();
-		if ( $this->regex ) {
-			$matched = preg_match( '@'.str_replace( '@', '\\@', $this->agent ).'@i', Redirection_Request::get_user_agent() ) > 0;
-		}
+		$matched = current_user_can( $this->role );
 
 		$target = false;
 		if ( $this->url_from !== '' && $matched ) {
 			$target = $this->url_from;
 		} elseif ( $this->url_notfrom !== '' && ! $matched ) {
 			$target = $this->url_notfrom;
-		}
-
-		if ( $regex && $target ) {
-			$target = $this->get_target_regex_url( $matched_url, $target, $url );
 		}
 
 		return $target;
@@ -53,8 +38,7 @@ class Agent_Match extends Red_Match {
 		return array(
 			'url_from' => $this->url_from,
 			'url_notfrom' => $this->url_notfrom,
-			'regex' => $this->regex,
-			'agent' => $this->agent,
+			'role' => $this->role,
 		);
 	}
 
@@ -66,7 +50,6 @@ class Agent_Match extends Red_Match {
 			$this->url_notfrom = $values['url_notfrom'];
 		}
 
-		$this->regex = $values['regex'];
-		$this->agent = $values['agent'];
+		$this->role = $values['role'];
 	}
 }
