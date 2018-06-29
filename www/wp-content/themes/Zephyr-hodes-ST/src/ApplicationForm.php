@@ -31,6 +31,7 @@ class ApplicationForm extends VCComponent {
 			'en-sg' => 'Singapore',
 			'en-us' => 'USA',
 			'cn' => 'China',
+			'en-au' => 'Australia',
 		];
 		$lang_code = function_exists( 'pll_current_language' ) ? pll_current_language() : 'en';
 		$default_region = isset( $region_map[ $lang_code ] ) ? $region_map[ $lang_code ] : 'UK';
