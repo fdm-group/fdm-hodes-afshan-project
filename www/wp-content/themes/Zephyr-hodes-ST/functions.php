@@ -200,6 +200,17 @@ add_action( 'wp_head', function() {
 	<?php
 } );
 
+
+add_action( 'wp_head', function() {
+	if ( function_exists( 'pll_current_language' ) ) { 
+		if($_COOKIE['acceptcookies']==1  || pll_current_language()!='de'){
+			echo "cookies accepted";		
+	 	} 
+	}
+});
+
+
+
 // Insert addthis sharing buttons on single post pages
 add_filter( 'wp', function() {
 	if ( is_singular( ['post'] ) ) {

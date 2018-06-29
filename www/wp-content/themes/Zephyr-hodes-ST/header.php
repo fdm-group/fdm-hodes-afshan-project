@@ -30,9 +30,6 @@ if ($_SERVER["REQUEST_URI"] == '/') {
        }
 
 }
-if($_COOKIE['acceptcookies']==1){
-	echo "cookies accepted";
-}
 // End of Geo Redirection
 ?>
 
