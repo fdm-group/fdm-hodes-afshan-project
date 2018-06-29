@@ -134,7 +134,7 @@ function setCookie(key, value) {
 }
 
 window.showhubspot = function(){
-	$('#hubspot').html('<script type="text/javascript" async src="//js.hs-scripts.com/4411419.js"></'+'script>');
+	$('#hubspot').html('<script type="text/javascript" id="hs-script-loader" async src="//js.hs-scripts.com/4411419.js"></'+'script>');
 }	
 
 window.addtagmanager = function(){
