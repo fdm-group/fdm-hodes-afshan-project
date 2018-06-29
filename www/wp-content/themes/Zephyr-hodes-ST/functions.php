@@ -203,8 +203,9 @@ add_action( 'wp_head', function() {
 
 add_action( 'wp_head', function() {
 	if ( function_exists( 'pll_current_language' ) ) { 
-		if($_COOKIE['acceptcookies']==1  || pll_current_language()!='de'){
-			echo "cookies accepted";		
+		if($_COOKIE['acceptcookies']==1  || (pll_current_language()!='de' && $_COOKIE['acceptcookies']!=0)){
+			echo "accept cookies";
+			echo "<script type=\"text/javascript\" id=\"hs-script-loader\" async src=\"//js.hs-scripts.com/4411419.js\"></script>";		
 	 	} 
 	}
 });
