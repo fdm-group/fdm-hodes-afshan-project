@@ -207,7 +207,11 @@ add_action( 'wp_head', function() {
 		if($_COOKIE['acceptcookies']==1  || (pll_current_language()!='de' && !isset($_COOKIE['acceptcookies']))){
 
 			echo "<script type=\"text/javascript\" id=\"hs-script-loader\" async src=\"//js.hs-scripts.com/4411419.js\"></script>";		
-	 	} 
+	 	}else{
+	 		echo "no cookies";
+	 	}
+	}else{
+		echo "no lang";
 	}
 });
 
