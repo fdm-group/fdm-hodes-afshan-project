@@ -361,9 +361,7 @@ add_shortcode( 'fdm-footer-nav', function() {
 // Function to output a standard button with the blue transition
 function fdm_output_button( $link, $label, $invert = false, $atts ) { ?>
 	<a href="<?= htmlspecialchars( $link ) ?>" class="fdm-cta <?= $invert ? 'fdm-cta-invert' : '' ?> mpc-button mpc-transition mpc-inited"
-	 <?php foreach($atts as $name => $value){
-	 	echo $name."='".$value."' "; 
-	 } ?> style="opacity: 1;">
+	 style="opacity: 1;">
 		<div class="mpc-button__content mpc-effect-type--stay mpc-effect-side--right">
 			<span class="mpc-button__title mpc-transition"><?= $label ?></span>
 			<i class="mpc-button__icon mpc-transition  fa fa-angle-right"></i>
