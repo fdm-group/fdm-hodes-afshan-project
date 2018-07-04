@@ -19,6 +19,7 @@ class OurPeople extends VCComponent {
 			[ 'acf_post' => 'fdm_people_china', 'name' => 'China', 'lang_code' => 'cn', 't_name' => __( 'China', 'fdm' ) ],
 			[ 'acf_post' => 'fdm_people_singapore', 'name' => 'Singapore', 'lang_code' => 'en-sg', 't_name' => __( 'Singapore', 'fdm' ) ],
 			[ 'acf_post' => 'fdm_people_hk', 'name' => 'Hong Kong', 'lang_code' => 'en-hk', 't_name' => __( 'Hong Kong', 'fdm' ) ],
+			[ 'acf_post' => 'fdm_people_au', 'name' => 'Australia', 'lang_code' => 'en-au', 't_name' => __( 'Australia', 'fdm' ) ],
 
 		];
 		
